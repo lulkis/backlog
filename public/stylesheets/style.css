@@ -1,8 +1,17 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding-left: 15%;
+    padding-right: 15%;
 }
 
-a {
-  color: #00B7FF;
+.category-box{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.category-box > div {
+    background-color: burlywood;
+    padding: 20px;
+    margin: 10px;
+
+    border-radius: 10px;
 }
