@@ -3,6 +3,7 @@
 <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/form-style.css' />
 </head>
 <body>
     <a class="outer" href="/<%= route%>">
@@ -12,7 +13,26 @@
     <h1>Add <%= title%></h1>
 
     <div>
-        <form method='post'>
+        <form ref='uploadForm'
+              id='uploadForm'
+              method='post'
+              encType="multipart/form-data">
+
+            <div>
+                <div class="center-drag space-bottom">
+                    <input name="foo" type="file" class="dragndrop" />
+                </div>
+                <p>Cover</p>
+            </div>
+
+            <div>
+                <div class="center-drag space-bottom">
+                    <input name="foo" type="file" class="dragndrop" />
+                </div>
+                <p>Header</p>
+            </div>
+
+
             <input name="name" id="name" placeholder="Name" type="text" >
             <input name="year" id="year" placeholder="Year" type="text" >
             <input name="genre" id="genre" placeholder="Genre" type="text" >

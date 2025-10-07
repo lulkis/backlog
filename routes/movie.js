@@ -37,6 +37,26 @@ router.post('/add', function(req, res, next) {
     var length = req.body.length;
     var cast = req.body.cast;
 
+    console.log(req.files);
+
+    var path = './public/images/movies/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
+    let picture = req.files.foo;
+    picture.mv(path, function(err) {
+        if(err){
+            console.log(err)
+        }
+        console.log("Succ")
+    });
+
+    var path2 = './public/images/movies/header/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
+    let picture2 = req.files.foo2;
+    picture2.mv(path2, function(err) {
+        if(err){
+            console.log(err)
+        }
+        console.log("Succ")
+    });
+
     const sql = "INSERT INTO movie (name, year, genre, country, description, status, added, studio, director, length, cast)" +
         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     db.run(sql, [name, year, genre, country, description, status, date_added, studio, director, length, cast]);
