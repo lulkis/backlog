@@ -8,3 +8,18 @@
     text-decoration: none;
     text-align: center;
 }
+
+.media-item {
+    width: 100%;
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.media-item:hover {
+    background-color: #004d61;
+    cursor: pointer;
+}
+
+.media-list {
+    margin-top: 30px;
+}
