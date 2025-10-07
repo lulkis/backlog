@@ -27,5 +27,23 @@ export function setup_database() {
         ");"
     );
 
+    db.run(
+        "CREATE TABLE IF NOT EXISTS series (" +
+        "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+        "name VARCHAR(128) NOT NULL," +
+        "year INTEGER," +
+        "genre VARCHAR(128)," +
+        "country VARCHAR(128)," +
+        "description TEXT," +
+        "status VARCHAR(128)," +
+        "added VARCHAR(128)," +
+        "idea VARCHAR(128)" +
+        "studio VARCHAR(128)" +
+        "cast TEXT" +
+        "episodes TEXT" +
+        "CHECK (status IN ('open', 'started', 'finished'))" +
+        ");"
+    );
+
     db.close()
 }
