@@ -37,10 +37,10 @@ export function setup_database() {
         "description TEXT," +
         "status VARCHAR(128)," +
         "added VARCHAR(128)," +
-        "idea VARCHAR(128)" +
-        "studio VARCHAR(128)" +
-        "cast TEXT" +
-        "episodes TEXT" +
+        "idea VARCHAR(128)," +
+        "studio VARCHAR(128)," +
+        "cast TEXT," +
+        "episodes TEXT," +
         "CHECK (status IN ('open', 'started', 'finished'))" +
         ");"
     );
