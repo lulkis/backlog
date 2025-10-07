@@ -29,6 +29,11 @@
                 <textarea name="episodes" id="cast" placeholder="Episodes" type="text" ></textarea>
             <%}%>
 
+            <% if (title === "Games") {%>
+                <input name="publisher" id="publisher" placeholder="Publisher" type="text" >
+                <input name="developer" id="developer" placeholder="Developer" type="text" >
+            <%}%>
+
             <button type="submit">Send</button>
         </form>
     </div>
