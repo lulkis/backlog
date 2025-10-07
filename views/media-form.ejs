@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+    <h1>Add <%= title%></h1>
+
+    <div>
+        <form method='post'>
+            <input name="name" id="name" placeholder="Name" type="text" >
+            <input name="year" id="year" placeholder="Year" type="text" >
+            <input name="genre" id="genre" placeholder="Genre" type="text" >
+            <input name="country" id="country" placeholder="Country" type="text" >
+            <textarea name="description" id="description" placeholder="Description" type="text" ></textarea>
+
+            <% if (title === "Movies") {%>
+                <input name="studio" id="studio" placeholder="Studio" type="text" >
+                <input name="director" id="director" placeholder="Director" type="text" >
+                <input name="length" id="length" placeholder="Length" type="text" >
+                <textarea name="cast" id="cast" placeholder="Cast" type="text" ></textarea>
+            <%}%>
+
+            <% if (title === "Series") {%>
+                <input name="idea" id="studio" placeholder="Idea" type="text" >
+                <input name="studio" id="director" placeholder="Studio" type="text" >
+                <textarea name="cast" id="cast" placeholder="Cast" type="text" ></textarea>
+                <textarea name="episodes" id="cast" placeholder="Episodes" type="text" ></textarea>
+            <%}%>
+
+            <% if (title === "Games") {%>
+                <input name="publisher" id="publisher" placeholder="Publisher" type="text" >
+                <input name="developer" id="developer" placeholder="Developer" type="text" >
+            <%}%>
+
+            <% if (title === "Books") {%>
+                <input name="author" id="author" placeholder="Author" type="text" >
+                <input name="length" id="length" placeholder="Length" type="text" >
+                <input name="publisher" id="publisher" placeholder="Publisher" type="text" >
+                <input name="illustrator" id="illustrator" placeholder="Illustrator" type="text" >
+            <%}%>
+
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</body>
+</html>

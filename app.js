@@ -12,6 +12,9 @@ var seriesRouter = require('./routes/series');
 
 var app = express();
 
+var t = require("./routes/database.js");
+t.setup_database();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

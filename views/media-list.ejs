@@ -3,8 +3,23 @@
 <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/listing-style.css' />
 </head>
 <body>
+    <a class="outer" href="/">
+        Back
+    </a>
+
     <h1><%= title%></h1>
+
+    <a class="add-button" href="<%= route%>/add">
+        <span>Add <%= title%></span>
+    </a>
+
+    <div class="media-list">
+        <% for(var i = 0; i < list.length; i++) {%>
+            <div class="media-item"><%= list[i].name%></div>
+        <%}%>
+    </div>
 </body>
 </html>
