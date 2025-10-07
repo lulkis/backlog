@@ -37,6 +37,24 @@ router.post('/add', function(req, res, next) {
     var cast = req.body.cast;
     var episodes = req.body.episodes;
 
+    var path = './public/images/series/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
+    let picture = req.files.foo;
+    picture.mv(path, function(err) {
+        if(err){
+            console.log(err)
+        }
+        console.log("Succ")
+    });
+
+    var path2 = './public/images/series/header/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
+    let picture2 = req.files.foo2;
+    picture2.mv(path2, function(err) {
+        if(err){
+            console.log(err)
+        }
+        console.log("Succ")
+    });
+
     const sql = "INSERT INTO series (name, year, genre, country, description, status, added, idea, studio, cast, episodes)" +
         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     db.run(sql, [name, year, genre, country, description, status, date_added, idea, studio, cast, episodes]);
