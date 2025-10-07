@@ -2,3 +2,7 @@
 node_modules/
 
 *.db
+/public/images/book/
+/public/images/game/
+/public/images/movie/
+/public/images/series/
