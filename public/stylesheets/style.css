@@ -8,10 +8,13 @@ body {
     grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
-.category-box > div {
+.category-box > a {
     background-color: burlywood;
     padding: 20px;
     margin: 10px;
-
     border-radius: 10px;
+
+    text-decoration: none;
+    text-align: center;
+    color: black;
 }
