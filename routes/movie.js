@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var sqlite3 = require('sqlite3');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -10,7 +11,9 @@ router.get('/add', function(req, res, next) {
     res.render('media-form', { title: 'Movies' });
 });
 
-router.post('/add', function(req, res) {
+router.post('/add', function(req, res, next) {
+    const db = new sqlite3.Database('backlog.db');
+
     console.log(req.body);
 
     var name = req.body.name;
@@ -20,8 +23,16 @@ router.post('/add', function(req, res) {
     var description = req.body.description;
     var date_added = new Date();
     var status = 'open';
+    var studio = req.body.studio;
+    var director = req.body.director;
+    var length = req.body.length;
+    var cast = req.body.cast;
 
-    res.redirect('/media/books')
+    const sql = "INSERT INTO movie (name, year, genre, country, description, status, added, studio, director, length, cast)" +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    db.run(sql, [name, year, genre, country, description, status, date_added, studio, director, length, cast]);
+
+    res.redirect('/movie')
 })
 
 module.exports = router;

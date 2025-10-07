@@ -8,16 +8,19 @@
     <h1>Add <%= title%></h1>
 
     <div>
-        <form ref='uploadForm'
-              id='uploadForm'
-              method='post'
-              encType="multipart/form-data">
+        <form method='post'>
+            <input name="name" id="name" placeholder="Name" type="text" >
+            <input name="year" id="year" placeholder="Year" type="text" >
+            <input name="genre" id="genre" placeholder="Genre" type="text" >
+            <input name="country" id="country" placeholder="Country" type="text" >
+            <textarea name="description" id="description" placeholder="Description" type="text" ></textarea>
 
-            <input id="name" placeholder="Name">
-            <input id="year" placeholder="Year">
-            <input id="genre" placeholder="Genre">
-            <input id="country" placeholder="Country">
-            <textarea id="description" placeholder="Description"></textarea>
+            <% if (title === "Movies") {%>
+                <input name="studio" id="studio" placeholder="Studio" type="text" >
+                <input name="director" id="director" placeholder="Director" type="text" >
+                <input name="length" id="length" placeholder="Length" type="text" >
+                <textarea name="cast" id="cast" placeholder="Cast" type="text" ></textarea>
+            <%}%>
 
             <button type="submit">Send</button>
         </form>
