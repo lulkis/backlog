@@ -4,7 +4,16 @@ var sqlite3 = require('sqlite3');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('media-list', { title: 'Movies', route: 'movie' });
+    const db = new sqlite3.Database('backlog.db');
+
+    var query = "SELECT * FROM movie";
+    db.all(query, function (err, rows) {
+        if(err){
+            console.log(err);
+        }else{
+            res.render('media-list', { title: 'Movies', route: 'movie' , list: rows});
+        }
+    });
 });
 
 router.get('/add', function(req, res, next) {

@@ -11,5 +11,11 @@
     <a class="add-button" href="<%= route%>/add">
         <span>Add <%= title%></span>
     </a>
+
+    <ul>
+        <% for(var i = 0; i < list.length; i++) {%>
+            <li><%= list[i].name%></li>
+        <%}%>
+    </ul>
 </body>
 </html>
