@@ -8,12 +8,18 @@
     <h1>Add <%= title%></h1>
 
     <div>
-        <form>
+        <form ref='uploadForm'
+              id='uploadForm'
+              method='post'
+              encType="multipart/form-data">
+
             <input placeholder="Name">
             <input placeholder="Year">
             <input placeholder="Genre">
             <input placeholder="Country">
             <textarea placeholder="Description"></textarea>
+
+            <button type="submit">Send</button>
         </form>
     </div>
 </body>
