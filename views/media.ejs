@@ -7,7 +7,18 @@
 <body>
     <h1><%= media.name%></h1>
     <div>
-        <h4>By <i><%= media.director%></i></h4>
+        <% if( route === 'book'){%>
+            <h4>By <i><%= media.author%></i></h4>
+        <%}%>
+        <% if( route === 'movie'){%>
+            <h4>By <i><%= media.director%></i></h4>
+        <%}%>
+        <% if( route === 'game'){%>
+            <h4>By <i><%= media.developer%></i></h4>
+        <%}%>
+        <% if( route === 'series'){%>
+            <h4>By <i><%= media.idea%></i></h4>
+        <%}%>
     </div>
 
     <hr>

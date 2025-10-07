@@ -52,7 +52,7 @@ router.get('/detail/:id', function(req, res, next) {
             console.log(err);
         }else{
             console.log(rows[0]);
-            res.render('media', { media: rows[0] });
+            res.render('media', { media: rows[0], route: 'book' });
         }
     });
 });
