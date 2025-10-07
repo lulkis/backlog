@@ -18,7 +18,7 @@
 
     <div class="media-list">
         <% for(var i = 0; i < list.length; i++) {%>
-            <a href="/movie/detail/<%= list[i].id%>">
+            <a href="/<%= route%>/detail/<%= list[i].id%>">
                 <div class="media-item"><%= list[i].name%></div>
             </a>
         <%}%>
