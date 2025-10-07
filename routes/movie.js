@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/add', function(req, res, next) {
-    res.render('media-form', { title: 'Movies' });
+    res.render('media-form', { title: 'Movies', route: 'movie' });
 });
 
 router.post('/add', function(req, res, next) {
