@@ -16,6 +16,10 @@
         <div class="tester"></div>
     </div>
 
+    <a class="outer" href="/<%= route%>">
+        Back
+    </a>
+
     <div class="container">
         <h1><%= media.name%></h1>
         <div>
@@ -32,12 +36,68 @@
                 <h4>By <i><%= media.idea%></i></h4>
             <%}%>
         </div>
+        
+        <div class="two-grid">
+            <div>
+                <img class="cover" height="500px" src="/images/<%= route%>/<%= media.name.toLowerCase()
+                        .replaceAll(" ", "_")
+                        .replaceAll(":", "")
+                        .replaceAll("'", "")
+                        .replaceAll("´", "")%>.jpg" alt="<%=media.name%>">
+            </div>
+
+            <div>
+                <span><b>Year:</b> <%= media.year %></span>
+                <% if(route === 'movie') {%>
+                    <div style="padding-top: 10px">
+                        <span><b>Country:</b> <%= media.country %></span>                                        <br>
+                        <span><b>Length:</b> <%= media.length %> Minutes</span>
+                    </div>
+                <%}%>
+
+                <p style="margin-top:21px">
+                    <% var tiles = media.genre.split(", "); for(var i = 0; i < tiles.length; i++) {%>
+                    <span class="tag"><%=tiles[i]%></span>
+                    <%}%>
+                </p>
+            </div>
+        </div>
 
         <hr>
         <div>
             <h3>Description</h3>
             <p><%= media.description%></p>
         </div>
+
+        <hr>
+        <% if(route === 'movie' || route === 'series') {%>
+            <h3>Besetzung</h3>
+            <div>
+                <% var role = media.cast.split("\n") %>
+                <div class="two-grid">
+                    <div>
+                        <ul>
+                            <%for(var i=0; i<role.length; i++) {%>
+                            <%if(i%2 === 0){%>
+                                <% var actor = role[i].split(':')%>
+                                <li><a class="actor-link" href="/actor/listing/<%=actor[0]%>"><b><%=actor[0]%></b></a>:<%=actor[1]%></li>
+                            <%}%>
+                            <%}%>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul>
+                            <%for(var i=0; i<role.length; i++) {%>
+                            <%if(i%2 != 0){%>
+                                <% var actor = role[i].split(':')%>
+                                <li><a class="actor-link" href="/actor/listing/<%=actor[0]%>"><b><%=actor[0]%></b></a>:<%=actor[1]%></li>
+                            <%}%>
+                            <%}%>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        <%}%>
     </div>
 </body>
 </html>

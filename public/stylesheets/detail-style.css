@@ -18,3 +18,12 @@ body {
     height: 400px;
     width: 100%;
 }
+
+.two-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.cover{
+    border-radius: 15px;
+}
