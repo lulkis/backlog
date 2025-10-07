@@ -6,7 +6,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
     const db = new sqlite3.Database('backlog.db');
 
-    var query = "SELECT name FROM book";
+    var query = "SELECT id, name FROM book";
     db.all(query, function (err, rows) {
         if(err){
             console.log(err);
@@ -42,5 +42,19 @@ router.post('/add', function(req, res, next) {
 
     res.redirect('/book')
 })
+
+router.get('/detail/:id', function(req, res, next) {
+    const db = new sqlite3.Database('backlog.db');
+
+    var query = "SELECT * FROM book WHERE id = ?;";
+    db.all(query, [req.params.id], function (err, rows) {
+        if(err){
+            console.log(err);
+        }else{
+            console.log(rows[0]);
+            res.render('media', { media: rows[0] });
+        }
+    });
+});
 
 module.exports = router;
