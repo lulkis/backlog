@@ -4,7 +4,7 @@ html{
     color: #f0f0f0;
 }
 
-body {
+.container {
     padding-left: 15%;
     padding-right: 15%;
 }

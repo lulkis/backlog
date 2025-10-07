@@ -10,16 +10,20 @@
         Back
     </a>
 
-    <h1><%= title%></h1>
+    <div class="container">
+        <h1><%= title%></h1>
 
-    <a class="add-button" href="<%= route%>/add">
-        <span>Add <%= title%></span>
-    </a>
+        <a class="add-button" href="<%= route%>/add">
+            <span>Add <%= title%></span>
+        </a>
 
-    <div class="media-list">
-        <% for(var i = 0; i < list.length; i++) {%>
-            <div class="media-item"><%= list[i].name%></div>
-        <%}%>
+        <div class="media-list">
+            <% for(var i = 0; i < list.length; i++) {%>
+                <a href="/<%= route%>/detail/<%= list[i].id%>">
+                    <div class="media-item"><%= list[i].name%></div>
+                </a>
+            <%}%>
+        </div>
     </div>
 </body>
 </html>

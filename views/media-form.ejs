@@ -3,50 +3,72 @@
 <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/form-style.css' />
 </head>
 <body>
     <a class="outer" href="/<%= route%>">
         Back
     </a>
 
-    <h1>Add <%= title%></h1>
+    <div class="container">
+        <h1>Add <%= title%></h1>
 
-    <div>
-        <form method='post'>
-            <input name="name" id="name" placeholder="Name" type="text" >
-            <input name="year" id="year" placeholder="Year" type="text" >
-            <input name="genre" id="genre" placeholder="Genre" type="text" >
-            <input name="country" id="country" placeholder="Country" type="text" >
-            <textarea name="description" id="description" placeholder="Description" type="text" ></textarea>
+        <div>
+            <form ref='uploadForm'
+                  id='uploadForm'
+                  method='post'
+                  encType="multipart/form-data">
 
-            <% if (title === "Movies") {%>
-                <input name="studio" id="studio" placeholder="Studio" type="text" >
-                <input name="director" id="director" placeholder="Director" type="text" >
-                <input name="length" id="length" placeholder="Length" type="text" >
-                <textarea name="cast" id="cast" placeholder="Cast" type="text" ></textarea>
-            <%}%>
+                <div>
+                    <div class="center-drag space-bottom">
+                        <input name="foo" type="file" class="dragndrop" />
+                    </div>
+                    <p>Cover</p>
+                </div>
 
-            <% if (title === "Series") {%>
-                <input name="idea" id="studio" placeholder="Idea" type="text" >
-                <input name="studio" id="director" placeholder="Studio" type="text" >
-                <textarea name="cast" id="cast" placeholder="Cast" type="text" ></textarea>
-                <textarea name="episodes" id="cast" placeholder="Episodes" type="text" ></textarea>
-            <%}%>
+                <div>
+                    <div class="center-drag space-bottom">
+                        <input name="foo2" type="file" class="dragndrop" />
+                    </div>
+                    <p>Header</p>
+                </div>
 
-            <% if (title === "Games") {%>
-                <input name="publisher" id="publisher" placeholder="Publisher" type="text" >
-                <input name="developer" id="developer" placeholder="Developer" type="text" >
-            <%}%>
 
-            <% if (title === "Books") {%>
-                <input name="author" id="author" placeholder="Author" type="text" >
-                <input name="length" id="length" placeholder="Length" type="text" >
-                <input name="publisher" id="publisher" placeholder="Publisher" type="text" >
-                <input name="illustrator" id="illustrator" placeholder="Illustrator" type="text" >
-            <%}%>
+                <input name="name" id="name" placeholder="Name" type="text" >
+                <input name="year" id="year" placeholder="Year" type="text" >
+                <input name="genre" id="genre" placeholder="Genre" type="text" >
+                <input name="country" id="country" placeholder="Country" type="text" >
+                <textarea name="description" id="description" placeholder="Description" type="text" ></textarea>
 
-            <button type="submit">Send</button>
-        </form>
+                <% if (title === "Movies") {%>
+                    <input name="studio" id="studio" placeholder="Studio" type="text" >
+                    <input name="director" id="director" placeholder="Director" type="text" >
+                    <input name="length" id="length" placeholder="Length" type="text" >
+                    <textarea name="cast" id="cast" placeholder="Cast" type="text" ></textarea>
+                <%}%>
+
+                <% if (title === "Series") {%>
+                    <input name="idea" id="studio" placeholder="Idea" type="text" >
+                    <input name="studio" id="director" placeholder="Studio" type="text" >
+                    <textarea name="cast" id="cast" placeholder="Cast" type="text" ></textarea>
+                    <textarea name="episodes" id="cast" placeholder="Episodes" type="text" ></textarea>
+                <%}%>
+
+                <% if (title === "Games") {%>
+                    <input name="publisher" id="publisher" placeholder="Publisher" type="text" >
+                    <input name="developer" id="developer" placeholder="Developer" type="text" >
+                <%}%>
+
+                <% if (title === "Books") {%>
+                    <input name="author" id="author" placeholder="Author" type="text" >
+                    <input name="length" id="length" placeholder="Length" type="text" >
+                    <input name="publisher" id="publisher" placeholder="Publisher" type="text" >
+                    <input name="illustrator" id="illustrator" placeholder="Illustrator" type="text" >
+                <%}%>
+
+                <button type="submit">Send</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>
