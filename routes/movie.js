@@ -39,7 +39,7 @@ router.post('/add', function(req, res, next) {
 
     console.log(req.files);
 
-    var path = './public/images/movies/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
+    var path = './public/images/movie/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
     let picture = req.files.foo;
     picture.mv(path, function(err) {
         if(err){
@@ -48,7 +48,7 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    var path2 = './public/images/movies/header/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
+    var path2 = './public/images/movie/header/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
     let picture2 = req.files.foo2;
     picture2.mv(path2, function(err) {
         if(err){

@@ -1,0 +1,20 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.tester {
+    background-image: linear-gradient(to top , #1a1a1a, rgba(255, 255, 0, 0));
+    position: absolute;
+
+    height: 400px;
+    width: 100%;
+}
+
+.image{
+    /*background-image: url("/images/movies/palm_springs.jpg");*/
+    background-position: 0 13%;
+    background-size: cover;
+    height: 400px;
+    width: 100%;
+}

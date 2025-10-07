@@ -36,7 +36,7 @@ router.post('/add', function(req, res, next) {
     var publisher = req.body.publisher;
     var illustrator = req.body.illustrator;
 
-    var path = './public/images/books/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
+    var path = './public/images/book/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
     let picture = req.files.foo;
     picture.mv(path, function(err) {
         if(err){
@@ -45,7 +45,7 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    var path2 = './public/images/books/header/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
+    var path2 = './public/images/book/header/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
     let picture2 = req.files.foo2;
     picture2.mv(path2, function(err) {
         if(err){
