@@ -6,7 +6,7 @@ var sqlite3 = require('sqlite3');
 router.get('/', function(req, res, next) {
     const db = new sqlite3.Database('backlog.db');
 
-    var query = "SELECT name FROM series";
+    var query = "SELECT id, name FROM series";
     db.all(query, function (err, rows) {
         if(err){
             console.log(err);
@@ -43,5 +43,19 @@ router.post('/add', function(req, res, next) {
 
     res.redirect('/series')
 })
+
+router.get('/detail/:id', function(req, res, next) {
+    const db = new sqlite3.Database('backlog.db');
+
+    var query = "SELECT * FROM series WHERE id = ?;";
+    db.all(query, [req.params.id], function (err, rows) {
+        if(err){
+            console.log(err);
+        }else{
+            console.log(rows[0]);
+            res.render('media', { media: rows[0] });
+        }
+    });
+});
 
 module.exports = router;
