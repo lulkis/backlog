@@ -12,10 +12,10 @@
         <span>Add <%= title%></span>
     </a>
 
-    <ul>
+    <div class="media-list">
         <% for(var i = 0; i < list.length; i++) {%>
-            <li><%= list[i].name%></li>
+            <div class="media-item"><%= list[i].name%></div>
         <%}%>
-    </ul>
+    </div>
 </body>
 </html>
