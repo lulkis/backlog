@@ -54,10 +54,27 @@ export function setup_database() {
         "country VARCHAR(128)," +
         "description TEXT," +
         "status VARCHAR(128)," +
+        "added VARCHAR(128)," +
         "author VARCHAR(128)," +
         "length INTEGER," +
         "publisher VARCHAR(128)," +
         "illustrator VARCHAR(128)," +
+        "CHECK (status IN ('open', 'started', 'finished'))" +
+        ");"
+    );
+
+    db.run(
+        "CREATE TABLE IF NOT EXISTS game (" +
+        "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+        "name VARCHAR(128) NOT NULL," +
+        "year INTEGER," +
+        "genre VARCHAR(128)," +
+        "country VARCHAR(128)," +
+        "description TEXT," +
+        "status VARCHAR(128)," +
+        "added VARCHAR(128)," +
+        "developer VARCHAR(128)," +
+        "publisher VARCHAR(128)," +
         "CHECK (status IN ('open', 'started', 'finished'))" +
         ");"
     );
