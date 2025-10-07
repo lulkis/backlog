@@ -6,4 +6,8 @@ router.get('/', function(req, res, next) {
     res.render('media-list', { title: 'Games' });
 });
 
+router.get('/add', function(req, res, next) {
+    res.render('media-form', { title: 'Games' });
+});
+
 module.exports = router;
