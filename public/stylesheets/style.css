@@ -24,3 +24,19 @@ body {
     text-decoration: none;
     text-align: center;
 }
+
+.outer {
+    left: 15px;
+    top: 15px;
+    background-color: #3e5641;
+    color: #f0f0f0;
+    position: fixed;
+    border-radius: 10px;
+    height: 50px;
+    width: 50px;
+    transition-duration: 0.3s;
+}
+
+.outer:hover {
+    transform: scale(1.05, 1.05);
+}
