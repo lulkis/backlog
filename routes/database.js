@@ -89,5 +89,35 @@ export function setup_database() {
         ");"
     );
 
+    db.run(
+        "CREATE TABLE IF NOT EXISTS series_finished (" +
+        "id INTEGER PRIMARY KEY NOT NULL," +
+        "date VARCHAR(128)," +
+        "rating INTEGER," +
+        "valuation TEXT," +
+        "FOREIGN KEY(id) REFERENCES series(id)" +
+        ");"
+    );
+
+    db.run(
+        "CREATE TABLE IF NOT EXISTS game_finished (" +
+        "id INTEGER PRIMARY KEY NOT NULL," +
+        "date VARCHAR(128)," +
+        "rating INTEGER," +
+        "valuation TEXT," +
+        "FOREIGN KEY(id) REFERENCES game(id)" +
+        ");"
+    );
+
+    db.run(
+        "CREATE TABLE IF NOT EXISTS book_finished (" +
+        "id INTEGER PRIMARY KEY NOT NULL," +
+        "date VARCHAR(128)," +
+        "rating INTEGER," +
+        "valuation TEXT," +
+        "FOREIGN KEY(id) REFERENCES book(id)" +
+        ");"
+    );
+
     db.close()
 }
