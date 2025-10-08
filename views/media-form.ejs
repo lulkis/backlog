@@ -7,7 +7,7 @@
 </head>
 <body>
     <a class="outer" href="/<%= route%>">
-        Back
+        <img src="/images/icons/back_arrow.png" width="100%">
     </a>
 
     <div class="container">
@@ -19,20 +19,21 @@
                   method='post'
                   encType="multipart/form-data">
 
-                <div>
-                    <div class="center-drag space-bottom">
-                        <input name="foo" type="file" class="dragndrop" />
+                <div class="two-grid">
+                    <div>
+                        <div class="center-drag space-bottom">
+                            <input name="foo" type="file" class="dragndrop" />
+                        </div>
+                        <p class="dragndrop-title">Cover</p>
                     </div>
-                    <p>Cover</p>
-                </div>
 
-                <div>
-                    <div class="center-drag space-bottom">
-                        <input name="foo2" type="file" class="dragndrop" />
+                    <div>
+                        <div class="center-drag space-bottom">
+                            <input name="foo2" type="file" class="dragndrop" />
+                        </div>
+                        <p class="dragndrop-title">Header</p>
                     </div>
-                    <p>Header</p>
                 </div>
-
 
                 <input name="name" id="name" placeholder="Name" type="text" >
                 <input name="year" id="year" placeholder="Year" type="text" >
