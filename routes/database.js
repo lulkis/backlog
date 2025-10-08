@@ -79,5 +79,15 @@ export function setup_database() {
         ");"
     );
 
+    db.run(
+        "CREATE TABLE IF NOT EXISTS movie_finished (" +
+        "id INTEGER PRIMARY KEY NOT NULL," +
+        "date VARCHAR(128)," +
+        "rating INTEGER," +
+        "valuation TEXT," +
+        "FOREIGN KEY(id) REFERENCES movie(id)" +
+        ");"
+    );
+
     db.close()
 }
