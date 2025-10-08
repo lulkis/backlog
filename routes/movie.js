@@ -94,8 +94,8 @@ router.post('/finish/:id', function(req, res, next) {
         "VALUES (?, ?, ?, ?)";
     db.run(sql, [id, date, rating, valuation]);
 
-    const sql2 = "UPDATE movie SET status = ? WHERE id = ?;";
-    db.run(sql, ["finished", id]);
+    const sql2 = "UPDATE movie SET status = ? WHERE id = ?";
+    db.run(sql2, ["finished", id]);
 
     res.redirect('/movie/detail/' + id);
 })
