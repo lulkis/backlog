@@ -6,7 +6,7 @@ var sqlite3 = require('sqlite3');
 router.get('/', function(req, res, next) {
     const db = new sqlite3.Database('backlog.db');
 
-    var query = "SELECT id, name FROM movie";
+    var query = "SELECT id, name, status FROM movie";
     db.all(query, function (err, rows) {
         if(err){
             console.log(err);
