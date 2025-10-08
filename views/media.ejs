@@ -21,20 +21,28 @@
     </a>
 
     <div class="container">
-        <h1><%= media.name%></h1>
-        <div>
-            <% if( route === 'book'){%>
-                <h4>By <i><%= media.author%></i></h4>
-            <%}%>
-            <% if( route === 'movie'){%>
-                <h4>By <i><%= media.director%></i></h4>
-            <%}%>
-            <% if( route === 'game'){%>
-                <h4>By <i><%= media.developer%></i></h4>
-            <%}%>
-            <% if( route === 'series'){%>
-                <h4>By <i><%= media.idea%></i></h4>
-            <%}%>
+        <div class="two-grid">
+            <div>
+                <h1><%= media.name%></h1>
+                <div>
+                    <% if( route === 'book'){%>
+                        <h4>By <i><%= media.author%></i></h4>
+                    <%}%>
+                    <% if( route === 'movie'){%>
+                        <h4>By <i><%= media.director%></i></h4>
+                    <%}%>
+                    <% if( route === 'game'){%>
+                        <h4>By <i><%= media.developer%></i></h4>
+                    <%}%>
+                    <% if( route === 'series'){%>
+                        <h4>By <i><%= media.idea%></i></h4>
+                    <%}%>
+                </div>
+            </div>
+
+            <div>
+                <a href="/<%= route%>/finish/<%= media.id%>">Finish</a>
+            </div>
         </div>
         
         <div class="two-grid">
