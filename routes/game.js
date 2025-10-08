@@ -72,4 +72,26 @@ router.get('/detail/:id', function(req, res, next) {
     });
 });
 
+router.get('/finish/:id', function(req, res, next) {
+    res.render('media-finish', { route: 'game' });
+})
+
+router.post('/finish/:id', function(req, res, next) {
+    const db = new sqlite3.Database('backlog.db');
+
+    const id = req.params.id;
+    const date = new Date();
+    const rating = req.body.rating;
+    const valuation = req.body.valuation;
+
+    const sql = "INSERT INTO game_finished (id, date, rating, valuation)" +
+        "VALUES (?, ?, ?, ?)";
+    db.run(sql, [id, date, rating, valuation]);
+
+    const sql2 = "UPDATE game SET status = ? WHERE id = ?";
+    db.run(sql2, ["finished", id]);
+
+    res.redirect('/game/detail/' + id);
+})
+
 module.exports = router;
