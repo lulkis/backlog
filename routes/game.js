@@ -72,6 +72,16 @@ router.get('/detail/:id', function(req, res, next) {
     });
 });
 
+router.get('/start/:id', function(req, res, next) {
+    const db = new sqlite3.Database('backlog.db');
+
+    const id = req.params.id;
+    const sql2 = "UPDATE game SET status = ? WHERE id = ?";
+    db.run(sql2, ["started", id]);
+
+    res.redirect('/game/detail/' + id);
+})
+
 router.get('/finish/:id', function(req, res, next) {
     res.render('media-finish', { route: 'game' });
 })
