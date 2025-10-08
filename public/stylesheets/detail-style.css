@@ -49,3 +49,9 @@ hr {
     grid-template-columns: 1fr;
     place-items: center;
 }
+
+.tag {
+    background-color: #822659;
+    padding: 5px;
+    border-radius: 5px;
+}
