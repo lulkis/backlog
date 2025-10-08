@@ -31,3 +31,21 @@ body {
 hr {
     margin-bottom: 25px;
 }
+
+.detail-button {
+    background-color: #3e5641;
+    height: 35px;
+    width: 35px;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.detail-button > img {
+    height: 100%;
+}
+
+.base {
+    display: grid;
+    grid-template-columns: 1fr;
+    place-items: center;
+}
