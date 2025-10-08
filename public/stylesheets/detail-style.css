@@ -27,3 +27,7 @@ body {
 .cover{
     border-radius: 15px;
 }
+
+hr {
+    margin-bottom: 25px;
+}
