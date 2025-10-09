@@ -6,7 +6,7 @@ var sqlite3 = require('sqlite3');
 router.get('/', function(req, res, next) {
     const db = new sqlite3.Database('backlog.db');
 
-    var query = "SELECT id, name FROM movie";
+    var query = "SELECT id, name, status FROM movie";
     db.all(query, function (err, rows) {
         if(err){
             console.log(err);
@@ -77,5 +77,27 @@ router.get('/detail/:id', function(req, res, next) {
         }
     });
 });
+
+router.get('/finish/:id', function(req, res, next) {
+    res.render('media-finish', { route: 'movie' });
+})
+
+router.post('/finish/:id', function(req, res, next) {
+    const db = new sqlite3.Database('backlog.db');
+
+    const id = req.params.id;
+    const date = new Date();
+    const rating = req.body.rating;
+    const valuation = req.body.valuation;
+
+    const sql = "INSERT INTO movie_finished (id, date, rating, valuation)" +
+        "VALUES (?, ?, ?, ?)";
+    db.run(sql, [id, date, rating, valuation]);
+
+    const sql2 = "UPDATE movie SET status = ? WHERE id = ?";
+    db.run(sql2, ["finished", id]);
+
+    res.redirect('/movie/detail/' + id);
+})
 
 module.exports = router;

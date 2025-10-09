@@ -17,26 +17,53 @@
     </div>
 
     <a class="outer" href="/<%= route%>">
-        Back
+        <img src="/images/icons/back_arrow.png" width="100%">
     </a>
 
     <div class="container">
-        <h1><%= media.name%></h1>
-        <div>
-            <% if( route === 'book'){%>
-                <h4>By <i><%= media.author%></i></h4>
-            <%}%>
-            <% if( route === 'movie'){%>
-                <h4>By <i><%= media.director%></i></h4>
-            <%}%>
-            <% if( route === 'game'){%>
-                <h4>By <i><%= media.developer%></i></h4>
-            <%}%>
-            <% if( route === 'series'){%>
-                <h4>By <i><%= media.idea%></i></h4>
-            <%}%>
+        <div class="two-grid">
+            <div>
+                <h1><%= media.name%></h1>
+                <div>
+                    <% if( route === 'book'){%>
+                        <h4>By <i><%= media.author%></i></h4>
+                    <%}%>
+                    <% if( route === 'movie'){%>
+                        <h4>By <i><%= media.director%></i></h4>
+                    <%}%>
+                    <% if( route === 'game'){%>
+                        <h4>By <i><%= media.developer%></i></h4>
+                    <%}%>
+                    <% if( route === 'series'){%>
+                        <h4>By <i><%= media.idea%></i></h4>
+                    <%}%>
+                </div>
+            </div>
+
+            <div class="base">
+                <%if((media.status != 'finished' &&  route === 'movie') || media.status === 'started' &&  route != 'movie'){%>
+                <div>
+                    <a href="/<%= route%>/finish/<%= media.id%>" >
+                        <div class="detail-button">
+                            <img src="/images/icons/finish.png" height="30px">
+                        </div>
+                    </a>
+                </div>
+                <%}%>
+
+                <%if(media.status === 'open' && route != 'movie'){%>
+                <div>
+                    <a href="/<%= route%>/start/<%= media.id%>" >
+                        <div class="detail-button">
+                            <img src="/images/icons/start.png" height="30px">
+                        </div>
+                    </a>
+                </div>
+                <%}%>
+            </div>
         </div>
-        
+
+        <hr>
         <div class="two-grid">
             <div>
                 <img class="cover" height="500px" src="/images/<%= route%>/<%= media.name.toLowerCase()
@@ -69,8 +96,8 @@
             <p><%= media.description%></p>
         </div>
 
-        <hr>
         <% if(route === 'movie' || route === 'series') {%>
+            <hr>
             <h3>Besetzung</h3>
             <div>
                 <% var role = media.cast.split("\n") %>
@@ -80,7 +107,7 @@
                             <%for(var i=0; i<role.length; i++) {%>
                             <%if(i%2 === 0){%>
                                 <% var actor = role[i].split(':')%>
-                                <li><a class="actor-link" href="/actor/listing/<%=actor[0]%>"><b><%=actor[0]%></b></a>:<%=actor[1]%></li>
+                                <li><b><%=actor[0]%></b>:<%=actor[1]%></li>
                             <%}%>
                             <%}%>
                         </ul>
@@ -90,7 +117,7 @@
                             <%for(var i=0; i<role.length; i++) {%>
                             <%if(i%2 != 0){%>
                                 <% var actor = role[i].split(':')%>
-                                <li><a class="actor-link" href="/actor/listing/<%=actor[0]%>"><b><%=actor[0]%></b></a>:<%=actor[1]%></li>
+                                <li><b><%=actor[0]%></b>:<%=actor[1]%></li>
                             <%}%>
                             <%}%>
                         </ul>
@@ -98,6 +125,32 @@
                 </div>
             </div>
         <%}%>
+
+        <% if(route === 'series') {%>
+            <hr>
+            <div class="row episode-box">
+                <h3 class="topic-header">Episodes</h3>
+                <div>
+                    <% var seasons = media.episodes.split(";")%>
+                    <%for(var i = 0; i < seasons.length;i++){%>
+                    <div class="col-lg-4 season-box" style="margin-top: 20px">
+                        <h5 class="season-header">Staffel <%=(i+1)%></h5>
+                        <hr>
+                        <ol>
+                            <% var episodes = seasons[i].split("\n")%>
+                            <% for(var j = 0; j < episodes.length; j++) {%>
+                            <li><%=episodes[j]%></li>
+                            <%}%>
+                        </ol>
+                    </div>
+                    <%}%>
+                </div>
+            </div>
+        <%}%>
+    </div>
+
+    <div class="footer">
+        <img src="/images/icons/orchid_heart_red.png" height="50px">
     </div>
 </body>
 </html>

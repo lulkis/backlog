@@ -6,7 +6,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
     const db = new sqlite3.Database('backlog.db');
 
-    var query = "SELECT id, name FROM book";
+    var query = "SELECT id, name, status FROM book";
     db.all(query, function (err, rows) {
         if(err){
             console.log(err);
@@ -45,15 +45,6 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    var path2 = './public/images/book/header/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
-    let picture2 = req.files.foo2;
-    picture2.mv(path2, function(err) {
-        if(err){
-            console.log(err)
-        }
-        console.log("Succ")
-    });
-
     const sql = "INSERT INTO book (name, year, genre, country, description, status, added, author, length, publisher, illustrator)" +
         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     db.run(sql, [name, year, genre, country, description, status, date_added, author, length, publisher, illustrator]);
@@ -74,5 +65,37 @@ router.get('/detail/:id', function(req, res, next) {
         }
     });
 });
+
+router.get('/start/:id', function(req, res, next) {
+    const db = new sqlite3.Database('backlog.db');
+
+    const id = req.params.id;
+    const sql2 = "UPDATE book SET status = ? WHERE id = ?";
+    db.run(sql2, ["started", id]);
+
+    res.redirect('/book/detail/' + id);
+})
+
+router.get('/finish/:id', function(req, res, next) {
+    res.render('media-finish', { route: 'book' });
+})
+
+router.post('/finish/:id', function(req, res, next) {
+    const db = new sqlite3.Database('backlog.db');
+
+    const id = req.params.id;
+    const date = new Date();
+    const rating = req.body.rating;
+    const valuation = req.body.valuation;
+
+    const sql = "INSERT INTO book_finished (id, date, rating, valuation)" +
+        "VALUES (?, ?, ?, ?)";
+    db.run(sql, [id, date, rating, valuation]);
+
+    const sql2 = "UPDATE book SET status = ? WHERE id = ?";
+    db.run(sql2, ["finished", id]);
+
+    res.redirect('/book/detail/' + id);
+})
 
 module.exports = router;

@@ -40,3 +40,17 @@ html{
 .outer:hover {
     transform: scale(1.05, 1.05);
 }
+
+.footer {
+    background-color: #822659;
+    width: 100%;
+    height: fit-content;
+
+    margin-top: 50px;
+    text-align: center;
+}
+
+.footer > img {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
