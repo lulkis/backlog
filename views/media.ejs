@@ -4,6 +4,7 @@
     <title><%= media.name%></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/detail-style.css' />
+    <link rel='stylesheet' href='/stylesheets/color-style.css' />
 </head>
 
 <body>
@@ -16,7 +17,7 @@
         <div class="tester"></div>
     </div>
 
-    <a class="outer" href="/<%= route%>">
+    <a class="outer shadow" href="/<%= route%>">
         <img src="/images/icons/back_arrow.png" width="100%">
     </a>
 
@@ -66,7 +67,7 @@
         <hr>
         <div class="two-grid">
             <div>
-                <img class="cover" height="500px" src="/images/<%= route%>/<%= media.name.toLowerCase()
+                <img class="cover shadow" height="500px" src="/images/<%= route%>/<%= media.name.toLowerCase()
                         .replaceAll(" ", "_")
                         .replaceAll(":", "")
                         .replaceAll("'", "")

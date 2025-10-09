@@ -1,7 +1,7 @@
 html{
     font-family: "Nunito Sans", sans-serif;
-    background-color: #1a1a1a;
-    color: #f0f0f0;
+    background-color: var(--base);
+    color: var(--highlight);
 }
 
 .container {
@@ -15,8 +15,8 @@ html{
 }
 
 .category-box > a {
-    background-color: #3e5641;
-    color: #f0f0f0;
+    background-color: var(--action);
+    color: var(--highlight);
     padding: 20px;
     margin: 10px;
     border-radius: 10px;
@@ -28,8 +28,8 @@ html{
 .outer {
     left: 15px;
     top: 15px;
-    background-color: #3e5641;
-    color: #f0f0f0;
+    background-color: var(--action);
+    color: var(--highlight);
     position: fixed;
     border-radius: 10px;
     height: 50px;
@@ -42,7 +42,7 @@ html{
 }
 
 .footer {
-    background-color: #822659;
+    background-color: var(--accent-one);
     width: 100%;
     height: fit-content;
 

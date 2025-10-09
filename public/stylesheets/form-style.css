@@ -1,5 +1,5 @@
 .dragndrop {
-    border: 1px solid #ccc;
+    border: 1px solid var(--highlight);
     padding: 70px 50px;
 
     border-radius: 10px;
@@ -26,8 +26,8 @@
 input[type="text"] {
     width: 100%;
     resize: none;
-    background-color: #004d61;
-    color: #f0f0f0;
+    background-color: var(--accent-one);
+    color: var(--highlight);
     border-style: solid;
     padding: 5px;
     border-radius: 5px;
@@ -37,8 +37,8 @@ input[type="text"] {
 textarea {
     width: 100%;
     resize: none;
-    background-color: #004d61;
-    color: #f0f0f0;
+    background-color: var(--accent-one);
+    color: var(--highlight);
     border-style: solid;
     padding: 5px;
     border-radius: 5px;
