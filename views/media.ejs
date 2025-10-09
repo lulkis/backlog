@@ -45,7 +45,7 @@
                 <%if((media.status != 'finished' &&  route === 'movie') || media.status === 'started' &&  route != 'movie'){%>
                 <div>
                     <a href="/<%= route%>/finish/<%= media.id%>" >
-                        <div class="detail-button">
+                        <div class="detail-button shadow">
                             <img src="/images/icons/finish.png" height="30px">
                         </div>
                     </a>
@@ -55,7 +55,7 @@
                 <%if(media.status === 'open' && route != 'movie'){%>
                 <div>
                     <a href="/<%= route%>/start/<%= media.id%>" >
-                        <div class="detail-button">
+                        <div class="detail-button shadow">
                             <img src="/images/icons/start.png" height="30px">
                         </div>
                     </a>
@@ -85,7 +85,7 @@
 
                 <p style="margin-top:21px">
                     <% var tiles = media.genre.split(", "); for(var i = 0; i < tiles.length; i++) {%>
-                    <span class="tag"><%=tiles[i]%></span>
+                    <span class="tag shadow"><%=tiles[i]%></span>
                     <%}%>
                 </p>
             </div>
