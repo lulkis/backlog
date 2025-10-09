@@ -4,7 +4,7 @@ body {
 }
 
 .tester {
-    background-image: linear-gradient(to top , #1a1a1a, rgba(255, 255, 0, 0));
+    background-image: linear-gradient(to top , var(--base), rgba(255, 255, 0, 0));
     position: absolute;
 
     height: 400px;
@@ -33,7 +33,7 @@ hr {
 }
 
 .detail-button {
-    background-color: #3e5641;
+    background-color: var(--action);
     height: 35px;
     width: 35px;
     padding: 10px;
@@ -46,12 +46,22 @@ hr {
 
 .base {
     display: grid;
-    grid-template-columns: 1fr;
-    place-items: center;
+    grid-template-columns: 1fr 1fr;
+
+    place-items: end;
 }
 
 .tag {
-    background-color: #822659;
+    background-color: var(--accent-two);
     padding: 5px;
     border-radius: 5px;
+}
+
+.episode-box{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr ;
+}
+
+.season-box {
+    padding: 10px;
 }

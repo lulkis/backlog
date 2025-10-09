@@ -4,9 +4,10 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/form-style.css' />
+    <link rel='stylesheet' href='/stylesheets/color-style.css' />
 </head>
 <body>
-    <a class="outer" href="/<%= route%>">
+    <a class="outer shadow" href="/<%= route%>">
         <img src="/images/icons/back_arrow.png" width="100%">
     </a>
 
@@ -37,54 +38,54 @@
                     <%}%>
                 </div>
 
-                <input name="name" id="name" placeholder="Name" type="text" >
+                <input name="name" id="name" placeholder="Name" type="text" value="<%= media.name%>">
                 <br>
-                <input name="year" id="year" placeholder="Year" type="text" >
+                <input name="year" id="year" placeholder="Year" type="text" value="<%= media.year%>">
                 <br>
-                <input name="genre" id="genre" placeholder="Genre" type="text" >
+                <input name="genre" id="genre" placeholder="Genre" type="text" value="<%= media.genre%>">
                 <br>
-                <input name="country" id="country" placeholder="Country" type="text" >
+                <input name="country" id="country" placeholder="Country" type="text" value="<%= media.country%>">
                 <br>
-                <textarea rows="7" name="description" id="description" placeholder="Description" type="text" ></textarea>
+                <textarea rows="7" name="description" id="description" placeholder="Description" type="text" ><%= media.description%></textarea>
                 <br>
 
                 <% if (title === "Movies") {%>
-                    <input name="studio" id="studio" placeholder="Studio" type="text" >
+                    <input name="studio" id="studio" placeholder="Studio" type="text" value="<%= media.studio%>">
                     <br>
-                    <input name="director" id="director" placeholder="Director" type="text" >
+                    <input name="director" id="director" placeholder="Director" type="text" value="<%= media.director%>">
                     <br>
-                    <input name="length" id="length" placeholder="Length" type="text" >
+                    <input name="length" id="length" placeholder="Length" type="text" value="<%= media.length%>">
                     <br>
-                    <textarea rows="7" name="cast" id="cast" placeholder="Cast" type="text" ></textarea>
+                    <textarea rows="7" name="cast" id="cast" placeholder="Cast" type="text" ><%= media.cast%></textarea>
                     <br>
                 <%}%>
 
                 <% if (title === "Series") {%>
-                    <input name="idea" id="studio" placeholder="Idea" type="text" >
+                    <input name="idea" id="idea" placeholder="Idea" type="text" value="<%= media.idea%>">
                     <br>
-                    <input name="studio" id="director" placeholder="Studio" type="text" >
+                    <input name="studio" id="studio" placeholder="Studio" type="text" value="<%= media.studio%>">
                     <br>
-                    <textarea rows="7" name="cast" id="cast" placeholder="Cast" type="text" ></textarea>
+                    <textarea rows="7" name="cast" id="cast" placeholder="Cast" type="text" ><%= media.cast%></textarea>
                     <br>
-                    <textarea rows="7" name="episodes" id="cast" placeholder="Episodes" type="text" ></textarea>
+                    <textarea rows="7" name="episodes" id="cast" placeholder="Episodes" type="text" ><%= media.episodes%></textarea>
                     <br>
                 <%}%>
 
                 <% if (title === "Games") {%>
-                    <input name="publisher" id="publisher" placeholder="Publisher" type="text" >
+                    <input name="publisher" id="publisher" placeholder="Publisher" type="text" value="<%= media.publisher%>">
                     <br>
-                    <input name="developer" id="developer" placeholder="Developer" type="text" >
+                    <input name="developer" id="developer" placeholder="Developer" type="text" value="<%= media.developer%>">
                     <br>
                 <%}%>
 
                 <% if (title === "Books") {%>
-                    <input name="author" id="author" placeholder="Author" type="text" >
+                    <input name="author" id="author" placeholder="Author" type="text" value="<%= media.author%>">
                     <br>
-                    <input name="length" id="length" placeholder="Length" type="text" >
+                    <input name="length" id="length" placeholder="Length" type="text" value="<%= media.length%>">
                     <br>
-                    <input name="publisher" id="publisher" placeholder="Publisher" type="text" >
+                    <input name="publisher" id="publisher" placeholder="Publisher" type="text" value="<%= media.publisher%>">
                     <br>
-                    <input name="illustrator" id="illustrator" placeholder="Illustrator" type="text" >
+                    <input name="illustrator" id="illustrator" placeholder="Illustrator" type="text" value="<%= media.illustrator%>">
                     <br>
                 <%}%>
 

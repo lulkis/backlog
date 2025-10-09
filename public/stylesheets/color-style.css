@@ -1,0 +1,12 @@
+.shadow {
+    box-shadow: 0px 0px 5px var(--shadow);
+}
+
+:root {
+    --base: #1E1919;
+    --action: #007891;
+    --accent-one: #283750;
+    --accent-two: #78286E;
+    --highlight: #F7F5F2;
+    --shadow: rgba(211, 211, 211, 0.46);
+}

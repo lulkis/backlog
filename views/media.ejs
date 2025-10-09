@@ -4,19 +4,31 @@
     <title><%= media.name%></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/detail-style.css' />
+    <link rel='stylesheet' href='/stylesheets/color-style.css' />
 </head>
 
 <body>
+    <%if(route === 'book'){%>
     <div class="image"
-        style="background-image: url(/images/<%=route%>/header/<%= media.name.toLowerCase()
-                .replaceAll(" ", "_")
-                .replaceAll(":", "")
-                .replaceAll("'", "")
-                .replaceAll("´", "")  %>.jpg);">
+         style="background-image: url(/images/<%=route%>/<%= media.name.toLowerCase()
+                 .replaceAll(" ", "_")
+                 .replaceAll(":", "")
+                 .replaceAll("'", "")
+                 .replaceAll("´", "")  %>.jpg);">
         <div class="tester"></div>
     </div>
+    <%} else {%>
+    <div class="image"
+         style="background-image: url(/images/<%=route%>/header/<%= media.name.toLowerCase()
+                 .replaceAll(" ", "_")
+                 .replaceAll(":", "")
+                 .replaceAll("'", "")
+                 .replaceAll("´", "")  %>.jpg);">
+        <div class="tester"></div>
+    </div>
+    <%}%>
 
-    <a class="outer" href="/<%= route%>">
+    <a class="outer shadow" href="/<%= route%>">
         <img src="/images/icons/back_arrow.png" width="100%">
     </a>
 
@@ -42,31 +54,39 @@
 
             <div class="base">
                 <%if((media.status != 'finished' &&  route === 'movie') || media.status === 'started' &&  route != 'movie'){%>
-                <div>
-                    <a href="/<%= route%>/finish/<%= media.id%>" >
-                        <div class="detail-button">
-                            <img src="/images/icons/finish.png" height="30px">
-                        </div>
-                    </a>
-                </div>
+                    <div>
+                        <a href="/<%= route%>/finish/<%= media.id%>" >
+                            <div class="detail-button shadow">
+                                <img src="/images/icons/finish.png" height="30px">
+                            </div>
+                        </a>
+                    </div>
                 <%}%>
 
                 <%if(media.status === 'open' && route != 'movie'){%>
                 <div>
                     <a href="/<%= route%>/start/<%= media.id%>" >
-                        <div class="detail-button">
+                        <div class="detail-button shadow">
                             <img src="/images/icons/start.png" height="30px">
                         </div>
                     </a>
                 </div>
                 <%}%>
+
+                <div>
+                    <a href="/<%=route%>/edit/<%= media.id%>">
+                        <div class="detail-button shadow">
+                            <img src="/images/icons/edit.png" height="30px">
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
 
         <hr>
         <div class="two-grid">
             <div>
-                <img class="cover" height="500px" src="/images/<%= route%>/<%= media.name.toLowerCase()
+                <img class="cover shadow" height="500px" src="/images/<%= route%>/<%= media.name.toLowerCase()
                         .replaceAll(" ", "_")
                         .replaceAll(":", "")
                         .replaceAll("'", "")
@@ -84,7 +104,7 @@
 
                 <p style="margin-top:21px">
                     <% var tiles = media.genre.split(", "); for(var i = 0; i < tiles.length; i++) {%>
-                    <span class="tag"><%=tiles[i]%></span>
+                    <span class="tag shadow"><%=tiles[i]%></span>
                     <%}%>
                 </p>
             </div>
@@ -128,12 +148,12 @@
 
         <% if(route === 'series') {%>
             <hr>
-            <div class="row episode-box">
+            <div>
                 <h3 class="topic-header">Episodes</h3>
-                <div>
+                <div  class="episode-box">
                     <% var seasons = media.episodes.split(";")%>
                     <%for(var i = 0; i < seasons.length;i++){%>
-                    <div class="col-lg-4 season-box" style="margin-top: 20px">
+                    <div class="season-box">
                         <h5 class="season-header">Staffel <%=(i+1)%></h5>
                         <hr>
                         <ol>

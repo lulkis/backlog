@@ -17,7 +17,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/add', function(req, res, next) {
-    res.render('media-form', { title: 'Books', route: 'book' });
+    const media = { name: "", year: "", genre: "", country: "" , description: "", author: "", length: "", publisher: "", illustrator: "" };
+    res.render('media-form', { title: 'Books', route: 'book' , media: media });
 });
 
 router.post('/add', function(req, res, next) {
@@ -64,6 +65,66 @@ router.get('/detail/:id', function(req, res, next) {
             res.render('media', { media: rows[0], route: 'book' });
         }
     });
+});
+
+router.get('/edit/:id', function(req, res, next) {
+    const db = new sqlite3.Database('backlog.db');
+
+    var query = "SELECT * FROM book WHERE id = ?;";
+    db.all(query, [req.params.id], function (err, rows) {
+        if(err){
+            console.log(err);
+        }else{
+            res.render('media-form', { title: 'Book', route: 'book', media: rows[0] });
+        }
+    });
+});
+
+router.post('/edit/:id', function(req, res, next) {
+    const db = new sqlite3.Database('backlog.db');
+
+    var name = req.body.name;
+    var year = Number(req.body.year);
+    var genre = req.body.genre;
+    var country = req.body.country;
+    var description = req.body.description;
+    var author = req.body.author;
+    var length = req.body.length;
+    var publisher = req.body.publisher;
+    var illustrator = req.body.illustrator;
+
+    if(req.files != null){
+        const path = './public/images/book/' + name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "")  + '.jpg';
+
+        if (req.files.foo != null){
+            let picture = req.files.foo;
+            picture.mv(path, function(err) {
+                if(err){
+                    console.log(err)
+                }
+                console.log("Succ")
+            });
+
+        }
+        var path2 = './public/images/book/game/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
+
+        if (req.files.foo2 != null){
+            let picture2 = req.files.foo2;
+            picture2.mv(path2, function(err) {
+                if(err){
+                    console.log(err)
+                }
+                console.log("Succ")
+            });
+        }
+    }
+
+    const sql = "Update book SET " +
+        "name=?, year=?, genre=?, country=?, description=?, author=?, length=?, publisher=?, illustrator=?" +
+        "WHERE id = ?"
+    db.run(sql, [name, year, genre, country, description, author, length, publisher, illustrator, req.params.id]);
+
+    res.redirect('/book/detail/'+req.params.id);
 });
 
 router.get('/start/:id', function(req, res, next) {

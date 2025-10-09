@@ -17,7 +17,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/add', function(req, res, next) {
-    res.render('media-form', { title: 'Movies', route: 'movie' });
+    const media = { name: "", year: "", genre: "", country: "" , description: "", studio: "", director: "", length: "", cast: "" };
+    res.render('media-form', { title: 'Movies', route: 'movie', media: media });
 });
 
 router.post('/add', function(req, res, next) {
@@ -76,6 +77,66 @@ router.get('/detail/:id', function(req, res, next) {
             res.render('media', { media: rows[0], route: 'movie' });
         }
     });
+});
+
+router.get('/edit/:id', function(req, res, next) {
+    const db = new sqlite3.Database('backlog.db');
+
+    var query = "SELECT * FROM movie WHERE id = ?;";
+    db.all(query, [req.params.id], function (err, rows) {
+        if(err){
+            console.log(err);
+        }else{
+            res.render('media-form', { title: 'Movies', route: 'movie', media: rows[0] });
+        }
+    });
+});
+
+router.post('/edit/:id', function(req, res, next) {
+    const db = new sqlite3.Database('backlog.db');
+
+    var name = req.body.name;
+    var year = Number(req.body.year);
+    var genre = req.body.genre;
+    var country = req.body.country;
+    var description = req.body.description;
+    var studio = req.body.studio;
+    var director = req.body.director;
+    var length = req.body.length;
+    var cast = req.body.cast;
+
+    if(req.files != null){
+        const path = './public/images/movies/' + name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "")  + '.jpg';
+
+        if (req.files.foo != null){
+            let picture = req.files.foo;
+            picture.mv(path, function(err) {
+                if(err){
+                    console.log(err)
+                }
+                console.log("Succ")
+            });
+
+        }
+        var path2 = './public/images/movies/header/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
+
+        if (req.files.foo2 != null){
+            let picture2 = req.files.foo2;
+            picture2.mv(path2, function(err) {
+                if(err){
+                    console.log(err)
+                }
+                console.log("Succ")
+            });
+        }
+    }
+
+    const sql = "Update movie SET " +
+        "name=?, year=?, genre=?, country=?, description=?, studio=?, director=?, length=?, cast=?" +
+        "WHERE id = ?"
+    db.run(sql, [name, year, genre, country, description, studio, director, length, cast, req.params.id]);
+
+    res.redirect('/movie/detail/'+req.params.id);
 });
 
 router.get('/finish/:id', function(req, res, next) {
