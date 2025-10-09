@@ -17,7 +17,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/add', function(req, res, next) {
-    res.render('media-form', { title: 'Books', route: 'book' });
+    const media = { name: "", year: "", genre: "", country: "" , description: "", author: "", length: "", publisher: "", illustrator: "" };
+    res.render('media-form', { title: 'Books', route: 'book' , media: media });
 });
 
 router.post('/add', function(req, res, next) {
