@@ -68,13 +68,19 @@ router.post('/add', function(req, res, next) {
 router.get('/detail/:id', function(req, res, next) {
     const db = new sqlite3.Database('backlog.db');
 
-    var query = "SELECT * FROM movie WHERE id = ?;";
+    var query = "SELECT * FROM movie WHERE movie.id = ?";
     db.all(query, [req.params.id], function (err, rows) {
         if(err){
             console.log(err);
         }else{
-            console.log(rows[0]);
-            res.render('media', { media: rows[0], route: 'movie' });
+            var query = "SELECT * FROM movie_finished WHERE id = ?";
+            db.all(query, [req.params.id], function (err, rows2) {
+                if(err){
+                    console.log(err);
+                }else{
+                    res.render('media', { media: rows[0], route: 'movie', finish: rows2[0]});
+                }
+            });
         }
     });
 });

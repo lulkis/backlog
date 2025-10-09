@@ -71,8 +71,14 @@ router.get('/detail/:id', function(req, res, next) {
         if(err){
             console.log(err);
         }else{
-            console.log(rows[0]);
-            res.render('media', { media: rows[0], route: 'series' });
+            var query = "SELECT * FROM series_finished WHERE id = ?";
+            db.all(query, [req.params.id], function (err, rows2) {
+                if(err){
+                    console.log(err);
+                }else{
+                    res.render('media', { media: rows[0], route: 'series', finish: rows2[0]});
+                }
+            });
         }
     });
 });
