@@ -56,3 +56,12 @@ hr {
     padding: 5px;
     border-radius: 5px;
 }
+
+.episode-box{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr ;
+}
+
+.season-box {
+    padding: 10px;
+}
