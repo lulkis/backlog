@@ -24,7 +24,23 @@
 }
 
 input[type="text"] {
+    width: 100%;
+    resize: none;
     background-color: #004d61;
     color: #f0f0f0;
     border-style: solid;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+textarea {
+    width: 100%;
+    resize: none;
+    background-color: #004d61;
+    color: #f0f0f0;
+    border-style: solid;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 10px;
 }
