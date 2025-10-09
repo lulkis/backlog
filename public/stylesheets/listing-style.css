@@ -2,11 +2,22 @@
     background-color: var(--action);
     color: var(--highlight);
     padding: 20px;
-    margin: 10px;
     border-radius: 10px;
 
     text-decoration: none;
     text-align: center;
+
+     float: right;
+    transition-duration: 0.3s;
+}
+
+.add-button:hover {
+    transform: scale(1.05, 1.05);
+}
+
+.add-wrap {
+    width: 100%;
+    height: 40px;
 }
 
 .media-item {
