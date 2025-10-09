@@ -43,13 +43,13 @@
 
             <div class="base">
                 <%if((media.status != 'finished' &&  route === 'movie') || media.status === 'started' &&  route != 'movie'){%>
-                <div>
-                    <a href="/<%= route%>/finish/<%= media.id%>" >
-                        <div class="detail-button shadow">
-                            <img src="/images/icons/finish.png" height="30px">
-                        </div>
-                    </a>
-                </div>
+                    <div>
+                        <a href="/<%= route%>/finish/<%= media.id%>" >
+                            <div class="detail-button shadow">
+                                <img src="/images/icons/finish.png" height="30px">
+                            </div>
+                        </a>
+                    </div>
                 <%}%>
 
                 <%if(media.status === 'open' && route != 'movie'){%>
@@ -61,6 +61,14 @@
                     </a>
                 </div>
                 <%}%>
+
+                <div>
+                    <a>
+                        <div class="detail-button shadow">
+                            <img src="/images/icons/edit.png" height="30px">
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
 
