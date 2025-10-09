@@ -45,15 +45,6 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    var path2 = './public/images/book/header/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
-    let picture2 = req.files.foo2;
-    picture2.mv(path2, function(err) {
-        if(err){
-            console.log(err)
-        }
-        console.log("Succ")
-    });
-
     const sql = "INSERT INTO book (name, year, genre, country, description, status, added, author, length, publisher, illustrator)" +
         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     db.run(sql, [name, year, genre, country, description, status, date_added, author, length, publisher, illustrator]);

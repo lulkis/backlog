@@ -27,12 +27,14 @@
                         <p class="dragndrop-title">Cover</p>
                     </div>
 
-                    <div>
-                        <div class="center-drag space-bottom">
-                            <input name="foo2" type="file" class="dragndrop" />
+                    <%if(route != 'book'){%>
+                        <div>
+                            <div class="center-drag space-bottom">
+                                <input name="foo2" type="file" class="dragndrop" />
+                            </div>
+                            <p class="dragndrop-title">Header</p>
                         </div>
-                        <p class="dragndrop-title">Header</p>
-                    </div>
+                    <%}%>
                 </div>
 
                 <input name="name" id="name" placeholder="Name" type="text" >
