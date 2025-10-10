@@ -65,3 +65,12 @@ hr {
 .season-box {
     padding: 10px;
 }
+
+.cast-element > a {
+    text-decoration: none;
+    color: var(--highlight);
+}
+
+.cast-element > a:hover {
+    color: var(--action);
+}
