@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/add', function(req, res, next) {
-    const media = { name: "", year: "", genre: "", country: "" , description: "", author: "", length: "", publisher: "", illustrator: "" };
+    const media = { name: "", year: "", genre: "", country: "" , description: "", author: "", length: "", publisher: "", illustrator: "" ,header_space: 0};
     res.render('media-form', { title: 'Books', route: 'book' , media: media });
 });
 
@@ -31,6 +31,7 @@ router.post('/add', function(req, res, next) {
     var description = req.body.description;
     var date_added = new Date();
     var status = 'open';
+    var header_space = req.body.header_space;
 
     var author = req.body.author;
     var length = req.body.length;
@@ -46,9 +47,9 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    const sql = "INSERT INTO book (name, year, genre, country, description, status, added, author, length, publisher, illustrator)" +
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    db.run(sql, [name, year, genre, country, description, status, date_added, author, length, publisher, illustrator]);
+    const sql = "INSERT INTO book (name, year, genre, country, description, status, added, author, length, publisher, illustrator, header_space)" +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    db.run(sql, [name, year, genre, country, description, status, date_added, author, length, publisher, illustrator, header_space]);
 
     res.redirect('/book')
 })
@@ -61,8 +62,14 @@ router.get('/detail/:id', function(req, res, next) {
         if(err){
             console.log(err);
         }else{
-            console.log(rows[0]);
-            res.render('media', { media: rows[0], route: 'book' });
+            var query = "SELECT * FROM book_finished WHERE id = ?";
+            db.all(query, [req.params.id], function (err, rows2) {
+                if(err){
+                    console.log(err);
+                }else{
+                    res.render('media', { media: rows[0], route: 'book', finish: rows2[0]});
+                }
+            });
         }
     });
 });
@@ -92,6 +99,7 @@ router.post('/edit/:id', function(req, res, next) {
     var length = req.body.length;
     var publisher = req.body.publisher;
     var illustrator = req.body.illustrator;
+    var header_space = req.body.header_space;
 
     if(req.files != null){
         const path = './public/images/book/' + name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "")  + '.jpg';
@@ -120,9 +128,9 @@ router.post('/edit/:id', function(req, res, next) {
     }
 
     const sql = "Update book SET " +
-        "name=?, year=?, genre=?, country=?, description=?, author=?, length=?, publisher=?, illustrator=?" +
+        "name=?, year=?, genre=?, country=?, description=?, author=?, length=?, publisher=?, illustrator=?, header_space=?" +
         "WHERE id = ?"
-    db.run(sql, [name, year, genre, country, description, author, length, publisher, illustrator, req.params.id]);
+    db.run(sql, [name, year, genre, country, description, author, length, publisher, illustrator, header_space, req.params.id]);
 
     res.redirect('/book/detail/'+req.params.id);
 });

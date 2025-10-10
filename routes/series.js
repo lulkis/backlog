@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/add', function(req, res, next) {
-    const media = { name: "", year: "", genre: "", country: "" , description: "", idea: "", studio: "", cast: "", episodes: "" };
+    const media = { name: "", year: "", genre: "", country: "" , description: "", idea: "", studio: "", cast: "", episodes: "" ,header_space: 0};
     res.render('media-form', { title: 'Series', route: 'series' , media: media });
 });
 
@@ -32,6 +32,7 @@ router.post('/add', function(req, res, next) {
     var country = req.body.country;
     var description = req.body.description;
     var date_added = new Date();
+    var header_space = req.body.header_space;
     var status = 'open';
     var idea = req.body.idea;
     var studio = req.body.studio;
@@ -56,9 +57,9 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    const sql = "INSERT INTO series (name, year, genre, country, description, status, added, idea, studio, cast, episodes)" +
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    db.run(sql, [name, year, genre, country, description, status, date_added, idea, studio, cast, episodes]);
+    const sql = "INSERT INTO series (name, year, genre, country, description, status, added, idea, studio, cast, episodes, header_space)" +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    db.run(sql, [name, year, genre, country, description, status, date_added, idea, studio, cast, episodes, header_space]);
 
     res.redirect('/series')
 })
@@ -71,8 +72,14 @@ router.get('/detail/:id', function(req, res, next) {
         if(err){
             console.log(err);
         }else{
-            console.log(rows[0]);
-            res.render('media', { media: rows[0], route: 'series' });
+            var query = "SELECT * FROM series_finished WHERE id = ?";
+            db.all(query, [req.params.id], function (err, rows2) {
+                if(err){
+                    console.log(err);
+                }else{
+                    res.render('media', { media: rows[0], route: 'series', finish: rows2[0]});
+                }
+            });
         }
     });
 });
@@ -98,6 +105,7 @@ router.post('/edit/:id', function(req, res, next) {
     var genre = req.body.genre;
     var country = req.body.country;
     var description = req.body.description;
+    var header_space = req.body.header_space;
     var idea = req.body.idea;
     var studio = req.body.studio;
     var cast = req.body.cast;
@@ -130,9 +138,9 @@ router.post('/edit/:id', function(req, res, next) {
     }
 
     const sql = "Update series SET " +
-        "name=?, year=?, genre=?, country=?, description=?, idea=?, studio=?, cast=?, episodes=?" +
+        "name=?, year=?, genre=?, country=?, description=?, idea=?, studio=?, cast=?, episodes=?, header_space=?" +
         "WHERE id = ?"
-    db.run(sql, [name, year, genre, country, description, idea, studio, cast, episodes, req.params.id]);
+    db.run(sql, [name, year, genre, country, description, idea, studio, cast, episodes, header_space, req.params.id]);
 
     res.redirect('/series/detail/'+req.params.id);
 });

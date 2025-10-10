@@ -23,7 +23,8 @@
                  .replaceAll(" ", "_")
                  .replaceAll(":", "")
                  .replaceAll("'", "")
-                 .replaceAll("´", "")  %>.jpg);">
+                 .replaceAll("´", "")  %>.jpg);
+                 background-position: 0 <%=media.header_space%>%;">
         <div class="tester"></div>
     </div>
     <%}%>
@@ -94,12 +95,22 @@
             </div>
 
             <div>
-                <span><b>Year:</b> <%= media.year %></span>
+                <h1><%= media.year %></h1>
+                <span><b>Country:</b> <%= media.country %></span><br>
                 <% if(route === 'movie') {%>
-                    <div style="padding-top: 10px">
-                        <span><b>Country:</b> <%= media.country %></span>                                        <br>
-                        <span><b>Length:</b> <%= media.length %> Minutes</span>
-                    </div>
+                    <span><b>Studio:</b> <%= media.studio %></span><br>
+                    <span><b>Length:</b> <%= media.length %> Minutes</span>
+                <%}%>
+                <% if(route === 'series') {%>
+                    <span><b>Studio:</b> <%= media.studio %></span>
+                <%}%>
+                <% if(route === 'game') {%>
+                    <span><b>Publisher:</b> <%= media.publisher %></span>
+                <%}%>
+                <% if(route === 'book') {%>
+                    <span><b>Length:</b> <%= media.length %></span><br>
+                    <span><b>Publisher:</b> <%= media.publisher %></span><br>
+                    <span><b>Illustrator:</b> <%= media.illustrator %></span>
                 <%}%>
 
                 <p style="margin-top:21px">
@@ -165,6 +176,15 @@
                     </div>
                     <%}%>
                 </div>
+            </div>
+        <%}%>
+
+        <%if(media.status === 'finished') {%>
+            <div>
+                <hr>
+                <h3>Review</h3>
+                <p><%= finish.valuation%></p>
+                <p><%= finish.rating%>/10</p>
             </div>
         <%}%>
     </div>

@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/add', function(req, res, next) {
-    const media = { name: "", year: "", genre: "", country: "" , description: "", publisher: "", developer: ""};
+    const media = { name: "", year: "", genre: "", country: "" , description: "", publisher: "", developer: "",header_space: 0};
     res.render('media-form', { title: 'Games', route: 'game' , media: media });
 });
 
@@ -28,6 +28,7 @@ router.post('/add', function(req, res, next) {
     var year = Number(req.body.year);
     var genre = req.body.genre;
     var country = req.body.country;
+    var header_space = req.body.header_space;
     var description = req.body.description;
     var date_added = new Date();
     var status = 'open';
@@ -52,9 +53,9 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    const sql = "INSERT INTO game (name, year, genre, country, description, status, added, developer, publisher)" +
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    db.run(sql, [name, year, genre, country, description, status, date_added, developer, publisher]);
+    const sql = "INSERT INTO game (name, year, genre, country, description, status, added, developer, publisher, header_space)" +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    db.run(sql, [name, year, genre, country, description, status, date_added, developer, publisher, header_space]);
 
     res.redirect('/game')
 })
@@ -67,8 +68,14 @@ router.get('/detail/:id', function(req, res, next) {
         if(err){
             console.log(err);
         }else{
-            console.log(rows[0]);
-            res.render('media', { media: rows[0], route: 'game' });
+            var query = "SELECT * FROM game_finished WHERE id = ?";
+            db.all(query, [req.params.id], function (err, rows2) {
+                if(err){
+                    console.log(err);
+                }else{
+                    res.render('media', { media: rows[0], route: 'game', finish: rows2[0]});
+                }
+            });
         }
     });
 });
@@ -96,6 +103,7 @@ router.post('/edit/:id', function(req, res, next) {
     var description = req.body.description;
     var developer = req.body.developer;
     var publisher = req.body.publisher;
+    var header_space = req.body.header_space;
 
     if(req.files != null){
         const path = './public/images/game/' + name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "")  + '.jpg';
@@ -124,9 +132,9 @@ router.post('/edit/:id', function(req, res, next) {
     }
 
     const sql = "Update game SET " +
-        "name=?, year=?, genre=?, country=?, description=?, developer=?, publisher=?" +
+        "name=?, year=?, genre=?, country=?, description=?, developer=?, publisher=?, header_space=?" +
         "WHERE id = ?"
-    db.run(sql, [name, year, genre, country, description, developer, publisher, req.params.id]);
+    db.run(sql, [name, year, genre, country, description, developer, publisher, header_space, req.params.id]);
 
     res.redirect('/game/detail/'+req.params.id);
 });

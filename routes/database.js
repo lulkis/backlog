@@ -17,6 +17,7 @@ export function setup_database() {
         "genre VARCHAR(128)," +
         "country VARCHAR(128)," +
         "description TEXT," +
+        "header_space FLOAT," +
         "status VARCHAR(128)," +
         "added VARCHAR(128)," +
         "studio VARCHAR(128)," +
@@ -35,6 +36,7 @@ export function setup_database() {
         "genre VARCHAR(128)," +
         "country VARCHAR(128)," +
         "description TEXT," +
+        "header_space FLOAT," +
         "status VARCHAR(128)," +
         "added VARCHAR(128)," +
         "idea VARCHAR(128)," +
@@ -53,6 +55,7 @@ export function setup_database() {
         "genre VARCHAR(128)," +
         "country VARCHAR(128)," +
         "description TEXT," +
+        "header_space FLOAT," +
         "status VARCHAR(128)," +
         "added VARCHAR(128)," +
         "author VARCHAR(128)," +
@@ -71,6 +74,7 @@ export function setup_database() {
         "genre VARCHAR(128)," +
         "country VARCHAR(128)," +
         "description TEXT," +
+        "header_space FLOAT," +
         "status VARCHAR(128)," +
         "added VARCHAR(128)," +
         "developer VARCHAR(128)," +
