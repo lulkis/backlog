@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/listing-style.css' />
+    <link rel='stylesheet' href='/stylesheets/color-style.css' />
+</head>
+<body>
+
+<a class="outer shadow" onclick="history.back()">
+    <img src="/images/icons/back_arrow.png" width="100%">
+</a>
+
+<div class="container">
+    <h1><%= name%></h1>
+
+    <%if(list.length != 0){%>
+        <div class="media-list">
+            <h3>Movies</h3>
+            <% for(var i = 0; i < list.length; i++) {%>
+                <a href="/movie/detail/<%=list[i].id%>">
+                    <div class="media-item"><%= list[i].name%></div>
+                </a>
+            <%}%>
+        </div>
+    <%}%>
+
+    <%if(list2.length != 0){%>
+        <div class="media-list">
+            <h3>Series</h3>
+            <% for(var i = 0; i < list2.length; i++) {%>
+                <a href="/series/detail/<%=list2[i].id%>">
+                    <div class="media-item"><%= list2[i].name%></div>
+                </a>
+            <%}%>
+        </div>
+    <%}%>
+</div>
+
+</body>
+</html>
