@@ -55,6 +55,7 @@ hr {
     background-color: var(--accent-two);
     padding: 5px;
     border-radius: 5px;
+    margin: 5px;
 }
 
 .episode-box{
