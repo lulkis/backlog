@@ -1,8 +1,3 @@
-body {
-    margin: 0;
-    padding: 0;
-}
-
 .tester {
     background-image: linear-gradient(to top , var(--base), rgba(255, 255, 0, 0));
     position: absolute;

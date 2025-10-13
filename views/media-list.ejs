@@ -11,50 +11,56 @@
         <img src="/images/icons/back_arrow.png" width="100%">
     </a>
 
-    <div class="container">
-        <h1><%= title%></h1>
+    <main>
+        <div class="container">
+            <h1><%= title%></h1>
 
-        <div class="add-wrap">
-            <a class="add-button shadow" href="<%= route%>/add">
-                <span>Add <%= title%></span>
-            </a>
-        </div>
-
-
-        <div class="media-list">
-            <h3>Open</h3>
-            <% for(var i = 0; i < list.length; i++) {%>
-            <%if(list[i].status === 'open') {%>
-                <a href="/<%= route%>/detail/<%= list[i].id%>">
-                    <div class="media-item"><%= list[i].name%></div>
+            <div class="add-wrap">
+                <a class="add-button shadow" href="<%= route%>/add">
+                    <span>Add <%= title%></span>
                 </a>
-            <%}%>
-            <%}%>
-        </div>
+            </div>
 
-        <%if(route != 'movie') {%>
-        <div class="media-list">
-            <h3>Started</h3>
-            <% for(var i = 0; i < list.length; i++) {%>
-            <%if(list[i].status === 'started') {%>
-                <a href="/<%= route%>/detail/<%= list[i].id%>">
-                    <div class="media-item"><%= list[i].name%></div>
-                </a>
-            <%}%>
-            <%}%>
-        </div>
-        <%}%>
 
-        <div class="media-list">
-            <h3>Finished</h3>
-            <% for(var i = 0; i < list.length; i++) {%>
-            <%if(list[i].status === 'finished') {%>
-                <a href="/<%= route%>/detail/<%= list[i].id%>">
-                    <div class="media-item"><%= list[i].name%></div>
-                </a>
+            <div class="media-list">
+                <h3>Open</h3>
+                <% for(var i = 0; i < list.length; i++) {%>
+                <%if(list[i].status === 'open') {%>
+                    <a href="/<%= route%>/detail/<%= list[i].id%>">
+                        <div class="media-item"><%= list[i].name%></div>
+                    </a>
+                <%}%>
+                <%}%>
+            </div>
+
+            <%if(route != 'movie') {%>
+                <div class="media-list">
+                    <h3>Started</h3>
+                    <% for(var i = 0; i < list.length; i++) {%>
+                    <%if(list[i].status === 'started') {%>
+                        <a href="/<%= route%>/detail/<%= list[i].id%>">
+                            <div class="media-item"><%= list[i].name%></div>
+                        </a>
+                    <%}%>
+                    <%}%>
+                </div>
             <%}%>
-            <%}%>
+
+            <div class="media-list">
+                <h3>Finished</h3>
+                <% for(var i = 0; i < list.length; i++) {%>
+                <%if(list[i].status === 'finished') {%>
+                    <a href="/<%= route%>/detail/<%= list[i].id%>">
+                        <div class="media-item"><%= list[i].name%></div>
+                    </a>
+                <%}%>
+                <%}%>
+            </div>
         </div>
+    </main>
+
+    <div class="footer">
+        <img src="/images/icons/orchid_heart_red.png" height="50px">
     </div>
 </body>
 </html>
