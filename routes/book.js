@@ -6,7 +6,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
     const db = new sqlite3.Database('backlog.db');
 
-    var query = "SELECT id, name, status FROM book";
+    var query = "SELECT id, name, status FROM book ORDER BY name ASC";
     db.all(query, function (err, rows) {
         if(err){
             console.log(err);
