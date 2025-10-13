@@ -45,9 +45,16 @@ hr {
 }
 
 .base {
+    /*
     display: grid;
-    grid-template-columns: 1fr 1fr;
-
+    grid-template-columns: auto auto;
+    gap: 0;
+    place-items: end;
+*/
+    display: grid;
+    grid-auto-flow: column;
+    gap: 10px;
+    width: max-content;
     place-items: end;
 }
 
