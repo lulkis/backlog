@@ -82,3 +82,8 @@ hr {
 .cast-element > a:hover {
     color: var(--action);
 }
+
+.rating {
+    margin: 0;
+    font-size: 40px;
+}
