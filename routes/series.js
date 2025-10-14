@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/add', function(req, res, next) {
-    const media = { name: "", year: "", genre: "", country: "" , description: "", idea: "", studio: "", cast: "", episodes: "" ,header_space: 0};
+    const media = { name: "", year: "", year_end: "", genre: "", country: "" , description: "", idea: "", studio: "", cast: "", episodes: "" ,header_space: 0};
     res.render('media-form', { title: 'Series', route: 'series' , media: media });
 });
 
@@ -28,6 +28,7 @@ router.post('/add', function(req, res, next) {
 
     var name = req.body.name;
     var year = Number(req.body.year);
+    var year_end = Number(req.body.year_end);
     var genre = req.body.genre;
     var country = req.body.country;
     var description = req.body.description;
@@ -57,9 +58,9 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    const sql = "INSERT INTO series (name, year, genre, country, description, status, added, idea, studio, cast, episodes, header_space)" +
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    db.run(sql, [name, year, genre, country, description, status, date_added, idea, studio, cast, episodes, header_space]);
+    const sql = "INSERT INTO series (name, year, year_end, genre, country, description, status, added, idea, studio, cast, episodes, header_space)" +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    db.run(sql, [name, year, year_end, genre, country, description, status, date_added, idea, studio, cast, episodes, header_space]);
 
     res.redirect('/series')
 })
@@ -102,6 +103,7 @@ router.post('/edit/:id', function(req, res, next) {
 
     var name = req.body.name;
     var year = Number(req.body.year);
+    var year_end = Number(req.body.year_end);
     var genre = req.body.genre;
     var country = req.body.country;
     var description = req.body.description;
@@ -138,9 +140,9 @@ router.post('/edit/:id', function(req, res, next) {
     }
 
     const sql = "Update series SET " +
-        "name=?, year=?, genre=?, country=?, description=?, idea=?, studio=?, cast=?, episodes=?, header_space=?" +
+        "name=?, year=?, year_end=?, genre=?, country=?, description=?, idea=?, studio=?, cast=?, episodes=?, header_space=?" +
         "WHERE id = ?"
-    db.run(sql, [name, year, genre, country, description, idea, studio, cast, episodes, header_space, req.params.id]);
+    db.run(sql, [name, year, year_end, genre, country, description, idea, studio, cast, episodes, header_space, req.params.id]);
 
     res.redirect('/series/detail/'+req.params.id);
 });

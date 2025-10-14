@@ -41,7 +41,15 @@
 
                     <input name="name" id="name" placeholder="Name" type="text" value="<%= media.name%>">
                     <br>
-                    <input name="year" id="year" placeholder="Year" type="text" value="<%= media.year%>">
+
+                    <%if(route === 'series'){%>
+                        <label for="year">Von</label>
+                        <input name="year" id="year" placeholder="Year" type="text" value="<%= media.year%>">
+                        <label for="year_end">Bis</label>
+                        <input name="year_end" id="year_end" placeholder="Year" type="text" value="<%= media.year_end%>">
+                    <%} else {%>
+                        <input name="year" id="year" placeholder="Year" type="text" value="<%= media.year%>">
+                    <%}%>
                     <br>
                     <input name="genre" id="genre" placeholder="Genre" type="text" value="<%= media.genre%>">
                     <br>
