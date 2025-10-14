@@ -52,7 +52,7 @@
                     <textarea rows="7" name="description" id="description" placeholder="Description" type="text" ><%= media.description%></textarea>
                     <br>
 
-                    <% if (title === "Movies") {%>
+                    <% if (route === "movie") {%>
                         <input name="studio" id="studio" placeholder="Studio" type="text" value="<%= media.studio%>">
                         <br>
                         <input name="director" id="director" placeholder="Director" type="text" value="<%= media.director%>">
@@ -63,7 +63,7 @@
                         <br>
                     <%}%>
 
-                    <% if (title === "Series") {%>
+                    <% if (route === "series") {%>
                         <input name="idea" id="idea" placeholder="Idea" type="text" value="<%= media.idea%>">
                         <br>
                         <input name="studio" id="studio" placeholder="Studio" type="text" value="<%= media.studio%>">
@@ -74,14 +74,14 @@
                         <br>
                     <%}%>
 
-                    <% if (title === "Games") {%>
+                    <% if (route === "game") {%>
                         <input name="publisher" id="publisher" placeholder="Publisher" type="text" value="<%= media.publisher%>">
                         <br>
                         <input name="developer" id="developer" placeholder="Developer" type="text" value="<%= media.developer%>">
                         <br>
                     <%}%>
 
-                    <% if (title === "Books") {%>
+                    <% if (route === "book") {%>
                         <input name="author" id="author" placeholder="Author" type="text" value="<%= media.author%>">
                         <br>
                         <input name="length" id="length" placeholder="Length" type="text" value="<%= media.length%>">
