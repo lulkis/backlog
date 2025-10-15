@@ -33,6 +33,7 @@ export function setup_database() {
         "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
         "name VARCHAR(128) NOT NULL," +
         "year INTEGER," +
+        "year_end INTEGER," +
         "genre VARCHAR(128)," +
         "country VARCHAR(128)," +
         "description TEXT," +

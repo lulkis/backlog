@@ -95,7 +95,15 @@
             </div>
 
             <div>
-                <h1><%= media.year %></h1>
+                <h1><%= media.year %>
+
+                    <%if(route === 'series'){%>
+                        <%if(media.year !== media.year_end){%>
+                        - <%= media.year_end %>
+                        <%}%>
+                    <%}%>
+                </h1>
+
                 <span><b>Country:</b> <%= media.country %></span><br>
                 <% if(route === 'movie') {%>
                     <span><b>Studio:</b> <%= media.studio %></span><br>
