@@ -33,10 +33,15 @@ hr {
     width: 35px;
     padding: 10px;
     border-radius: 15px;
+    transition-duration: 0.3s;
 }
 
 .detail-button > img {
     height: 100%;
+}
+
+.detail-button:hover {
+    transform: scale(1.05, 1.05);
 }
 
 .base {

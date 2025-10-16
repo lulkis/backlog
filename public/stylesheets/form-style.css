@@ -1,13 +1,11 @@
 .dragndrop {
     border: 1px solid var(--highlight);
     padding: 70px 50px;
-
     border-radius: 10px;
-}
-
-.center-drag {
-    margin-left: auto;
-    margin-right: auto;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    display: block;
 }
 
 .space-bottom {
@@ -17,40 +15,30 @@
 .two-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }
 
 .dragndrop-title {
     text-align: center;
 }
 
+button,
+textarea,
 input[type="text"] {
-    width: 100%;
     resize: none;
     background-color: var(--accent-one);
     color: var(--highlight);
-    border-style: solid;
-    padding: 5px;
-    border-radius: 5px;
-    margin: 10px;
-}
 
-textarea {
     width: 100%;
-    resize: none;
-    background-color: var(--accent-one);
-    color: var(--highlight);
-    border-style: solid;
     padding: 5px;
+    box-sizing: border-box;
+    margin: 10px 0;
+    border-style: solid;
     border-radius: 5px;
-    margin: 10px;
 }
 
 button {
-    width: 101%;
-    padding: 5px;
-    margin: 10px;
-    border-radius: 5px;
     background-color: var(--action);
-    color: var(--highlight);
-    border-style: solid;
+    cursor: pointer;
+    font-size: 20px;
 }

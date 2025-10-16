@@ -1,0 +1,35 @@
+.media-list {
+    margin-top: 30px;
+}
+
+.media-list > a {
+    text-decoration: none;
+    color: var(--highlight);
+}
+
+.media-item {
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.search-grid{
+    display: grid;
+    grid-template-columns: 20% 80%;
+
+    width: 100%;
+    padding: 5px;
+    border-bottom: 1px solid var(--highlight);
+}
+
+.search-grid > img {
+    height: 150px;
+    width: 100px;
+
+    border-radius: 5px;
+}
+
+.search-grid:hover {
+    background-color: var(--accent-one);
+    cursor: pointer;
+}
