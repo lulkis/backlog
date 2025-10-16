@@ -28,4 +28,18 @@ router.get('/search/:name', function(req, res, next) {
     });
 })
 
+router.get('/director/:name', function(req, res, next) {
+    //SELECT * FROM movie WHERE movie_cast LIKE $1
+    const db = new sqlite3.Database('backlog.db');
+
+    var query = "SELECT * FROM movie WHERE movie.director LIKE ?";
+    db.all(query,['%'+req.params.name+'%'], function (err, rows) {
+        if(err){
+            console.log(err);
+        }else{
+            res.render('search', { name: req.params.name, list: rows, list2: [] });
+        }
+    });
+})
+
 module.exports = router;

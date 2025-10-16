@@ -74,11 +74,13 @@ hr {
     padding: 10px;
 }
 
+h4 > a,
 .cast-element > a {
     text-decoration: none;
     color: var(--highlight);
 }
 
+h4 > a:hover,
 .cast-element > a:hover {
     color: var(--action);
 }

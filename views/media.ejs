@@ -42,7 +42,7 @@
                         <h4>By <i><%= media.author%></i></h4>
                     <%}%>
                     <% if( route === 'movie'){%>
-                        <h4>By <i><%= media.director%></i></h4>
+                        <h4>By <a href="/director/<%= media.director%>"><i><%= media.director%></i></a></h4>
                     <%}%>
                     <% if( route === 'game'){%>
                         <h4>By <i><%= media.developer%></i></h4>
