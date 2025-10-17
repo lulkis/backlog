@@ -4,6 +4,7 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
       <link rel='stylesheet' href='/stylesheets/color-style.css' />
+      <link rel='stylesheet' href='/stylesheets/index-style.css' />
   </head>
   <body>
     <main>
@@ -27,6 +28,19 @@
                 <a href="/book" class="shadow">
                     <div>Books</div>
                 </a>
+            </div>
+
+            <h2>Recently Added</h2>
+            <div class="recent-box">
+                <% for(var i = 0; i < recent.length; i++){ %>
+                    <div style="background-image: url(/images/<%=recent[i].route%>/<%= recent[i].name.toLowerCase()
+                            .replaceAll(" ", "_")
+                            .replaceAll(":", "")
+                            .replaceAll("'", "")
+                            .replaceAll("´", "")  %>.jpg);"
+                        class="shadow">
+                    </div>
+                <% } %>
             </div>
         </div>
     </main>

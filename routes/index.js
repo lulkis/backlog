@@ -4,7 +4,22 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+    const db = new sqlite3.Database('backlog.db');
+    var query = "SELECT movie.name, movie.added, 'movie' AS route FROM movie\n" +
+        "UNION\n" +
+        "SELECT series.name, series.added, 'series' AS route FROM series\n" +
+        "UNION\n" +
+        "SELECT book.name, book.added, 'book' AS route FROM book\n" +
+        "UNION\n" +
+        "SELECT game.name, game.added, 'book' AS route FROM game\n" +
+        "ORDER BY added DESC LIMIT 5"
+    db.all(query, function (err, row) {
+        if(err){
+            console.log(err);
+        }else{
+            res.render('index', { title: 'Express', recent: row});
+        }
+    });
 });
 
 router.get('/search/:name', function(req, res, next) {

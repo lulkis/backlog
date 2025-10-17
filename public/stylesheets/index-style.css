@@ -1,0 +1,22 @@
+.recent-box{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.recent-box > div{
+    background-color: blue;
+
+    height: 350px;
+    margin: 10px;
+
+    background-size: cover;
+    background-position: center;
+
+    border-radius: 10px;
+    transition-duration: 0.3s;
+}
+
+.recent-box > div:hover{
+    transform: scale(1.05, 1.05);
+    cursor: pointer;
+}
