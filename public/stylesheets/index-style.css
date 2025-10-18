@@ -3,8 +3,8 @@
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
-.recent-box > div{
-    background-color: blue;
+.recent-box > a{
+    background-color: var(--action);
 
     height: 350px;
     margin: 10px;
@@ -16,7 +16,7 @@
     transition-duration: 0.3s;
 }
 
-.recent-box > div:hover{
+.recent-box > a:hover{
     transform: scale(1.05, 1.05);
     cursor: pointer;
 }

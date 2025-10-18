@@ -33,3 +33,7 @@
     background-color: var(--accent-one);
     cursor: pointer;
 }
+
+.search-button:hover {
+    cursor: pointer;
+}
