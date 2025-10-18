@@ -5,13 +5,13 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
     const db = new sqlite3.Database('backlog.db');
-    var query = "SELECT movie.name, movie.added, 'movie' AS route FROM movie\n" +
+    var query = "SELECT movie.id, movie.name, movie.added, 'movie' AS route FROM movie\n" +
         "UNION\n" +
-        "SELECT series.name, series.added, 'series' AS route FROM series\n" +
+        "SELECT series.id, series.name, series.added, 'series' AS route FROM series\n" +
         "UNION\n" +
-        "SELECT book.name, book.added, 'book' AS route FROM book\n" +
+        "SELECT book.id, book.name, book.added, 'book' AS route FROM book\n" +
         "UNION\n" +
-        "SELECT game.name, game.added, 'book' AS route FROM game\n" +
+        "SELECT game.id, game.name, game.added, 'book' AS route FROM game\n" +
         "ORDER BY added DESC LIMIT 5"
     db.all(query, function (err, row) {
         if(err){

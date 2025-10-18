@@ -33,13 +33,16 @@
             <h2>Recently Added</h2>
             <div class="recent-box">
                 <% for(var i = 0; i < recent.length; i++){ %>
-                    <div style="background-image: url(/images/<%=recent[i].route%>/<%= recent[i].name.toLowerCase()
-                            .replaceAll(" ", "_")
-                            .replaceAll(":", "")
-                            .replaceAll("'", "")
-                            .replaceAll("´", "")  %>.jpg);"
-                        class="shadow">
-                    </div>
+                    <a style="background-image: url(/images/<%=recent[i].route%>/<%= recent[i].name.toLowerCase()
+                        .replaceAll(" ", "_")
+                        .replaceAll(":", "")
+                        .replaceAll("'", "")
+                        .replaceAll("´", "")  %>.jpg);"
+                    class="shadow"
+                    href="/<%=recent[i].route%>/detail/<%=recent[i].id%>">
+                        <div>
+                        </div>
+                    </a>
                 <% } %>
             </div>
         </div>
