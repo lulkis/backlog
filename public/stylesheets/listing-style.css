@@ -8,11 +8,6 @@
     text-align: center;
 
      float: right;
-    transition-duration: 0.3s;
-}
-
-.add-button:hover {
-    transform: scale(1.05, 1.05);
 }
 
 .add-wrap {

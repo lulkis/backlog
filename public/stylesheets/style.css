@@ -46,11 +46,6 @@ html{
     border-radius: 10px;
     height: 50px;
     width: 50px;
-    transition-duration: 0.3s;
-}
-
-.outer:hover {
-    transform: scale(1.05, 1.05);
 }
 
 .footer {
@@ -67,4 +62,12 @@ html{
 .footer > img {
     padding-top: 15px;
     padding-bottom: 15px;
+}
+
+.click-anim {
+    transition-duration: 0.3s;
+}
+
+.click-anim:hover {
+    transform: scale(1.05, 1.05);
 }

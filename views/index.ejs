@@ -13,19 +13,19 @@
             <p>Welcome to the Backlog</p>
 
             <div class="category-box">
-                <a href="/movie" class="shadow">
+                <a href="/movie" class="shadow click-anim">
                     <div>Movies</div>
                 </a>
 
-                <a href="/series" class="shadow">
+                <a href="/series" class="shadow click-anim">
                     <div>Series</div>
                 </a>
 
-                <a href="/game" class="shadow">
+                <a href="/game" class="shadow click-anim">
                     <div>Games</div>
                 </a>
 
-                <a href="/book" class="shadow">
+                <a href="/book" class="shadow click-anim">
                     <div>Books</div>
                 </a>
             </div>
@@ -38,7 +38,7 @@
                         .replaceAll(":", "")
                         .replaceAll("'", "")
                         .replaceAll("´", "")  %>.jpg);"
-                    class="shadow"
+                    class="shadow click-anim"
                     href="/<%=recent[i].route%>/detail/<%=recent[i].id%>">
                         <div>
                         </div>
@@ -54,7 +54,7 @@
                         .replaceAll(":", "")
                         .replaceAll("'", "")
                         .replaceAll("´", "")  %>.jpg);"
-                   class="shadow"
+                   class="shadow click-anim"
                    href="/<%=finish[i].route%>/detail/<%=finish[i].id%>">
                     <div>
                     </div>
