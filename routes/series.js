@@ -168,10 +168,11 @@ router.post('/finish/:id', function(req, res, next) {
     const date = new Date();
     const rating = req.body.rating;
     const valuation = req.body.valuation;
+    const like = req.body.like;
 
-    const sql = "INSERT INTO series_finished (id, date, rating, valuation)" +
-        "VALUES (?, ?, ?, ?)";
-    db.run(sql, [id, date, rating, valuation]);
+    const sql = "INSERT INTO series_finished (id, date, rating, valuation, like)" +
+        "VALUES (?, ?, ?, ?, ?)";
+    db.run(sql, [id, date, rating, valuation, like]);
 
     const sql2 = "UPDATE series SET status = ? WHERE id = ?";
     db.run(sql2, ["finished", id]);

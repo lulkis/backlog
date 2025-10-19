@@ -13,10 +13,8 @@
     background-position: center;
 
     border-radius: 10px;
-    transition-duration: 0.3s;
 }
 
 .recent-box > a:hover{
-    transform: scale(1.05, 1.05);
     cursor: pointer;
 }

@@ -29,7 +29,7 @@
     </div>
     <%}%>
 
-    <a class="outer shadow" href="/<%= route%>">
+    <a class="outer shadow click-anim" href="/<%= route%>">
         <img src="/images/icons/back_arrow.png" width="100%">
     </a>
 
@@ -57,7 +57,7 @@
                 <%if((media.status != 'finished' &&  route === 'movie') || media.status === 'started' &&  route != 'movie'){%>
                     <div>
                         <a href="/<%= route%>/finish/<%= media.id%>" >
-                            <div class="detail-button shadow">
+                            <div class="detail-button shadow click-anim">
                                 <img src="/images/icons/finish.png" height="30px">
                             </div>
                         </a>
@@ -67,7 +67,7 @@
                 <%if(media.status === 'open' && route != 'movie'){%>
                 <div>
                     <a href="/<%= route%>/start/<%= media.id%>" >
-                        <div class="detail-button shadow">
+                        <div class="detail-button shadow click-anim">
                             <img src="/images/icons/start.png" height="30px">
                         </div>
                     </a>
@@ -76,7 +76,7 @@
 
                 <div>
                     <a href="/<%=route%>/edit/<%= media.id%>">
-                        <div class="detail-button shadow">
+                        <div class="detail-button shadow click-anim">
                             <img src="/images/icons/edit.png" height="30px">
                         </div>
                     </a>
@@ -135,7 +135,7 @@
             <p><%= media.description%></p>
         </div>
 
-        <% if(route === 'movie' || route === 'series') {%>
+        <% if((route === 'movie' || route === 'series') && media.cast) {%>
             <hr>
             <h3>Besetzung</h3>
             <div>
