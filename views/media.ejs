@@ -135,7 +135,7 @@
             <p><%= media.description%></p>
         </div>
 
-        <% if(route === 'movie' || route === 'series') {%>
+        <% if((route === 'movie' || route === 'series') && media.cast) {%>
             <hr>
             <h3>Besetzung</h3>
             <div>
