@@ -45,6 +45,22 @@
                     </a>
                 <% } %>
             </div>
+
+            <h2>Recently Finished</h2>
+            <div class="recent-box">
+                <% for(var i = 0; i < finish.length; i++){ %>
+                <a style="background-image: url(/images/<%=finish[i].route%>/<%= finish[i].name.toLowerCase()
+                        .replaceAll(" ", "_")
+                        .replaceAll(":", "")
+                        .replaceAll("'", "")
+                        .replaceAll("´", "")  %>.jpg);"
+                   class="shadow"
+                   href="/<%=finish[i].route%>/detail/<%=finish[i].id%>">
+                    <div>
+                    </div>
+                </a>
+                <% } %>
+            </div>
         </div>
     </main>
 

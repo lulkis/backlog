@@ -17,7 +17,26 @@ router.get('/', function(req, res, next) {
         if(err){
             console.log(err);
         }else{
-            res.render('index', { title: 'Express', recent: row});
+            var query = "SELECT movie.name, movie.id, movie_finished.date, 'movie' AS route FROM movie\n" +
+                "INNER JOIN movie_finished ON movie.id = movie_finished.id\n" +
+                "UNION\n" +
+                "SELECT series.name, series.id, series_finished.date, 'series' AS route FROM series\n" +
+                "INNER JOIN series_finished ON series.id = series_finished.id\n" +
+                "UNION\n" +
+                "SELECT book.name, book.id, book_finished.date, 'book' AS route FROM book\n" +
+                "INNER JOIN book_finished ON book.id = book_finished.id\n" +
+                "UNION\n" +
+                "SELECT game.name, game.id, game_finished.date, 'game' AS route FROM game\n" +
+                "INNER JOIN game_finished ON game.id = game_finished.id\n" +
+                "ORDER BY date DESC LIMIT 5"
+
+            db.all(query, function (err, row2) {
+                if(err){
+                    console.log(err);
+                }else{
+                    res.render('index', { title: 'Express', recent: row, finish: row2 });
+                }
+            });
         }
     });
 });
