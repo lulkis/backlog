@@ -90,6 +90,7 @@ export function setup_database() {
         "date VARCHAR(128)," +
         "rating INTEGER," +
         "valuation TEXT," +
+        "like BOOLEAN," +
         "FOREIGN KEY(id) REFERENCES movie(id)" +
         ");"
     );
@@ -100,6 +101,7 @@ export function setup_database() {
         "date VARCHAR(128)," +
         "rating INTEGER," +
         "valuation TEXT," +
+        "like BOOLEAN," +
         "FOREIGN KEY(id) REFERENCES series(id)" +
         ");"
     );
@@ -110,6 +112,7 @@ export function setup_database() {
         "date VARCHAR(128)," +
         "rating INTEGER," +
         "valuation TEXT," +
+        "like BOOLEAN," +
         "FOREIGN KEY(id) REFERENCES game(id)" +
         ");"
     );
@@ -120,6 +123,7 @@ export function setup_database() {
         "date VARCHAR(128)," +
         "rating INTEGER," +
         "valuation TEXT," +
+        "like BOOLEAN," +
         "FOREIGN KEY(id) REFERENCES book(id)" +
         ");"
     );
