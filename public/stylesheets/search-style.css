@@ -15,11 +15,9 @@
 
 .search-grid{
     display: grid;
-    grid-template-columns: 20% 80%;
-
-    width: 100%;
+    grid-auto-flow: column;
+    width: max-content;
     padding: 5px;
-    border-bottom: 1px solid var(--highlight);
 }
 
 .search-grid > img {
@@ -29,11 +27,23 @@
     border-radius: 5px;
 }
 
-.search-grid:hover {
-    background-color: var(--accent-one);
-    cursor: pointer;
+.search-grid > div {
+    margin: 10px;
+}
+
+.search-grid > div > p {
+    margin: 10px;
 }
 
 .search-button:hover {
+    cursor: pointer;
+}
+
+.lines {
+    border-bottom: 1px solid var(--highlight);
+}
+
+.lines:hover {
+    background-color: var(--accent-one);
     cursor: pointer;
 }

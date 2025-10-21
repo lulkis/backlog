@@ -21,16 +21,18 @@
                     <h3>Movies</h3>
                     <% for(var i = 0; i < list.length; i++) {%>
                     <a href="/movie/detail/<%=list[i].id%>">
-                        <div class="search-grid">
-                            <img class="shadow" src="/images/movie/<%= list[i].name.toLowerCase()
-                                .replaceAll(" ", "_")
-                                .replaceAll(":", "")
-                                .replaceAll("'", "")
-                                .replaceAll("´", "")%>.jpg" alt="<%=list[i].name%>">
+                        <div class="lines">
+                            <div class="search-grid">
+                                <img class="shadow" src="/images/movie/<%= list[i].name.toLowerCase()
+                                        .replaceAll(" ", "_")
+                                        .replaceAll(":", "")
+                                        .replaceAll("'", "")
+                                        .replaceAll("´", "")%>.jpg" alt="<%=list[i].name%>">
 
-                            <div>
-                                <h3 class="media-item"><%= list[i].name%></h3>
-                                <p>by <span style="font-style: italic"><%= list[i].director%></span></p>
+                                <div>
+                                    <h3 class="media-item"><%= list[i].name%></h3>
+                                    <p>by <span style="font-style: italic"><%= list[i].director%></span></p>
+                                </div>
                             </div>
                         </div>
                     </a>

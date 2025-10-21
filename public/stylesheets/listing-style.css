@@ -34,3 +34,16 @@
     text-decoration: none;
     color: var(--highlight);
 }
+
+.status-stats{
+    margin: 100px 10px 10px 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+    background-color: var(--stats);
+    border-radius: 15px;
+}
+
+.status-stats > div {
+    text-align: center;
+}

@@ -21,6 +21,7 @@
                 </a>
             </div>
 
+            <%var open = 0; var started=0; var finished=0%>
 
             <div class="media-list">
                 <h3>Open</h3>
@@ -29,6 +30,7 @@
                     <a href="/<%= route%>/detail/<%= list[i].id%>">
                         <div class="media-item"><%= list[i].name%></div>
                     </a>
+                    <% open += 1%>
                 <%}%>
                 <%}%>
             </div>
@@ -41,6 +43,7 @@
                         <a href="/<%= route%>/detail/<%= list[i].id%>">
                             <div class="media-item"><%= list[i].name%></div>
                         </a>
+                        <% started += 1%>
                     <%}%>
                     <%}%>
                 </div>
@@ -53,8 +56,31 @@
                     <a href="/<%= route%>/detail/<%= list[i].id%>">
                         <div class="media-item"><%= list[i].name%></div>
                     </a>
+                    <% finished += 1%>
                 <%}%>
                 <%}%>
+            </div>
+
+            <div class="status-stats shadow">
+                <div>
+                    <h2>Open</h2>
+                    <p><%= open%></p>
+                </div>
+
+                <div>
+                    <h2>Started</h2>
+                    <p><%= started%></p>
+                </div>
+
+                <div>
+                    <h2>Finished</h2>
+                    <p><%= finished%></p>
+                </div>
+
+                <div>
+                    <h2>All</h2>
+                    <p><%= open+started+finished%></p>
+                </div>
             </div>
         </div>
     </main>
