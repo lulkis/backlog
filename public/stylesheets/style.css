@@ -11,7 +11,7 @@ main {
 }
 
 html{
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Funnel Display", sans-serif;
     background-color: var(--base);
     color: var(--highlight);
 }
@@ -19,22 +19,6 @@ html{
 .container {
     padding-left: 15%;
     padding-right: 15%;
-}
-
-.category-box{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-
-.category-box > a {
-    background-color: var(--action);
-    color: var(--highlight);
-    padding: 20px;
-    margin: 10px;
-    border-radius: 10px;
-
-    text-decoration: none;
-    text-align: center;
 }
 
 .outer {
