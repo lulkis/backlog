@@ -21,22 +21,6 @@ html{
     padding-right: 15%;
 }
 
-.category-box{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-
-.category-box > a {
-    background-color: var(--action);
-    color: var(--highlight);
-    padding: 20px;
-    margin: 10px;
-    border-radius: 10px;
-
-    text-decoration: none;
-    text-align: center;
-}
-
 .outer {
     left: 15px;
     top: 15px;
