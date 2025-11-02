@@ -196,7 +196,12 @@
             <div class="finished-box shadow">
                 <h3>Review</h3>
                 <p><%= finish.valuation%></p>
-                <p class="rating"><%= finish.rating%>/10</p>
+                <p class="rating">
+                    <%= finish.rating%>/10
+                    <%if(finish.like === "true" || finish.like === 1){%>
+                        <img src="/images/icons/heart.png" height="30px">
+                    <%}%>
+                </p>
             </div>
         <%}%>
     </div>
