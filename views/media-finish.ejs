@@ -5,6 +5,7 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/form-style.css' />
     <link rel='stylesheet' href='/stylesheets/color-style.css' />
+    <link rel='stylesheet' href='/stylesheets/finish-style.css' />
 </head>
 <body>
 <a class="outer shadow click-anim" href="/">
@@ -20,8 +21,11 @@
                 <br>
                 <textarea rows="7" name="valuation" id="valuation" placeholder="Valuation" type="text" ></textarea>
                 <br>
-                <input type="checkbox" id="like" name="like" value="true">
-                <label for="like">Like</label><br>
+
+                <label for="like" class="like-check">
+                    <input type="checkbox" id="like" name="like" value="true">
+                    <span class="checkmark"></span>
+                </label>
 
                 <button class="shadow" type="submit">Send</button>
             </form>
