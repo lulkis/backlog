@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
         "UNION\n" +
         "SELECT book.id, book.name, book.added, 'book' AS route FROM book WHERE book.status = 'open'\n" +
         "UNION\n" +
-        "SELECT game.id, game.name, game.added, 'book' AS route FROM game WHERE game.status = 'open'\n" +
+        "SELECT game.id, game.name, game.added, 'game' AS route FROM game WHERE game.status = 'open'\n" +
         "ORDER BY added DESC LIMIT 5"
     db.all(query, function (err, row) {
         if(err){
