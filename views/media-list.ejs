@@ -67,10 +67,12 @@
                     <p><%= open%></p>
                 </div>
 
-                <div>
-                    <h2>Started</h2>
-                    <p><%= started%></p>
-                </div>
+                <%if(route !== "movie") {%>
+                    <div>
+                        <h2>Started</h2>
+                        <p><%= started%></p>
+                    </div>
+                <%}%>
 
                 <div>
                     <h2>Finished</h2>

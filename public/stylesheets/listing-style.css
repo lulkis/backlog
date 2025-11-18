@@ -38,7 +38,8 @@
 .status-stats{
     margin: 100px 10px 10px 10px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
 
     background-color: var(--stats);
     border-radius: 15px;
