@@ -74,6 +74,16 @@
                 </div>
                 <%}%>
 
+                <%if(media.status === 'finished' && route == 'series'){%>
+                    <div>
+                        <a>
+                            <div class="detail-button shadow click-anim">
+                                <img src="/images/icons/bolt.png" height="30px">
+                            </div>
+                        </a>
+                    </div>
+                <%}%>
+
                 <div>
                     <a href="/<%=route%>/edit/<%= media.id%>">
                         <div class="detail-button shadow click-anim">
