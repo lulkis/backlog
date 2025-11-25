@@ -75,13 +75,15 @@
                 <%}%>
 
                 <%if(media.status === 'finished' && route == 'series'){%>
-                    <div>
-                        <a href="/<%= route%>/new/<%= media.id%>" >
-                            <div class="detail-button shadow click-anim">
-                                <img src="/images/icons/bolt.png" height="30px">
-                            </div>
-                        </a>
-                    </div>
+                    <%if(media.year_end === 0){%>
+                        <div>
+                            <a href="/<%= route%>/new/<%= media.id%>" >
+                                <div class="detail-button shadow click-anim">
+                                    <img src="/images/icons/bolt.png" height="30px">
+                                </div>
+                            </a>
+                        </div>
+                    <%}%>
                 <%}%>
 
                 <div>
@@ -109,7 +111,12 @@
 
                     <%if(route === 'series'){%>
                         <%if(media.year !== media.year_end){%>
-                        - <%= media.year_end %>
+                        -
+                            <%if(media.year_end === 0){%>
+                                <%= "Now" %>
+                            <%} else {%>
+                                <%= media.year_end %>
+                            <%}%>
                         <%}%>
                     <%}%>
                 </h1>
