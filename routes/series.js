@@ -180,4 +180,14 @@ router.post('/finish/:id', function(req, res, next) {
     res.redirect('/series/detail/' + id);
 })
 
+router.get('/new/:id', function(req, res, next) {
+    const db = new sqlite3.Database('backlog.db');
+
+    const id = req.params.id;
+    const sql2 = "UPDATE series SET status = ? WHERE id = ?";
+    db.run(sql2, ["open", id]);
+
+    res.redirect('/series/detail/' + id);
+})
+
 module.exports = router;
