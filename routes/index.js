@@ -7,11 +7,11 @@ router.get('/', function(req, res, next) {
     const db = new sqlite3.Database('backlog.db');
     var query = "SELECT movie.id, movie.name, movie.added, 'movie' AS route FROM movie WHERE movie.status = 'open'\n" +
         "UNION\n" +
-        "SELECT series.id, series.name, series.added, 'series' AS route FROM series WHERE series.status = 'open'\n" +
+        "SELECT series.id, series.name, series.added, 'series' AS route FROM series WHERE series.status = 'open' OR series.status = 'started'\n" +
         "UNION\n" +
-        "SELECT book.id, book.name, book.added, 'book' AS route FROM book WHERE book.status = 'open'\n" +
+        "SELECT book.id, book.name, book.added, 'book' AS route FROM book WHERE book.status = 'open' OR book.status = 'started'\n" +
         "UNION\n" +
-        "SELECT game.id, game.name, game.added, 'game' AS route FROM game WHERE game.status = 'open'\n" +
+        "SELECT game.id, game.name, game.added, 'game' AS route FROM game WHERE game.status = 'open' OR game.status = 'started'\n" +
         "ORDER BY added DESC LIMIT 5"
     db.all(query, function (err, row) {
         if(err){
