@@ -34,7 +34,25 @@ router.get('/', function(req, res, next) {
                 if(err){
                     console.log(err);
                 }else{
-                    res.render('index', { title: 'Express', recent: row, finish: row2 });
+                    var query = "SELECT status, COUNT(*) as count\n" +
+                        "FROM (\n" +
+                        "         SELECT status FROM movie\n" +
+                        "         UNION ALL\n" +
+                        "         SELECT status FROM series\n" +
+                        "         UNION ALL\n" +
+                        "         SELECT status FROM book\n" +
+                        "         UNION ALL\n" +
+                        "         SELECT status FROM game\n" +
+                        "     ) AS Alle_Daten\n" +
+                        "GROUP BY status;"
+
+                    db.all(query, function (err, row3) {
+                        if(err){
+                            console.log(err);
+                        }else{
+                            res.render('index', { title: 'Express', recent: row, finish: row2, counts: row3 });
+                        }
+                    });
                 }
             });
         }

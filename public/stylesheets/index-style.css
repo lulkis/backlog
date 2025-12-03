@@ -19,7 +19,7 @@
     cursor: pointer;
 }
 
-h2 {
+.up-titles {
     margin-top: 50px;
 }
 
@@ -49,4 +49,18 @@ h2 {
 h1 {
     text-align: center;
     font-size: 50px;
+}
+
+.status-stats{
+    margin: 20px 10px 10px 10px;
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+
+    background-color: var(--stats);
+    border-radius: 15px;
+}
+
+.status-stats > div {
+    text-align: center;
 }

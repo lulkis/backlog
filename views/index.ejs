@@ -29,7 +29,36 @@
                 </a>
             </div>
 
-            <h2>Recently Added</h2>
+            <div class="status-stats shadow">
+                <div>
+                    <h2>Open</h2>
+                    <p><%= counts[1].count %></p>
+                </div>
+                <div>
+                    <h2>Started</h2>
+                    <p><%= counts[2].count %></p>
+                </div>
+                <div>
+                    <h2>Finished</h2>
+                    <p><%= counts[0].count %></p>
+                </div>
+                <div>
+                    <h2>All</h2>
+                    <p><%= counts[0].count+counts[2].count+counts[1].count %></p>
+                </div>
+                <div>
+                    <h2>Status</h2>
+                    <p>
+                        <%= Math.floor(
+                            (Math.abs(counts[0].count) /
+                             Math.abs(counts[0].count+counts[2].count+counts[1].count))
+                            * 100)
+                        %> %
+                    </p>
+                </div>
+            </div>
+
+            <h2 class="up-titles">Recently Added</h2>
             <div class="recent-box">
                 <% for(var i = 0; i < recent.length; i++){ %>
                     <a style="background-image: url(/images/<%=recent[i].route%>/<%= recent[i].name.toLowerCase()
@@ -45,7 +74,7 @@
                 <% } %>
             </div>
 
-            <h2>Recently Finished</h2>
+            <h2 class="up-titles">Recently Finished</h2>
             <div class="recent-box">
                 <% for(var i = 0; i < finish.length; i++){ %>
                 <a style="background-image: url(/images/<%=finish[i].route%>/<%= finish[i].name.toLowerCase()
