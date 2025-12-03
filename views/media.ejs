@@ -107,7 +107,12 @@
             </div>
 
             <div>
-                <h1><%= media.year %>
+                <h1>
+                    <%if(media.year > 0){%>
+                        <%= media.year %>
+                    <%} else {%>
+                        <%= Math.abs(media.year)  %> v. Chr.
+                    <%}%>
 
                     <%if(route === 'series'){%>
                         <%if(media.year !== media.year_end){%>

@@ -45,16 +45,18 @@
                     <h3>Series</h3>
                     <% for(var i = 0; i < list2.length; i++) {%>
                     <a href="/series/detail/<%=list2[i].id%>">
-                        <div class="search-grid">
-                            <img class="shadow" src="/images/series/<%= list2[i].name.toLowerCase()
-                                    .replaceAll(" ", "_")
-                                    .replaceAll(":", "")
-                                    .replaceAll("'", "")
-                                    .replaceAll("´", "")%>.jpg" alt="<%=list2[i].name%>">
+                        <div class="lines">
+                            <div class="search-grid">
+                                <img class="shadow" src="/images/series/<%= list2[i].name.toLowerCase()
+                                        .replaceAll(" ", "_")
+                                        .replaceAll(":", "")
+                                        .replaceAll("'", "")
+                                        .replaceAll("´", "")%>.jpg" alt="<%=list2[i].name%>">
 
-                            <div>
-                                <h3 class="media-item"><%= list2[i].name%></h3>
-                                <p>by <span style="font-style: italic"><%= list2[i].idea%></span></p>
+                                <div>
+                                    <h3 class="media-item"><%= list2[i].name%></h3>
+                                    <p>by <span style="font-style: italic"><%= list2[i].idea%></span></p>
+                                </div>
                             </div>
                         </div>
                     </a>
