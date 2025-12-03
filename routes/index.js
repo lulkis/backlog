@@ -89,7 +89,14 @@ router.get('/director/:name', function(req, res, next) {
         if(err){
             console.log(err);
         }else{
-            res.render('search', { name: req.params.name, list: rows, list2: [] });
+            var query = "SELECT * FROM series WHERE series.idea LIKE ?";
+            db.all(query,['%'+req.params.name+'%'], function (err, rows2) {
+                if(err){
+                    console.log(err);
+                }else{
+                    res.render('search', { name: req.params.name, list: rows, list2: rows2 });
+                }
+            });
         }
     });
 })
