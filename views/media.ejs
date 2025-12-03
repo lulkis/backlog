@@ -126,7 +126,9 @@
                     <%}%>
                 </h1>
 
-                <span><b>Country:</b> <%= media.country %></span><br>
+                <span>
+                    <img src="/images/countries/<%= media.country %>.png" height="35px">
+                </span><br>
                 <% if(route === 'movie') {%>
                     <span><b>Studio:</b> <%= media.studio %></span><br>
                     <span><b>Length:</b> <%= media.length %> Minutes</span>
