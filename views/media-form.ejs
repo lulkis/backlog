@@ -45,7 +45,18 @@
                     <%if(route === 'series'){%>
                         <label for="year">Von</label>
                         <input name="year" id="year" placeholder="Year" type="text" value="<%= media.year%>">
-                        <label for="year_end">Bis</label>
+                        <label for="year_end" style="line-height: 25px;">Bis</label>
+
+                        <div class="tooltip">
+                            <img  src="/images/icons/information.png" height="25px">
+                            <div class="tooltiptext">
+                                <ul>
+                                    <li>0 wenn Series noch läuft</li>
+                                    <li>Selbes Jahr wenn Series nur ein Jahr lief</li>
+                                </ul>
+                            </div>
+                        </div>
+
                         <input name="year_end" id="year_end" placeholder="Year" type="text" value="<%= media.year_end%>">
                     <%} else {%>
                         <input name="year" id="year" placeholder="Year" type="text" value="<%= media.year%>">
