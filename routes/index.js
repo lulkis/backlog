@@ -59,6 +59,41 @@ router.get('/', function(req, res, next) {
     });
 });
 
+router.get('/get/:name', function(req, res, next) {
+    //SELECT * FROM movie WHERE movie_cast LIKE $1
+    const db = new sqlite3.Database('backlog.db');
+
+    var query = "SELECT * FROM movie WHERE CONCAT(movie.name, movie.director, movie.cast) LIKE ? ORDER BY movie.year DESC ";
+    db.all(query,['%'+req.params.name+'%'], function (err, rows) {
+        if(err){
+            console.log(err);
+        }else{
+            var query = "SELECT * FROM series WHERE CONCAT(series.name, series.idea, series.cast) LIKE ? ORDER BY series.year";
+            db.all(query,['%'+req.params.name+'%'], function (err, rows2) {
+                if(err){
+                    console.log(err);
+                }else{
+                    var query = "SELECT * FROM game WHERE CONCAT(game.name, game.publisher, game.developer) LIKE ? ORDER BY game.year";
+                    db.all(query,['%'+req.params.name+'%'], function (err, rows3) {
+                        if(err){
+                            console.log(err);
+                        }else{
+                            var query = "SELECT * FROM book WHERE CONCAT(book.name, book.author) LIKE ? ORDER BY book.year";
+                            db.all(query,['%'+req.params.name+'%'], function (err, rows4) {
+                                if(err){
+                                    console.log(err);
+                                }else{
+                                    res.render('search', { name: req.params.name, list: rows, list2: rows2, list3: rows3, list4: rows4 });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
+})
+
 router.get('/search/:name', function(req, res, next) {
     //SELECT * FROM movie WHERE movie_cast LIKE $1
     const db = new sqlite3.Database('backlog.db');
@@ -73,7 +108,7 @@ router.get('/search/:name', function(req, res, next) {
                 if(err){
                     console.log(err);
                 }else{
-                    res.render('search', { name: req.params.name, list: rows, list2: rows2 });
+                    res.render('search', { name: req.params.name, list: rows, list2: rows2, list3: [], list4: [] });
                 }
             });
         }
@@ -94,7 +129,7 @@ router.get('/director/:name', function(req, res, next) {
                 if(err){
                     console.log(err);
                 }else{
-                    res.render('search', { name: req.params.name, list: rows, list2: rows2 });
+                    res.render('search', { name: req.params.name, list: rows, list2: rows2, list3: [], list4: [] });
                 }
             });
         }

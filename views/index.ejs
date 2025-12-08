@@ -29,6 +29,17 @@
                 </a>
             </div>
 
+            <div class="search-grid">
+                <input type="text" class="search-box" placeholder="Search Movies" id="search">
+                <button onclick="searching()">Search</button>
+                <script>
+                    function searching() {
+                        var term = document.getElementById('search').value;
+                        window.location.href = '/get/' + term;
+                    }
+                </script>
+            </div>
+
             <div class="status-stats shadow">
                 <div>
                     <h2>Open</h2>

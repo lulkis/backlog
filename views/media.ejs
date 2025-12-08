@@ -39,16 +39,16 @@
                 <h1><%= media.name%></h1>
                 <div>
                     <% if( route === 'book'){%>
-                        <h4>By <i><%= media.author%></i></h4>
+                        <h4>By <a href="/get/<%= media.author%>"><%= media.author%></a></h4>
                     <%}%>
                     <% if( route === 'movie'){%>
-                        <h4>By <a href="/director/<%= media.director%>"><i><%= media.director%></i></a></h4>
+                        <h4>By <a href="/get/<%= media.director%>"><i><%= media.director%></i></a></h4>
                     <%}%>
                     <% if( route === 'game'){%>
-                        <h4>By <i><%= media.developer%></i></h4>
+                        <h4>By <a href="/get/<%= media.developer%>"><%= media.developer%></a></h4>
                     <%}%>
                     <% if( route === 'series'){%>
-                        <h4>By <a href="/director/<%= media.idea%>"><i><%= media.idea%></i></a></h4>
+                        <h4>By <a href="/get/<%= media.idea%>"><i><%= media.idea%></i></a></h4>
                     <%}%>
                 </div>
             </div>
@@ -171,7 +171,7 @@
                             <%if(i%2 === 0){%>
                                 <% var actor = role[i].split(':')%>
                                 <li class="cast-element">
-                                    <a href="/search/<%=actor[0]%>"><b><%=actor[0]%></b></a>:<%=actor[1]%>
+                                    <a href="/get/<%=actor[0]%>"><b><%=actor[0]%></b></a>:<%=actor[1]%>
                                 </li>
                             <%}%>
                             <%}%>
@@ -183,7 +183,7 @@
                             <%if(i%2 != 0){%>
                                 <% var actor = role[i].split(':')%>
                                 <li class="cast-element">
-                                    <a href="/search/<%=actor[0]%>"><b><%=actor[0]%></b></a>:<%=actor[1]%>
+                                    <a href="/get/<%=actor[0]%>"><b><%=actor[0]%></b></a>:<%=actor[1]%>
                                 </li>
                             <%}%>
                             <%}%>

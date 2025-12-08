@@ -63,6 +63,54 @@
                     <%}%>
                 </div>
             <%}%>
+
+            <%if(list3.length != 0){%>
+                <div class="media-list">
+                    <h3>Games</h3>
+                    <% for(var i = 0; i < list3.length; i++) {%>
+                    <a href="/game/detail/<%=list3[i].id%>">
+                        <div class="lines">
+                            <div class="search-grid">
+                                <img class="shadow" src="/images/game/<%= list3[i].name.toLowerCase()
+                                        .replaceAll(" ", "_")
+                                        .replaceAll(":", "")
+                                        .replaceAll("'", "")
+                                        .replaceAll("´", "")%>.jpg" alt="<%=list3[i].name%>">
+
+                                <div>
+                                    <h3 class="media-item"><%= list3[i].name%></h3>
+                                    <p>by <span style="font-style: italic"><%= list3[i].developer%></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <%}%>
+                </div>
+            <%}%>
+
+            <%if(list4.length != 0){%>
+                <div class="media-list">
+                    <h3>Books</h3>
+                    <% for(var i = 0; i < list4.length; i++) {%>
+                    <a href="/book/detail/<%=list4[i].id%>">
+                        <div class="lines">
+                            <div class="search-grid">
+                                <img class="shadow" src="/images/book/<%= list4[i].name.toLowerCase()
+                                        .replaceAll(" ", "_")
+                                        .replaceAll(":", "")
+                                        .replaceAll("'", "")
+                                        .replaceAll("´", "")%>.jpg" alt="<%=list4[i].name%>">
+
+                                <div>
+                                    <h3 class="media-item"><%= list4[i].name%></h3>
+                                    <p>by <span style="font-style: italic"><%= list4[i].author%></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <%}%>
+                </div>
+            <%}%>
         </div>
     </main>
 

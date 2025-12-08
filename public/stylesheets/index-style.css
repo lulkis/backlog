@@ -64,3 +64,15 @@ h1 {
 .status-stats > div {
     text-align: center;
 }
+
+.search-box {
+    box-sizing: border-box;
+    width: calc(100% - 20px); /* 10px left + 10px right */
+    margin: 10px;
+    padding: 10px;
+}
+
+.search-grid {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
