@@ -112,6 +112,14 @@ router.post('/edit/:id', function(req, res, next) {
     var studio = req.body.studio;
     var cast = req.body.cast;
     var episodes = req.body.episodes;
+    var cancelled;
+    if(req.body.cancelled === "1") {
+        cancelled = 1;
+    } else {
+        cancelled = 0;
+    }
+    console.log(req.body.cancelled)
+    console.log(cancelled)
 
     if(req.files != null){
         const path = './public/images/series/' + name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "")  + '.jpg';
@@ -140,9 +148,9 @@ router.post('/edit/:id', function(req, res, next) {
     }
 
     const sql = "Update series SET " +
-        "name=?, year=?, year_end=?, genre=?, country=?, description=?, idea=?, studio=?, cast=?, episodes=?, header_space=?" +
+        "name=?, year=?, year_end=?, genre=?, country=?, description=?, idea=?, studio=?, cast=?, episodes=?, header_space=?, cancelled=?" +
         "WHERE id = ?"
-    db.run(sql, [name, year, year_end, genre, country, description, idea, studio, cast, episodes, header_space, req.params.id]);
+    db.run(sql, [name, year, year_end, genre, country, description, idea, studio, cast, episodes, header_space, cancelled, req.params.id]);
 
     res.redirect('/series/detail/'+req.params.id);
 });

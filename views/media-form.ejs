@@ -97,6 +97,8 @@
                             <% if (route === "series") {%>
                                 <input name="studio" id="studio" placeholder="Studio" type="text" value="<%= media.studio%>">
                                 <br>
+                                <input type="checkbox" id="cancelled" name="cancelled" value="1" <%= media.cancelled === 1 ? "checked" : "" %>>
+                                <label for="cancelled"> Was the Show Cancelled?</label><br>
                             <%}%>
                             <% if (route === "game") {%>
                                 <input name="publisher" id="publisher" placeholder="Publisher" type="text" value="<%= media.publisher%>">
