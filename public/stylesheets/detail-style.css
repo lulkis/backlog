@@ -107,3 +107,7 @@ h4 > a:hover,
     left: 0;
     border-radius: 15px;
 }
+
+.minutes {
+    font-size: 25px;
+}

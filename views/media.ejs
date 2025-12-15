@@ -138,8 +138,10 @@
                     <img src="/images/countries/<%= media.country %>.png" height="35px">
                 </span><br>
                 <% if(route === 'movie') {%>
+                    <p class="minutes">
+                        <%= media.length %> Minutes
+                    </p>
                     <span><b>Studio:</b> <%= media.studio %></span><br>
-                    <span><b>Length:</b> <%= media.length %> Minutes</span>
                 <%}%>
                 <% if(route === 'series') {%>
                     <span><b>Studio:</b> <%= media.studio %></span>
