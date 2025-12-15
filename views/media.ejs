@@ -99,11 +99,19 @@
         <hr>
         <div class="two-grid">
             <div>
-                <img class="cover shadow" height="500px" src="/images/<%= route%>/<%= media.name.toLowerCase()
-                        .replaceAll(" ", "_")
-                        .replaceAll(":", "")
-                        .replaceAll("'", "")
-                        .replaceAll("´", "")%>.jpg" alt="<%=media.name%>">
+                <div class="img-parent">
+                    <img class="cover shadow" height="500px" src="/images/<%= route%>/<%= media.name.toLowerCase()
+                            .replaceAll(" ", "_")
+                            .replaceAll(":", "")
+                            .replaceAll("'", "")
+                            .replaceAll("´", "")%>.jpg" alt="<%=media.name%>">
+
+                    <%if(route === "series"){%>
+                        <%if(media.cancelled === 1){%>
+                            <img class="cancelled" height="500px" src="/images/icons/cancelled.png">
+                        <%}%>
+                    <%}%>
+                </div>
             </div>
 
             <div>

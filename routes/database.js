@@ -44,6 +44,7 @@ export function setup_database() {
         "studio VARCHAR(128)," +
         "cast TEXT," +
         "episodes TEXT," +
+        "cancelled BOOLEAN," +
         "CHECK (status IN ('open', 'started', 'finished'))" +
         ");"
     );

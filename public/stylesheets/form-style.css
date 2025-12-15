@@ -1,40 +1,25 @@
-.dragndrop {
-    border: 1px solid var(--highlight);
-    padding: 70px 50px;
-    border-radius: 10px;
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 100%;
-    display: block;
-}
-
-.space-bottom {
-    margin-bottom: 20px;
-}
-
 .two-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
 
-.dragndrop-title {
-    text-align: center;
-}
-
 button,
 textarea,
 input[type="text"] {
     resize: none;
-    background-color: var(--accent-one);
+    background-color: rgba(255, 250, 250, 0);
+    border: none;
     color: var(--highlight);
 
-    width: 100%;
     padding: 5px;
     box-sizing: border-box;
     margin: 10px 0;
-    border-style: solid;
     border-radius: 5px;
+}
+
+textarea {
+    width: 100%;
 }
 
 button {
@@ -43,7 +28,18 @@ button {
     font-size: 20px;
 }
 
-/*HOVER TOOLTIPS*/
+.from {
+    width: max-content;
+}
+
+#name {
+    background-color: rgba(255, 250, 250, 0);
+    border: none;
+    color: var(--highlight);
+    font-size: 35px;
+    width: 100%;
+}
+
 .tooltip {
     position: relative;
     display: inline-block;
@@ -62,4 +58,14 @@ button {
 
 .tooltip:hover .tooltiptext {
     visibility: visible;
+}
+
+.dragndrop {
+    border: 1px solid var(--highlight);
+    padding: 70px 50px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    display: block;
 }

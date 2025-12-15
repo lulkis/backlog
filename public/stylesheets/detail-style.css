@@ -19,10 +19,6 @@
     grid-template-columns: 1fr 1fr;
 }
 
-.cover{
-    border-radius: 15px;
-}
-
 hr {
     margin-bottom: 25px;
 }
@@ -89,5 +85,25 @@ h4 > a:hover,
     margin-top: 25px;
     background-color: var(--stats);
     padding: 5px 20px 10px 20px;
+    border-radius: 15px;
+}
+
+.cancelled{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+.img-parent {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.cover {
+    position: relative;
+    top: 0;
+    left: 0;
     border-radius: 15px;
 }

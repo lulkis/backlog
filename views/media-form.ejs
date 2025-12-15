@@ -21,94 +21,109 @@
                       method='post'
                       encType="multipart/form-data">
 
-                    <div class="two-grid">
-                        <div>
-                            <div class="center-drag space-bottom">
-                                <input name="foo" type="file" class="dragndrop" />
-                            </div>
-                            <p class="dragndrop-title">Cover</p>
-                        </div>
-
+                    <div>
                         <%if(route != 'book'){%>
                             <div>
                                 <div class="center-drag space-bottom">
                                     <input name="foo2" type="file" class="dragndrop" />
                                 </div>
-                                <p class="dragndrop-title">Header</p>
                             </div>
                         <%}%>
                     </div>
 
-                    <input name="name" id="name" placeholder="Name" type="text" value="<%= media.name%>">
-                    <br>
+                    <div class="two-grid">
+                        <input name="name" id="name" placeholder="Name" type="text" value="<%= media.name%>">
+                    </div>
 
-                    <%if(route === 'series'){%>
-                        <label for="year">Von</label>
-                        <input name="year" id="year" placeholder="Year" type="text" value="<%= media.year%>">
-                        <label for="year_end" style="line-height: 25px;">Bis</label>
+                    <div>
+                        By
+                        <% if (route === "movie") {%>
+                            <input class="from" name="director" id="director" placeholder="Director" type="text" value="<%= media.director%>">
+                        <%}%>
+                        <% if (route === "series") {%>
+                            <input class="from" name="idea" id="idea" placeholder="Idea" type="text" value="<%= media.idea%>">
+                        <%}%>
+                        <% if (route === "game") {%>
+                            <input class="from" name="developer" id="developer" placeholder="Developer" type="text" value="<%= media.developer%>">
+                        <%}%>
+                        <% if (route === "book") {%>
+                            <input class="from" name="author" id="author" placeholder="Author" type="text" value="<%= media.author%>">
+                        <%}%>
+                    </div>
 
-                        <div class="tooltip">
-                            <img  src="/images/icons/information.png" height="25px">
-                            <div class="tooltiptext">
-                                <ul>
-                                    <li>0 wenn Series noch läuft</li>
-                                    <li>Selbes Jahr wenn Series nur ein Jahr lief</li>
-                                </ul>
+                    <hr>
+
+                    <div class="two-grid">
+                        <div>
+                            <div class="center-drag space-bottom">
+                                <input name="foo" type="file" class="dragndrop" />
                             </div>
                         </div>
 
-                        <input name="year_end" id="year_end" placeholder="Year" type="text" value="<%= media.year_end%>">
-                    <%} else {%>
-                        <input name="year" id="year" placeholder="Year" type="text" value="<%= media.year%>">
-                    <%}%>
-                    <br>
-                    <input name="genre" id="genre" placeholder="Genre" type="text" value="<%= media.genre%>">
-                    <br>
-                    <input name="country" id="country" placeholder="Country" type="text" value="<%= media.country%>">
-                    <br>
-                    <input name="header_space" id="header_space" placeholder="Header Space" type="text" value="<%= media.header_space%>">
-                    <br>
+                        <div>
+                            <%if(route === 'series'){%>
+                                <label for="year">Von</label>
+                                <input name="year" id="year" placeholder="Year" type="text" value="<%= media.year%>">
+                                <label for="year_end" style="line-height: 25px;">Bis</label>
+
+                                <div class="tooltip">
+                                    <img  src="/images/icons/information.png" height="25px">
+                                    <div class="tooltiptext">
+                                        <ul>
+                                            <li>0 wenn Series noch läuft</li>
+                                            <li>Selbes Jahr wenn Series nur ein Jahr lief</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <input name="year_end" id="year_end" placeholder="Year" type="text" value="<%= media.year_end%>">
+                            <%} else {%>
+                                <input name="year" id="year" placeholder="Year" type="text" value="<%= media.year%>">
+                            <%}%>
+
+                            <br>
+                                <input name="genre" id="genre" placeholder="Genre" type="text" value="<%= media.genre%>">
+                                <br>
+                                <input name="country" id="country" placeholder="Country" type="text" value="<%= media.country%>">
+                                <br>
+                                <input name="header_space" id="header_space" placeholder="Header Space" type="text" value="<%= media.header_space%>">
+                                <br>
+
+                            <% if (route === "movie") {%>
+                                <input name="studio" id="studio" placeholder="Studio" type="text" value="<%= media.studio%>">
+                                <br>
+                                <input name="length" id="length" placeholder="Length" type="text" value="<%= media.length%>">
+                                <br>
+                            <%}%>
+                            <% if (route === "series") {%>
+                                <input name="studio" id="studio" placeholder="Studio" type="text" value="<%= media.studio%>">
+                                <br>
+                            <%}%>
+                            <% if (route === "game") {%>
+                                <input name="publisher" id="publisher" placeholder="Publisher" type="text" value="<%= media.publisher%>">
+                                <br>
+                            <%}%>
+                            <% if (route === "book") {%>
+                                <input name="length" id="length" placeholder="Length" type="text" value="<%= media.length%>">
+                                <br>
+                                <input name="publisher" id="publisher" placeholder="Publisher" type="text" value="<%= media.publisher%>">
+                                <br>
+                                <input name="illustrator" id="illustrator" placeholder="Illustrator" type="text" value="<%= media.illustrator%>">
+                                <br>
+                            <%}%>
+                        </div>
+                    </div>
+
+                    <hr>
                     <textarea rows="7" name="description" id="description" placeholder="Description" type="text" ><%= media.description%></textarea>
-                    <br>
 
-                    <% if (route === "movie") {%>
-                        <input name="studio" id="studio" placeholder="Studio" type="text" value="<%= media.studio%>">
-                        <br>
-                        <input name="director" id="director" placeholder="Director" type="text" value="<%= media.director%>">
-                        <br>
-                        <input name="length" id="length" placeholder="Length" type="text" value="<%= media.length%>">
-                        <br>
+                    <%if(route === "movie" ||route === "series"){%>
+                        <hr>
                         <textarea rows="7" name="cast" id="cast" placeholder="Cast" type="text" ><%= media.cast%></textarea>
-                        <br>
                     <%}%>
 
-                    <% if (route === "series") {%>
-                        <input name="idea" id="idea" placeholder="Idea" type="text" value="<%= media.idea%>">
-                        <br>
-                        <input name="studio" id="studio" placeholder="Studio" type="text" value="<%= media.studio%>">
-                        <br>
-                        <textarea rows="7" name="cast" id="cast" placeholder="Cast" type="text" ><%= media.cast%></textarea>
-                        <br>
+                    <%if(route === "series"){%>
+                        <hr>
                         <textarea rows="7" name="episodes" id="cast" placeholder="Episodes" type="text" ><%= media.episodes%></textarea>
-                        <br>
-                    <%}%>
-
-                    <% if (route === "game") {%>
-                        <input name="publisher" id="publisher" placeholder="Publisher" type="text" value="<%= media.publisher%>">
-                        <br>
-                        <input name="developer" id="developer" placeholder="Developer" type="text" value="<%= media.developer%>">
-                        <br>
-                    <%}%>
-
-                    <% if (route === "book") {%>
-                        <input name="author" id="author" placeholder="Author" type="text" value="<%= media.author%>">
-                        <br>
-                        <input name="length" id="length" placeholder="Length" type="text" value="<%= media.length%>">
-                        <br>
-                        <input name="publisher" id="publisher" placeholder="Publisher" type="text" value="<%= media.publisher%>">
-                        <br>
-                        <input name="illustrator" id="illustrator" placeholder="Illustrator" type="text" value="<%= media.illustrator%>">
-                        <br>
                     <%}%>
 
                     <button class="shadow" type="submit">Send</button>
