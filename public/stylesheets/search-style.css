@@ -47,3 +47,14 @@
     background-color: var(--accent-one);
     cursor: pointer;
 }
+
+.status-box {
+    background-color: var(--accent-two);
+    height: 66px;
+    width: 66px;
+    border-radius: 15px;
+}
+
+.status-box > img{
+    padding: 8px;
+}

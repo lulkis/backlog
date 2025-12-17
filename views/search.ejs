@@ -33,6 +33,16 @@
                                     <h3 class="media-item"><%= list[i].name%></h3>
                                     <p>by <span style="font-style: italic"><%= list[i].director%></span></p>
                                 </div>
+
+                                <div class="status-box shadow">
+                                    <% if(list[i].status === "open"){%>
+                                        <img src="/images/icons/open.png" width="50px">
+                                    <%} else if(list[i].status === "started") {%>
+                                        <img src="/images/icons/start.png" width="50px">
+                                    <% } else { %>
+                                        <img src="/images/icons/finish.png" width="50px">
+                                    <%}%>
+                                </div>
                             </div>
                         </div>
                     </a>
@@ -56,6 +66,16 @@
                                 <div>
                                     <h3 class="media-item"><%= list2[i].name%></h3>
                                     <p>by <span style="font-style: italic"><%= list2[i].idea%></span></p>
+                                </div>
+
+                                <div class="status-box shadow">
+                                    <% if(list2[i].status === "open"){%>
+                                        <img src="/images/icons/open.png" width="50px">
+                                    <%} else if(list2[i].status === "started") {%>
+                                        <img src="/images/icons/start.png" width="50px">
+                                    <% } else { %>
+                                        <img src="/images/icons/finish.png" width="50px">
+                                    <%}%>
                                 </div>
                             </div>
                         </div>
@@ -81,6 +101,16 @@
                                     <h3 class="media-item"><%= list3[i].name%></h3>
                                     <p>by <span style="font-style: italic"><%= list3[i].developer%></span></p>
                                 </div>
+
+                                <div class="status-box shadow">
+                                    <% if(list3[i].status === "open"){%>
+                                        <img src="/images/icons/open.png" width="50px">
+                                    <%} else if(list3[i].status === "started") {%>
+                                        <img src="/images/icons/start.png" width="50px">
+                                    <% } else { %>
+                                        <img src="/images/icons/finish.png" width="50px">
+                                    <%}%>
+                                </div>
                             </div>
                         </div>
                     </a>
@@ -104,6 +134,16 @@
                                 <div>
                                     <h3 class="media-item"><%= list4[i].name%></h3>
                                     <p>by <span style="font-style: italic"><%= list4[i].author%></span></p>
+                                </div>
+
+                                <div class="status-box shadow">
+                                    <% if(list4[i].status === "open"){%>
+                                        <img src="/images/icons/open.png" width="50px">
+                                    <%} else if(list4[i].status === "started") {%>
+                                        <img src="/images/icons/start.png" width="50px">
+                                    <% } else { %>
+                                        <img src="/images/icons/finish.png" width="50px">
+                                    <%}%>
                                 </div>
                             </div>
                         </div>
