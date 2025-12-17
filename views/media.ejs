@@ -90,10 +90,11 @@
                 <%}%>
 
                 <%if(media.status === 'finished'){%>
-                    <div class="boxtohover">
-                        <a>
-                            <div class="detail-button shadow click-anim">
+                    <div class="boxtohover repeat-a">
+                        <a href="/<%= route%>/repeat/<%= media.id%>">
+                            <div class="detail-button shadow click-anim repeat">
                                 <img src="/images/icons/repeat.png" height="30px">
+                                <span><%= finish.finishcount%></span>
                             </div>
                         </a>
                         <span class="infotohover">Finished Again</span>

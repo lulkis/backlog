@@ -175,4 +175,14 @@ router.post('/finish/:id', function(req, res, next) {
     res.redirect('/movie/detail/' + id);
 })
 
+router.get('/repeat/:id', function(req, res, next) {
+    const db = new sqlite3.Database('backlog.db');
+
+    const id = req.params.id;
+    const sql2 = "UPDATE movie_finished SET finishcount = finishcount + 1 WHERE id = ?";
+    db.run(sql2, [id]);
+
+    res.redirect('/movie/detail/' + id);
+})
+
 module.exports = router;

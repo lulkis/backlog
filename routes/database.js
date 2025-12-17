@@ -96,6 +96,7 @@ export function setup_database() {
         "rating INTEGER," +
         "valuation TEXT," +
         "like BOOLEAN," +
+        "finishcount INTEGER default 1," +
         "FOREIGN KEY(id) REFERENCES movie(id)" +
         ");"
     );
@@ -107,6 +108,7 @@ export function setup_database() {
         "rating INTEGER," +
         "valuation TEXT," +
         "like BOOLEAN," +
+        "finishcount INTEGER default 1," +
         "FOREIGN KEY(id) REFERENCES series(id)" +
         ");"
     );
@@ -118,6 +120,7 @@ export function setup_database() {
         "rating INTEGER," +
         "valuation TEXT," +
         "like BOOLEAN," +
+        "finishcount INTEGER default 1," +
         "FOREIGN KEY(id) REFERENCES game(id)" +
         ");"
     );
@@ -129,6 +132,7 @@ export function setup_database() {
         "rating INTEGER," +
         "valuation TEXT," +
         "like BOOLEAN," +
+        "finishcount INTEGER default 1," +
         "FOREIGN KEY(id) REFERENCES book(id)" +
         ");"
     );
