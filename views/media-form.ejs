@@ -93,16 +93,22 @@
                                 <br>
                                 <input name="length" id="length" placeholder="Length" type="text" value="<%= media.length%>">
                                 <br>
+                                <input name="score" id="score" placeholder="Score" type="text" value="<%= media.score%>">
+                                <br>
                             <%}%>
                             <% if (route === "series") {%>
                                 <input name="studio" id="studio" placeholder="Studio" type="text" value="<%= media.studio%>">
                                 <br>
+                                    <input name="score" id="score" placeholder="Score" type="text" value="<%= media.score%>">
+                                    <br>
                                 <input type="checkbox" id="cancelled" name="cancelled" value="1" <%= media.cancelled === 1 ? "checked" : "" %>>
                                 <label for="cancelled"> Was the Show Cancelled?</label><br>
                             <%}%>
                             <% if (route === "game") {%>
                                 <input name="publisher" id="publisher" placeholder="Publisher" type="text" value="<%= media.publisher%>">
                                 <br>
+                                    <input name="score" id="score" placeholder="Score" type="text" value="<%= media.score%>">
+                                    <br>
                             <%}%>
                             <% if (route === "book") {%>
                                 <input name="length" id="length" placeholder="Length" type="text" value="<%= media.length%>">

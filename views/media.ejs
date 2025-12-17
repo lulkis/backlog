@@ -142,12 +142,15 @@
                         <%= media.length %> Minutes
                     </p>
                     <span><b>Studio:</b> <%= media.studio %></span><br>
+                    <span><b>Score:</b> <%= media.score %></span><br>
                 <%}%>
                 <% if(route === 'series') {%>
-                    <span><b>Studio:</b> <%= media.studio %></span>
+                    <span><b>Studio:</b> <%= media.studio %></span><br>
+                    <span><b>Score:</b> <%= media.score %></span><br>
                 <%}%>
                 <% if(route === 'game') {%>
-                    <span><b>Publisher:</b> <%= media.publisher %></span>
+                    <span><b>Publisher:</b> <%= media.publisher %></span><br>
+                    <span><b>Score:</b> <%= media.score %></span><br>
                 <%}%>
                 <% if(route === 'book') {%>
                     <span><b>Length:</b> <%= media.length %></span><br>

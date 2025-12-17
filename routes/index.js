@@ -63,17 +63,17 @@ router.get('/get/:name', function(req, res, next) {
     //SELECT * FROM movie WHERE movie_cast LIKE $1
     const db = new sqlite3.Database('backlog.db');
 
-    var query = "SELECT * FROM movie WHERE CONCAT(movie.name, movie.director, movie.cast, movie.studio) LIKE ? ORDER BY movie.year DESC ";
+    var query = "SELECT * FROM movie WHERE CONCAT(movie.name, movie.director, movie.cast, movie.studio, movie.score) LIKE ? ORDER BY movie.year DESC ";
     db.all(query,['%'+req.params.name+'%'], function (err, rows) {
         if(err){
             console.log(err);
         }else{
-            var query = "SELECT * FROM series WHERE CONCAT(series.name, series.idea, series.cast, series.studio) LIKE ? ORDER BY series.year";
+            var query = "SELECT * FROM series WHERE CONCAT(series.name, series.idea, series.cast, series.studio, series.score) LIKE ? ORDER BY series.year";
             db.all(query,['%'+req.params.name+'%'], function (err, rows2) {
                 if(err){
                     console.log(err);
                 }else{
-                    var query = "SELECT * FROM game WHERE CONCAT(game.name, game.publisher, game.developer) LIKE ? ORDER BY game.year";
+                    var query = "SELECT * FROM game WHERE CONCAT(game.name, game.publisher, game.developer, game.score) LIKE ? ORDER BY game.year";
                     db.all(query,['%'+req.params.name+'%'], function (err, rows3) {
                         if(err){
                             console.log(err);

@@ -38,6 +38,7 @@ router.post('/add', function(req, res, next) {
     var length = req.body.length;
     var cast = req.body.cast;
     var header_space = req.body.header_space;
+    var score = req.body.score;
 
     console.log(req.files);
 
@@ -59,9 +60,9 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    const sql = "INSERT INTO movie (name, year, genre, country, description, status, added, studio, director, length, cast, header_space)" +
-        "   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    db.get(sql, [name, year, genre, country, description, status, date_added, studio, director, length, cast, header_space]), (err, row) => {
+    const sql = "INSERT INTO movie (name, year, genre, country, description, status, added, studio, director, length, cast, header_space, score)" +
+        "   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    db.get(sql, [name, year, genre, country, description, status, date_added, studio, director, length, cast, header_space, score]), (err, row) => {
         if (err) return console.error(err.message)
         console.log("value id is:",row.id)
     }
@@ -115,6 +116,7 @@ router.post('/edit/:id', function(req, res, next) {
     var length = req.body.length;
     var cast = req.body.cast;
     var header_space = req.body.header_space;
+    var score = req.body.score;
 
     if(req.files != null){
         const path = './public/images/movies/' + name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "")  + '.jpg';
@@ -143,9 +145,9 @@ router.post('/edit/:id', function(req, res, next) {
     }
 
     const sql = "Update movie SET " +
-        "name=?, year=?, genre=?, country=?, description=?, studio=?, director=?, length=?, cast=?, header_space=?" +
+        "name=?, year=?, genre=?, country=?, description=?, studio=?, director=?, length=?, cast=?, header_space=?, score=?" +
         "WHERE id = ?"
-    db.run(sql, [name, year, genre, country, description, studio, director, length, cast, header_space, req.params.id]);
+    db.run(sql, [name, year, genre, country, description, studio, director, length, cast, header_space, score, req.params.id]);
 
     res.redirect('/movie/detail/'+req.params.id);
 });

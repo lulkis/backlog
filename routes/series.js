@@ -39,6 +39,7 @@ router.post('/add', function(req, res, next) {
     var studio = req.body.studio;
     var cast = req.body.cast;
     var episodes = req.body.episodes;
+    var score = req.body.score;
 
     var path = './public/images/series/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
     let picture = req.files.foo;
@@ -58,9 +59,9 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    const sql = "INSERT INTO series (name, year, year_end, genre, country, description, status, added, idea, studio, cast, episodes, header_space)" +
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    db.run(sql, [name, year, year_end, genre, country, description, status, date_added, idea, studio, cast, episodes, header_space]);
+    const sql = "INSERT INTO series (name, year, year_end, genre, country, description, status, added, idea, studio, cast, episodes, header_space, score)" +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    db.run(sql, [name, year, year_end, genre, country, description, status, date_added, idea, studio, cast, episodes, header_space, score]);
 
     res.redirect('/series')
 })
@@ -112,6 +113,7 @@ router.post('/edit/:id', function(req, res, next) {
     var studio = req.body.studio;
     var cast = req.body.cast;
     var episodes = req.body.episodes;
+    var score = req.body.score;
     var cancelled;
     if(req.body.cancelled === "1") {
         cancelled = 1;
@@ -148,9 +150,9 @@ router.post('/edit/:id', function(req, res, next) {
     }
 
     const sql = "Update series SET " +
-        "name=?, year=?, year_end=?, genre=?, country=?, description=?, idea=?, studio=?, cast=?, episodes=?, header_space=?, cancelled=?" +
+        "name=?, year=?, year_end=?, genre=?, country=?, description=?, idea=?, studio=?, cast=?, episodes=?, header_space=?, cancelled=?, score=?" +
         "WHERE id = ?"
-    db.run(sql, [name, year, year_end, genre, country, description, idea, studio, cast, episodes, header_space, cancelled, req.params.id]);
+    db.run(sql, [name, year, year_end, genre, country, description, idea, studio, cast, episodes, header_space, cancelled, score, req.params.id]);
 
     res.redirect('/series/detail/'+req.params.id);
 });

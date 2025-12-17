@@ -24,6 +24,7 @@ export function setup_database() {
         "director VARCHAR(128)," +
         "length INTEGER," +
         "cast TEXT," +
+        "score VARCHAR(128)," +
         "CHECK (status IN ('open', 'started', 'finished'))" +
         ");"
     );
@@ -45,6 +46,7 @@ export function setup_database() {
         "cast TEXT," +
         "episodes TEXT," +
         "cancelled BOOLEAN," +
+        "score VARCHAR(128)," +
         "CHECK (status IN ('open', 'started', 'finished'))" +
         ");"
     );
@@ -81,6 +83,7 @@ export function setup_database() {
         "added VARCHAR(128)," +
         "developer VARCHAR(128)," +
         "publisher VARCHAR(128)," +
+        "score VARCHAR(128)," +
         "CHECK (status IN ('open', 'started', 'finished'))" +
         ");"
     );
