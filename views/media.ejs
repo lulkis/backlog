@@ -55,53 +55,58 @@
 
             <div class="base">
                 <%if((media.status != 'finished' &&  route === 'movie') || media.status === 'started' &&  route != 'movie'){%>
-                    <div>
+                    <div class="boxtohover">
                         <a href="/<%= route%>/finish/<%= media.id%>" >
                             <div class="detail-button shadow click-anim">
                                 <img src="/images/icons/finish.png" height="30px">
                             </div>
                         </a>
+                        <span class="infotohover">Finish Media</span>
                     </div>
                 <%}%>
 
                 <%if(media.status === 'open' && route != 'movie'){%>
-                <div>
+                <div class="boxtohover">
                     <a href="/<%= route%>/start/<%= media.id%>" >
                         <div class="detail-button shadow click-anim">
                             <img src="/images/icons/start.png" height="30px">
                         </div>
                     </a>
+                    <span class="infotohover">Start Media</span>
                 </div>
                 <%}%>
 
                 <%if(media.status === 'finished' && route == 'series'){%>
                     <%if(media.year_end === 0){%>
-                        <div>
+                        <div class="boxtohover">
                             <a href="/<%= route%>/new/<%= media.id%>" >
                                 <div class="detail-button shadow click-anim">
                                     <img src="/images/icons/bolt.png" height="30px">
                                 </div>
                             </a>
+                            <span class="infotohover">New Season</span>
                         </div>
                     <%}%>
                 <%}%>
 
                 <%if(media.status === 'finished'){%>
-                    <div>
+                    <div class="boxtohover">
                         <a>
                             <div class="detail-button shadow click-anim">
                                 <img src="/images/icons/repeat.png" height="30px">
                             </div>
                         </a>
+                        <span class="infotohover">Finished Again</span>
                     </div>
                 <%}%>
 
-                <div>
+                <div class="boxtohover">
                     <a href="/<%=route%>/edit/<%= media.id%>">
                         <div class="detail-button shadow click-anim">
                             <img src="/images/icons/edit.png" height="30px">
                         </div>
                     </a>
+                    <span class="infotohover">Edit Media</span>
                 </div>
             </div>
         </div>

@@ -111,3 +111,41 @@ h4 > a:hover,
 .minutes {
     font-size: 25px;
 }
+
+/* HERE ALL HOVER OPTIONS */
+.boxtohover {
+    position: relative;
+}
+
+.infotohover {
+    position: absolute;
+    top: -50px;
+    width: max-content;
+
+    padding-left: 5px;
+    padding-right: 5px;
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    background: #000000;
+    border: 1px solid #DFDFDF;
+    color: #ffffff;
+    font-size: 11px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition: opacity 0.2s ease;
+    transition-delay: 1s;
+}
+
+.boxtohover:hover .infotohover {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 1s;
+}
