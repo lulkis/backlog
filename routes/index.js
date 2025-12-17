@@ -108,7 +108,14 @@ router.get('/search/:name', function(req, res, next) {
                 if(err){
                     console.log(err);
                 }else{
-                    res.render('search', { name: req.params.name, list: rows, list2: rows2, list3: [], list4: [] });
+                    var query = "SELECT * FROM game WHERE game.cast LIKE ? ORDER BY game.year";
+                    db.all(query,['%'+req.params.name+'%'], function (err, rows3) {
+                        if(err){
+                            console.log(err);
+                        }else{
+                            res.render('search', { name: req.params.name, list: rows, list2: rows2, list3: rows3, list4: [] });
+                        }
+                    });
                 }
             });
         }

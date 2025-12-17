@@ -84,6 +84,7 @@ export function setup_database() {
         "developer VARCHAR(128)," +
         "publisher VARCHAR(128)," +
         "score VARCHAR(128)," +
+        "cast TEXT," +
         "CHECK (status IN ('open', 'started', 'finished'))" +
         ");"
     );

@@ -35,6 +35,7 @@ router.post('/add', function(req, res, next) {
     var developer = req.body.developer;
     var publisher = req.body.publisher;
     var score = req.body.score;
+    var cast = req.body.cast;
 
     var path = './public/images/game/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
     let picture = req.files.foo;
@@ -54,9 +55,9 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    const sql = "INSERT INTO game (name, year, genre, country, description, status, added, developer, publisher, header_space, score)" +
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    db.run(sql, [name, year, genre, country, description, status, date_added, developer, publisher, header_space, score]);
+    const sql = "INSERT INTO game (name, year, genre, country, description, status, added, developer, publisher, header_space, score, cast)" +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    db.run(sql, [name, year, genre, country, description, status, date_added, developer, publisher, header_space, score, cast]);
 
     res.redirect('/game')
 })
@@ -106,6 +107,7 @@ router.post('/edit/:id', function(req, res, next) {
     var publisher = req.body.publisher;
     var header_space = req.body.header_space;
     var score = req.body.score;
+    var cast = req.body.cast;
 
     if(req.files != null){
         const path = './public/images/game/' + name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "")  + '.jpg';
@@ -134,9 +136,9 @@ router.post('/edit/:id', function(req, res, next) {
     }
 
     const sql = "Update game SET " +
-        "name=?, year=?, genre=?, country=?, description=?, developer=?, publisher=?, header_space=?, score=?" +
+        "name=?, year=?, genre=?, country=?, description=?, developer=?, publisher=?, header_space=?, score=?, cast=?" +
         "WHERE id = ?"
-    db.run(sql, [name, year, genre, country, description, developer, publisher, header_space, score, req.params.id]);
+    db.run(sql, [name, year, genre, country, description, developer, publisher, header_space, score, cast, req.params.id]);
 
     res.redirect('/game/detail/'+req.params.id);
 });
