@@ -167,3 +167,24 @@ h4 > a:hover,
     visibility: visible;
     transition-delay: 1s;
 }
+
+/* HOW LONG TO BEAT*/
+.hltb-box {
+    margin-top: 20px;
+    background-color: var(--stats);
+}
+
+.hltb-grid {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.hltb-grid > div {
+    font-size: large;
+    padding: 10px;
+}
+
+.hltb-grid > div > br{
+    margin-top: 10px;
+}

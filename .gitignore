@@ -2,7 +2,9 @@
 node_modules/
 
 *.db
+*.db-journal
 /public/images/book/
 /public/images/game/
 /public/images/movie/
 /public/images/series/
+/public/recources/hltb_dataset.csv

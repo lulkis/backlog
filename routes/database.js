@@ -1,4 +1,6 @@
 import sqlite3 from "sqlite3";
+import fs from "fs";
+import csv from "csv-parser";
 
 export function setup_database() {
     //Datenbanken
@@ -138,4 +140,22 @@ export function setup_database() {
     );
 
     db.close()
+
+    const db2 = new sqlite3.Database('hltb.db', (err) => {
+        if (err) {
+            return console.error(err.message);
+        }
+        console.log('Connected to the backlog database.');
+    });
+
+    db2.run("CREATE TABLE IF NOT EXISTS games (" +
+        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+        "title TEXT NOT NULL," +
+        "main TEXT," +
+        "main_extra TEXT," +
+        "completionist TEXT" +
+        ");"
+    );
+
+
 }

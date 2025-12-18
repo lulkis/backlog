@@ -64,6 +64,7 @@ router.post('/add', function(req, res, next) {
 
 router.get('/detail/:id', function(req, res, next) {
     const db = new sqlite3.Database('backlog.db');
+    const db2 = new sqlite3.Database('hltb.db');
 
     var query = "SELECT * FROM game WHERE id = ?;";
     db.all(query, [req.params.id], function (err, rows) {
@@ -75,7 +76,16 @@ router.get('/detail/:id', function(req, res, next) {
                 if(err){
                     console.log(err);
                 }else{
-                    res.render('media', { media: rows[0], route: 'game', finish: rows2[0]});
+
+                    var query2 = "SELECT * FROM games WHERE title = ? OR title = ?;";
+                    db2.all(query2, [rows[0].name, rows[0].name+'('+rows[0].year+')'], function (err, hltb) {
+                        if(err){
+                            console.log(err);
+                        }else{
+                            console.log(hltb);
+                            res.render('media', { media: rows[0], route: 'game', finish: rows2[0], hltb: hltb[0] });
+                        }
+                    });
                 }
             });
         }
