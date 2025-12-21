@@ -94,3 +94,28 @@ h1 {
     border-style: none;
     border-radius: 10px 0 0 10px;
 }
+
+.movie-header {
+    background-image: url("/resources/movie_header.png");
+    background-size: cover;
+}
+
+.series-header {
+    background-image: url("/resources/series_header.png");
+    background-size: cover;
+}
+
+.game-header {
+    background-image: url("/resources/game_header.png");
+    background-size: cover;
+}
+
+.book-header {
+    background-image: url("/resources/book_header.png");
+    background-size: cover;
+}
+
+.audiobook-header {
+    background-image: url("/resources/audiobook_header.png");
+    background-size: cover;
+}
