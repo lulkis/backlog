@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var sqlite3 = require('sqlite3');
+var dotenv = require('dotenv').config()
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -79,11 +80,32 @@ router.get('/detail/:id', function(req, res, next) {
             console.log(err);
         }else{
             var query = "SELECT * FROM movie_finished WHERE id = ?";
-            db.all(query, [req.params.id], function (err, rows2) {
-                if(err){
+            db.all(query, [req.params.id], async function (err, rows2) {
+                if (err) {
                     console.log(err);
-                }else{
-                    res.render('media', { media: rows[0], route: 'movie', finish: rows2[0]});
+                } else {
+                    const API_KEY = process.env.API_KEY;
+                    const query = rows[0].name;
+                    const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=de-DE`;
+
+                    const searchRes = await fetch(searchUrl);
+                    const searchData = await searchRes.json()
+
+                    const movieId = searchData.results[0].id;
+                    console.log(movieId);
+
+                    const providersUrl = `https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=${API_KEY}`;
+
+                    const provRes = await fetch(providersUrl);
+                    const provData = await provRes.json();
+                    const germany = provData.results.DE;
+
+                    if (!germany) {
+                        res.render('media', {media: rows[0], route: 'movie', finish: rows2[0], stream: []});
+                    } else {
+                        console.log(germany.flatrate)
+                        res.render('media', {media: rows[0], route: 'movie', finish: rows2[0], stream: germany.flatrate});
+                    }
                 }
             });
         }

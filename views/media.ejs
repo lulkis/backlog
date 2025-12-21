@@ -195,6 +195,16 @@
                     <%}%>
                 <%}%>
 
+                <%if(route === 'movie' && stream){%>
+                    <p>
+                        <div class="stream-box">
+                            <%for(var i = 0; i < stream.length; i++){%>
+                                <img class="streaming-service shadow" src="https://image.tmdb.org/t/p/w92/<%= stream[i].logo_path%>">
+                            <%}%>
+                        </div>
+                    </p>
+                <%}%>
+
                 <p style="margin-top:21px">
                     <% var tiles = media.genre.split(", "); for(var i = 0; i < tiles.length; i++) {%>
                     <span class="tag shadow"><%=tiles[i]%></span>

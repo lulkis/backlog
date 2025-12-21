@@ -188,3 +188,14 @@ h4 > a:hover,
 .hltb-grid > div > br{
     margin-top: 10px;
 }
+
+.stream-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, max-content));
+    grid-auto-flow: dense;
+}
+
+.streaming-service {
+    height: 50px;
+    border-radius: 10px;
+}
