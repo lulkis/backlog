@@ -1,6 +1,9 @@
 var express = require('express');
 const sqlite3 = require("sqlite3");
+const { access } = require("fs/promises");
+const { constants } = require("fs");
 var router = express.Router();
+const path = require("path");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -83,7 +86,7 @@ router.get('/get/:name', function(req, res, next) {
                                 if(err){
                                     console.log(err);
                                 }else{
-                                    res.render('search', { name: req.params.name, list: rows, list2: rows2, list3: rows3, list4: rows4 });
+                                    res.render('search', { name: req.params.name, list: rows, list2: rows2, list3: rows3, list4: rows4, search_type: "general"});
                                 }
                             });
                         }
@@ -109,11 +112,26 @@ router.get('/search/:name', function(req, res, next) {
                     console.log(err);
                 }else{
                     var query = "SELECT * FROM game WHERE game.cast LIKE ? ORDER BY game.year";
-                    db.all(query,['%'+req.params.name+'%'], function (err, rows3) {
-                        if(err){
+                    db.all(query,['%'+req.params.name+'%'], async function (err, rows3) {
+                        if (err) {
                             console.log(err);
-                        }else{
-                            res.render('search', { name: req.params.name, list: rows, list2: rows2, list3: rows3, list4: [] });
+                        } else {
+                            var search = "general"
+                            const pth = path.join(__dirname, "../public/images/actors/" + req.params.name.replaceAll(".", "") + ".jpg");
+                            console.log(pth);
+                            if (await fileExists(pth)) {
+                                console.log("Datei existiert");
+                                search = "actor";
+                            }
+
+                            res.render('search', {
+                                name: req.params.name,
+                                list: rows,
+                                list2: rows2,
+                                list3: rows3,
+                                list4: [],
+                                search_type: search
+                            });
                         }
                     });
                 }
@@ -136,11 +154,20 @@ router.get('/director/:name', function(req, res, next) {
                 if(err){
                     console.log(err);
                 }else{
-                    res.render('search', { name: req.params.name, list: rows, list2: rows2, list3: [], list4: [] });
+                    res.render('search', { name: req.params.name, list: rows, list2: rows2, list3: [], list4: [], search_type: "director"});
                 }
             });
         }
     });
 })
+
+async function fileExists(path) {
+    try {
+        await access(path, constants.F_OK);
+        return true;
+    } catch {
+        return false;
+    }
+}
 
 module.exports = router;

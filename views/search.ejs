@@ -14,7 +14,16 @@
 
     <main>
         <div class="container">
-            <h1><%= name%></h1>
+            <%if(search_type === "actor"){%>
+                <div class="two-grid">
+                    <div class="actor-image shadow"
+                         style="background-image:url('/images/actors/<%= name.replaceAll(".", "")%>.jpg')"
+                    ></div>
+                    <h1><%= name%></h1>
+                </div>
+            <%} else {%>
+                <h1><%= name%></h1>
+            <%}%>
 
             <%if(list.length != 0){%>
                 <div class="media-list">
@@ -30,8 +39,11 @@
                                         .replaceAll("´", "")%>.jpg" alt="<%=list[i].name%>">
 
                                 <div>
-                                    <h3 class="media-item"><%= list[i].name%></h3>
-                                    <p>by <span style="font-style: italic"><%= list[i].director%></span></p>
+                                    <p>
+                                        <span style="font-size: 20px;"><b><%= list[i].name%></b></span><br>
+                                        <span>(<%= list[i].year%>)</span><br>
+                                        <span>By <%= list[i].director%></span>
+                                    </p>
                                 </div>
 
                                 <div class="status-box shadow">
@@ -64,8 +76,11 @@
                                         .replaceAll("´", "")%>.jpg" alt="<%=list2[i].name%>">
 
                                 <div>
-                                    <h3 class="media-item"><%= list2[i].name%></h3>
-                                    <p>by <span style="font-style: italic"><%= list2[i].idea%></span></p>
+                                    <p>
+                                        <span style="font-size: 20px;"><b><%= list2[i].name%></b></span><br>
+                                        <span>(<%= list2[i].year%>)</span><br>
+                                        <span>By <%= list2[i].idea%></span>
+                                    </p>
                                 </div>
 
                                 <div class="status-box shadow">
@@ -98,8 +113,11 @@
                                         .replaceAll("´", "")%>.jpg" alt="<%=list3[i].name%>">
 
                                 <div>
-                                    <h3 class="media-item"><%= list3[i].name%></h3>
-                                    <p>by <span style="font-style: italic"><%= list3[i].developer%></span></p>
+                                    <p>
+                                        <span style="font-size: 20px;"><b><%= list3[i].name%></b></span><br>
+                                        <span>(<%= list3[i].year%>)</span><br>
+                                        <span>By <%= list3[i].developer%></span>
+                                    </p>
                                 </div>
 
                                 <div class="status-box shadow">
@@ -132,8 +150,11 @@
                                         .replaceAll("´", "")%>.jpg" alt="<%=list4[i].name%>">
 
                                 <div>
-                                    <h3 class="media-item"><%= list4[i].name%></h3>
-                                    <p>by <span style="font-style: italic"><%= list4[i].author%></span></p>
+                                    <p>
+                                        <span style="font-size: 20px;"><b><%= list4[i].name%></b></span><br>
+                                        <span>(<%= list4[i].year%>)</span><br>
+                                        <span>By <%= list4[i].author%></span>
+                                    </p>
                                 </div>
 
                                 <div class="status-box shadow">

@@ -60,3 +60,18 @@
 .status-box > img{
     padding: 8px;
 }
+
+.actor-image {
+    background-color: var(--stats);
+    height: 250px;
+    width: 250px;
+    margin: 20px;
+    border-radius: 180px;
+    background-size: cover;
+}
+
+.two-grid {
+    display: grid;
+    grid-auto-flow: column;
+    width: max-content;
+}
