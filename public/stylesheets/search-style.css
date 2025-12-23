@@ -25,6 +25,8 @@
     width: 100px;
 
     border-radius: 5px;
+    object-fit: cover;
+    image-rendering: smooth;
 }
 
 .search-grid > div {
