@@ -5,6 +5,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const { getSettings } = require("./settings");
+
 var indexRouter = require('./routes/index');
 var moviesRouter = require('./routes/movie');
 var gamesRouter = require('./routes/game');
@@ -15,6 +17,11 @@ var app = express();
 
 var t = require("./routes/database.js");
 t.setup_database();
+
+app.use((req, res, next) => {
+    res.locals.settings = getSettings();
+    next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var sqlite3 = require('sqlite3');
 var dotenv = require('dotenv').config()
+const { getSettings, updateSetting } = require("../settings");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -101,10 +102,10 @@ router.get('/detail/:id', function(req, res, next) {
                     const germany = provData.results.DE;
 
                     if (!germany) {
-                        res.render('media', {media: rows[0], route: 'movie', finish: rows2[0], stream: []});
+                        res.render('media', {media: rows[0], route: 'movie', finish: rows2[0], stream: [], settings: getSettings()});
                     } else {
                         console.log(germany.flatrate)
-                        res.render('media', {media: rows[0], route: 'movie', finish: rows2[0], stream: germany.flatrate});
+                        res.render('media', {media: rows[0], route: 'movie', finish: rows2[0], stream: germany.flatrate, settings: getSettings()});
                     }
                 }
             });

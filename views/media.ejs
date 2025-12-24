@@ -155,7 +155,11 @@
                 </span><br>
                 <% if(route === 'movie') {%>
                     <p class="minutes">
-                        <%= media.length %> Minutes
+                        <%if(settings.time_in_minutes === true){%>
+                            <%= media.length %> Minutes
+                        <%} else {%>
+                                <%= (media.length - (media.length%60))/60 %>h <%= (media.length % 60) %>min
+                        <%}%>
                     </p>
                     <span><b>Studio:</b> <%= media.studio %></span><br>
                     <span><b>Score:</b> <%= media.score %></span><br>
