@@ -92,14 +92,18 @@ router.get('/detail/:id', function(req, res, next) {
                     const searchRes = await fetch(searchUrl);
                     const searchData = await searchRes.json()
 
-                    const movieId = searchData.results[0].id;
-                    console.log(movieId);
+                    var movieId = 10
+                    try {
+                        movieId = searchData.results[0].id;
+                        console.log(movieId);
+                    } catch (err) {}
 
                     const providersUrl = `https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=${API_KEY}`;
 
                     const provRes = await fetch(providersUrl);
                     const provData = await provRes.json();
-                    const germany = provData.results.DE;
+                    console.log(provData);
+                    var germany = provData.results.DE;
 
                     if (!germany) {
                         res.render('media', {media: rows[0], route: 'movie', finish: rows2[0], stream: [], settings: getSettings()});
