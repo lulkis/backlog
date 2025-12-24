@@ -113,6 +113,12 @@
         </div>
 
         <hr>
+        <%if(days > 0){%>
+            <div class="upcoming">
+                <b><%= days%></b> <i>days until release</i> - <%= media.upcoming%>
+            </div>
+        <%}%>
+
         <div class="three-grid">
             <div>
                 <div class="img-parent">

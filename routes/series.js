@@ -40,6 +40,7 @@ router.post('/add', function(req, res, next) {
     var cast = req.body.cast;
     var episodes = req.body.episodes;
     var score = req.body.score;
+    var upcoming = req.body.upcoming;
 
     var path = './public/images/series/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
     let picture = req.files.foo;
@@ -59,9 +60,9 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    const sql = "INSERT INTO series (name, year, year_end, genre, country, description, status, added, idea, studio, cast, episodes, header_space, score)" +
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    db.run(sql, [name, year, year_end, genre, country, description, status, date_added, idea, studio, cast, episodes, header_space, score]);
+    const sql = "INSERT INTO series (name, year, year_end, genre, country, description, status, added, idea, studio, cast, episodes, header_space, score, upcoming)" +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    db.run(sql, [name, year, year_end, genre, country, description, status, date_added, idea, studio, cast, episodes, header_space, score, upcoming]);
 
     res.redirect('/series')
 })
@@ -79,7 +80,17 @@ router.get('/detail/:id', function(req, res, next) {
                 if(err){
                     console.log(err);
                 }else{
-                    res.render('media', { media: rows[0], route: 'series', finish: rows2[0]});
+                    const input = rows[0].upcoming;
+                    var diffDays = 0
+                    if(input){
+                        const [day, month, year] = input.split(".");
+                        const date = new Date(year, month - 1, day);
+                        const current_date = new Date();
+                        const oneDay = 24 * 60 * 60 * 1000;
+                        diffDays = Math.round(Math.abs((current_date - date) / oneDay));
+                    }
+
+                    res.render('media', { media: rows[0], route: 'series', finish: rows2[0], days: diffDays});
                 }
             });
         }
@@ -115,6 +126,7 @@ router.post('/edit/:id', function(req, res, next) {
     var episodes = req.body.episodes;
     var score = req.body.score;
     var cancelled;
+    var upcoming = req.body.upcoming;
     if(req.body.cancelled === "1") {
         cancelled = 1;
     } else {
@@ -150,9 +162,9 @@ router.post('/edit/:id', function(req, res, next) {
     }
 
     const sql = "Update series SET " +
-        "name=?, year=?, year_end=?, genre=?, country=?, description=?, idea=?, studio=?, cast=?, episodes=?, header_space=?, cancelled=?, score=?" +
+        "name=?, year=?, year_end=?, genre=?, country=?, description=?, idea=?, studio=?, cast=?, episodes=?, header_space=?, cancelled=?, score=?, upcoming=?" +
         "WHERE id = ?"
-    db.run(sql, [name, year, year_end, genre, country, description, idea, studio, cast, episodes, header_space, cancelled, score, req.params.id]);
+    db.run(sql, [name, year, year_end, genre, country, description, idea, studio, cast, episodes, header_space, cancelled, score, upcoming, req.params.id]);
 
     res.redirect('/series/detail/'+req.params.id);
 });

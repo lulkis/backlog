@@ -204,3 +204,11 @@ h4 > a:hover,
     height: 50px;
     border-radius: 10px;
 }
+
+.upcoming{
+    border-radius: 15px;
+    background-color: var(--upcoming);
+    font-size: 25px;
+    padding: 10px;
+    margin: 5px 5px 20px;
+}

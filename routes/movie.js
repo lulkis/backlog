@@ -105,11 +105,21 @@ router.get('/detail/:id', function(req, res, next) {
                     console.log(provData);
                     var germany = provData.results.DE;
 
+                    const input = rows[0].upcoming;
+                    var diffDays = 0
+                    if(input){
+                        const [day, month, year] = input.split(".");
+                        const date = new Date(year, month - 1, day);
+                        const current_date = new Date();
+                        const oneDay = 24 * 60 * 60 * 1000;
+                        diffDays = Math.round(Math.abs((current_date - date) / oneDay));
+                    }
+
                     if (!germany) {
-                        res.render('media', {media: rows[0], route: 'movie', finish: rows2[0], stream: [], settings: getSettings()});
+                        res.render('media', {media: rows[0], route: 'movie', finish: rows2[0], stream: [], settings: getSettings(), days: diffDays});
                     } else {
                         console.log(germany.flatrate)
-                        res.render('media', {media: rows[0], route: 'movie', finish: rows2[0], stream: germany.flatrate, settings: getSettings()});
+                        res.render('media', {media: rows[0], route: 'movie', finish: rows2[0], stream: germany.flatrate, settings: getSettings(), days: diffDays});
                     }
                 }
             });
@@ -144,6 +154,7 @@ router.post('/edit/:id', function(req, res, next) {
     var cast = req.body.cast;
     var header_space = req.body.header_space;
     var score = req.body.score;
+    var upcoming = req.body.upcoming;
 
     if(req.files != null){
         const path = './public/images/movies/' + name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "")  + '.jpg';
@@ -172,9 +183,9 @@ router.post('/edit/:id', function(req, res, next) {
     }
 
     const sql = "Update movie SET " +
-        "name=?, year=?, genre=?, country=?, description=?, studio=?, director=?, length=?, cast=?, header_space=?, score=?" +
+        "name=?, year=?, genre=?, country=?, description=?, studio=?, director=?, length=?, cast=?, header_space=?, score=?, upcoming=?" +
         "WHERE id = ?"
-    db.run(sql, [name, year, genre, country, description, studio, director, length, cast, header_space, score, req.params.id]);
+    db.run(sql, [name, year, genre, country, description, studio, director, length, cast, header_space, score, upcoming, req.params.id]);
 
     res.redirect('/movie/detail/'+req.params.id);
 });

@@ -37,6 +37,7 @@ router.post('/add', function(req, res, next) {
     var length = req.body.length;
     var publisher = req.body.publisher;
     var illustrator = req.body.illustrator;
+    var upcoming = req.body.upcoming;
 
     var path = './public/images/book/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
     let picture = req.files.foo;
@@ -47,9 +48,9 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    const sql = "INSERT INTO book (name, year, genre, country, description, status, added, author, length, publisher, illustrator, header_space)" +
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    db.run(sql, [name, year, genre, country, description, status, date_added, author, length, publisher, illustrator, header_space]);
+    const sql = "INSERT INTO book (name, year, genre, country, description, status, added, author, length, publisher, illustrator, header_space, upcoming)" +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    db.run(sql, [name, year, genre, country, description, status, date_added, author, length, publisher, illustrator, header_space, upcoming]);
 
     res.redirect('/book')
 })
@@ -67,7 +68,17 @@ router.get('/detail/:id', function(req, res, next) {
                 if(err){
                     console.log(err);
                 }else{
-                    res.render('media', { media: rows[0], route: 'book', finish: rows2[0]});
+                    const input = rows[0].upcoming;
+                    var diffDays = 0
+                    if(input){
+                        const [day, month, year] = input.split(".");
+                        const date = new Date(year, month - 1, day);
+                        const current_date = new Date();
+                        const oneDay = 24 * 60 * 60 * 1000;
+                        diffDays = Math.round(Math.abs((current_date - date) / oneDay));
+                    }
+
+                    res.render('media', { media: rows[0], route: 'book', finish: rows2[0], days: diffDays });
                 }
             });
         }
@@ -100,6 +111,7 @@ router.post('/edit/:id', function(req, res, next) {
     var publisher = req.body.publisher;
     var illustrator = req.body.illustrator;
     var header_space = req.body.header_space;
+    var upcoming = req.body.upcoming;
 
     if(req.files != null){
         const path = './public/images/book/' + name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "")  + '.jpg';
@@ -128,9 +140,9 @@ router.post('/edit/:id', function(req, res, next) {
     }
 
     const sql = "Update book SET " +
-        "name=?, year=?, genre=?, country=?, description=?, author=?, length=?, publisher=?, illustrator=?, header_space=?" +
+        "name=?, year=?, genre=?, country=?, description=?, author=?, length=?, publisher=?, illustrator=?, header_space=?, upcoming=?" +
         "WHERE id = ?"
-    db.run(sql, [name, year, genre, country, description, author, length, publisher, illustrator, header_space, req.params.id]);
+    db.run(sql, [name, year, genre, country, description, author, length, publisher, illustrator, header_space, upcoming, req.params.id]);
 
     res.redirect('/book/detail/'+req.params.id);
 });

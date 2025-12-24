@@ -36,6 +36,7 @@ router.post('/add', function(req, res, next) {
     var publisher = req.body.publisher;
     var score = req.body.score;
     var cast = req.body.cast;
+    var upcoming = req.body.upcoming;
 
     var path = './public/images/game/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
     let picture = req.files.foo;
@@ -55,9 +56,9 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    const sql = "INSERT INTO game (name, year, genre, country, description, status, added, developer, publisher, header_space, score, cast)" +
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    db.run(sql, [name, year, genre, country, description, status, date_added, developer, publisher, header_space, score, cast]);
+    const sql = "INSERT INTO game (name, year, genre, country, description, status, added, developer, publisher, header_space, score, cast, upcoming)" +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    db.run(sql, [name, year, genre, country, description, status, date_added, developer, publisher, header_space, score, cast, upcoming]);
 
     res.redirect('/game')
 })
@@ -83,7 +84,17 @@ router.get('/detail/:id', function(req, res, next) {
                             console.log(err);
                         }else{
                             console.log(hltb);
-                            res.render('media', { media: rows[0], route: 'game', finish: rows2[0], hltb: hltb[0] });
+                            const input = rows[0].upcoming;
+                            var diffDays = 0
+                            if(input){
+                                const [day, month, year] = input.split(".");
+                                const date = new Date(year, month - 1, day);
+                                const current_date = new Date();
+                                const oneDay = 24 * 60 * 60 * 1000;
+                                diffDays = Math.round(Math.abs((current_date - date) / oneDay));
+                            }
+
+                            res.render('media', { media: rows[0], route: 'game', finish: rows2[0], hltb: hltb[0], days: diffDays});
                         }
                     });
                 }
@@ -118,6 +129,7 @@ router.post('/edit/:id', function(req, res, next) {
     var header_space = req.body.header_space;
     var score = req.body.score;
     var cast = req.body.cast;
+    var upcoming = req.body.upcoming;
 
     if(req.files != null){
         const path = './public/images/game/' + name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "")  + '.jpg';
@@ -146,9 +158,9 @@ router.post('/edit/:id', function(req, res, next) {
     }
 
     const sql = "Update game SET " +
-        "name=?, year=?, genre=?, country=?, description=?, developer=?, publisher=?, header_space=?, score=?, cast=?" +
+        "name=?, year=?, genre=?, country=?, description=?, developer=?, publisher=?, header_space=?, score=?, cast=?, upcoming=?" +
         "WHERE id = ?"
-    db.run(sql, [name, year, genre, country, description, developer, publisher, header_space, score, cast, req.params.id]);
+    db.run(sql, [name, year, genre, country, description, developer, publisher, header_space, score, cast, upcoming, req.params.id]);
 
     res.redirect('/game/detail/'+req.params.id);
 });
