@@ -8,7 +8,7 @@
     <link rel='stylesheet' href='/stylesheets/finish-style.css' />
 </head>
 <body>
-<a class="outer shadow click-anim" href="/">
+<a class="outer shadow click-anim" href="/<%=route%>/detail/<%=vals.id%>">
     <img src="/images/icons/back_arrow.png" width="100%">
 </a>
 
@@ -17,13 +17,17 @@
             <h1>Finishing</h1>
 
             <form method='post'>
-                <input name="rating" id="rating" placeholder="Rating" type="text" >
+                <input name="rating" id="rating" placeholder="Rating" type="text" value="<%=vals.rating%>">
                 <br>
-                <textarea rows="7" name="valuation" id="valuation" placeholder="Valuation" type="text" ></textarea>
+                <textarea rows="7" name="valuation" id="valuation" placeholder="Valuation" type="text" ><%=vals.valuation%></textarea>
                 <br>
 
                 <label for="like" class="like-check">
-                    <input type="checkbox" id="like" name="like" value="true">
+                    <input type="checkbox" id="like" name="like" value="true"
+                    <%if(vals.like === "true"){%>
+                        checked
+                            <%}%>
+                    >
                     <span class="checkmark"></span>
                 </label>
 

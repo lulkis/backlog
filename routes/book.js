@@ -158,7 +158,7 @@ router.get('/start/:id', function(req, res, next) {
 })
 
 router.get('/finish/:id', function(req, res, next) {
-    res.render('media-finish', { route: 'book' });
+    res.render('media-finish', { route: 'book', vals: {rating: "", valuation: "", like: false, id: req.params.id}});
 })
 
 router.post('/finish/:id', function(req, res, next) {
@@ -188,6 +188,34 @@ router.get('/repeat/:id', function(req, res, next) {
     db.run(sql2, [id]);
 
     res.redirect('/book/detail/' + id);
+})
+
+router.get('/editval/:id', function(req, res, next) {
+    const db = new sqlite3.Database('backlog.db');
+
+    var query = "SELECT * FROM book_finished WHERE id = ?;";
+    db.all(query, [req.params.id], function (err, rows) {
+        if(err){
+            console.log(err);
+        }else{
+            res.render('media-finish', { route: 'book', vals: rows[0], id: req.body.id });
+        }
+    });
+})
+
+router.post('/editval/:id', function(req, res, next) {
+    const db = new sqlite3.Database('backlog.db');
+
+    const rating = req.body.rating;
+    const valuation = req.body.valuation;
+    const like = req.body.like;
+
+    const sql = "Update book_finished SET " +
+        "rating=?, valuation=?, like=?" +
+        "WHERE id = ?"
+    db.run(sql, [rating, valuation, like, req.params.id]);
+
+    res.redirect('/book/detail/' + req.params.id);
 })
 
 module.exports = router;

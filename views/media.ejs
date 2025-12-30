@@ -292,7 +292,16 @@
         <%if(media.status === 'finished') {%>
             <hr>
             <div class="finished-box shadow">
-                <h3>Review</h3>
+                <div class="two-grid">
+                    <h3>Review</h3>
+
+                    <a href="/<%= route%>/editval/<%=media.id%>"  class="edit-val">
+                        <div class="detail-button shadow click-anim">
+                            <img src="/images/icons/edit.png" height="30px">
+                        </div>
+                    </a>
+                </div>
+
                 <p><%= finish.valuation%></p>
                 <p class="rating">
                     <%= finish.rating%>/10
