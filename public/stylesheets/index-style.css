@@ -118,4 +118,11 @@ h1 {
 .audiobook-header {
     background-image: url("/resources/audiobook_header.png");
     background-size: cover;
+    opacity: 0.5;
+}
+
+.record-header {
+    background-image: url("/resources/record_header.png");
+    background-size: cover;
+    opacity: 0.5;
 }
