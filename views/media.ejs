@@ -167,7 +167,11 @@
                                 <%= (media.length - (media.length%60))/60 %>h <%= (media.length % 60) %>min
                         <%}%>
                     </p>
-                    <span><b>Studio:</b> <%= media.studio %></span><br>
+
+                    <p>
+                        <img src="/images/studios/<%= media.studio %>.png" height="55px" alt="<%= media.studio %>">
+                    </p>
+
                     <span><b>Score:</b> <%= media.score %></span><br>
                 <%}%>
                 <% if(route === 'series') {%>
