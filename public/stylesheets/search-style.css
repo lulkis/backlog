@@ -15,8 +15,7 @@
 
 .search-grid{
     display: grid;
-    grid-auto-flow: column;
-    width: max-content;
+    grid-template-columns:  100px 250px 1fr;
     padding: 5px;
 }
 
@@ -55,6 +54,9 @@
     height: 66px;
     width: 66px;
     border-radius: 15px;
+
+    justify-self: end;
+    align-self: center;
 }
 
 .status-box > img{
