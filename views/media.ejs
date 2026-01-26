@@ -48,7 +48,15 @@
                         <h4>By <a href="/get/<%= media.developer%>"><%= media.developer%></a></h4>
                     <%}%>
                     <% if( route === 'series'){%>
-                        <h4>By <a href="/get/<%= media.idea%>"><i><%= media.idea%></i></a></h4>
+                        <h4>By
+                            <% let arr = media.idea.split(",")
+                                for(var i=0; i<arr.length; i++){
+                            %>
+                                <a href="/get/<%= arr[i]%>"><i><%= arr[i]%></i></a>
+                                <%if(i != arr.length-1){%>,
+                                <%}%>
+                            <%}%>
+                        </h4>
                     <%}%>
                 </div>
             </div>
