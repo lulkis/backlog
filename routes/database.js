@@ -150,8 +150,10 @@ export function setup_database() {
     db.run(
         "CREATE TABLE IF NOT EXISTS list_content (" +
         "id INTEGER PRIMARY KEY NOT NULL," +
+        "list INT," +
         "media INT," +
-        "type TEXT" +
+        "type TEXT," +
+        "FOREIGN KEY(list) REFERENCES lists(id)" +
         ");"
     );
 

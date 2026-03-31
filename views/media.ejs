@@ -117,6 +117,17 @@
                     </a>
                     <span class="infotohover">Edit Media</span>
                 </div>
+
+                <div class="boxtohover">
+                    <a id="listbtn" onclick="list_toggle(<%= media.id%>, '<%= route%>')">
+                        <div class="detail-button shadow click-anim repeat">
+                            <img src="/images/icons/add.png" height="30px">
+                        </div>
+                    </a>
+                    <div class="list-menu" id="list-menu">
+                    </div>
+                    <span class="infotohover">Add to List</span>
+                </div>
             </div>
         </div>
 
@@ -320,6 +331,7 @@
             </div>
         <%}%>
     </div>
+    <script src="/javascripts/lists.js"></script>
 
     <div class="footer">
         <img src="/images/icons/orchid_heart_red.png" height="50px">

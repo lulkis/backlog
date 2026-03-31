@@ -15,6 +15,7 @@ var seriesRouter = require('./routes/series');
 
 var app = express();
 
+var list = require("./routes/listmanager.js");
 var t = require("./routes/database.js");
 t.setup_database();
 
@@ -39,6 +40,7 @@ app.use('/movie', moviesRouter);
 app.use('/game', gamesRouter);
 app.use('/book', booksRouter);
 app.use('/series', seriesRouter);
+app.use('/api', list);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
