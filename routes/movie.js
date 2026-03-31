@@ -1,21 +1,14 @@
 var express = require('express');
 var router = express.Router();
-var sqlite3 = require('sqlite3');
+const Database = require('better-sqlite3');
 var dotenv = require('dotenv').config()
 const { getSettings, updateSetting } = require("../settings");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
-
-    var query = "SELECT id, name, status FROM movie ORDER BY name ASC";
-    db.all(query, function (err, rows) {
-        if(err){
-            console.log(err);
-        }else{
-            res.render('media-list', { title: 'Movies', route: 'movie' , list: rows});
-        }
-    });
+    const db = new Database('backlog.db');
+    const rows = db.prepare("SELECT id, name, status FROM movie ORDER BY name ASC").all()
+    res.render('media-list', { title: 'Movies', route: 'movie' , list: rows});
 });
 
 router.get('/add', function(req, res, next) {
@@ -24,7 +17,7 @@ router.get('/add', function(req, res, next) {
 });
 
 router.post('/add', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
+    const db = new Database('backlog.db');
 
     console.log(req.body);
 
@@ -62,88 +55,81 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    const sql = "INSERT INTO movie (name, year, genre, country, description, status, added, studio, director, length, cast, header_space, score)" +
-        "   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    db.get(sql, [name, year, genre, country, description, status, date_added, studio, director, length, cast, header_space, score]), (err, row) => {
-        if (err) return console.error(err.message)
-        console.log("value id is:",row.id)
-    }
+    db.prepare("INSERT INTO movie (name, year, genre, country, description, status, added, studio, director, length, cast, header_space, score)" +
+        "   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)").run(name, year, genre, country, description, status, date_added, studio, director, length, cast, header_space, score)
 
     res.redirect('/movie')
 })
 
-router.get('/detail/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
+router.get('/detail/:id', async function (req, res, next) {
+    const db = new Database('backlog.db');
 
-    var query = "SELECT * FROM movie WHERE movie.id = ?";
-    db.all(query, [req.params.id], function (err, rows) {
-        if(err){
-            console.log(err);
-        }else{
-            var query = "SELECT * FROM movie_finished WHERE id = ?";
-            db.all(query, [req.params.id], async function (err, rows2) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    const API_KEY = process.env.API_KEY;
-                    const query = rows[0].name;
-                    const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=de-DE`;
+    const row1 = db.prepare("SELECT * FROM movie WHERE movie.id = ?").get(req.params.id)
+    const row2 = db.prepare("SELECT * FROM movie_finished WHERE id = ?").get(req.params.id)
 
-                    const searchRes = await fetch(searchUrl);
-                    const searchData = await searchRes.json()
+    const API_KEY = process.env.API_KEY;
+    const query = row1.name;
+    const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=de-DE`;
 
-                    var movieId = 10
-                    try {
-                        movieId = searchData.results[0].id;
-                        console.log(movieId);
-                    } catch (err) {}
+    const searchRes = await fetch(searchUrl);
+    const searchData = await searchRes.json()
 
-                    const providersUrl = `https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=${API_KEY}`;
+    var movieId = 10
+    try {
+        movieId = searchData.results[0].id;
+        console.log(movieId);
+    } catch (err) {
+    }
 
-                    const provRes = await fetch(providersUrl);
-                    const provData = await provRes.json();
-                    console.log(provData);
-                    var germany = provData.results.DE;
+    const providersUrl = `https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=${API_KEY}`;
 
-                    const input = rows[0].upcoming;
-                    var diffDays = 0
-                    if(input){
-                        const [day, month, year] = input.split(".");
-                        const date = new Date(year, month - 1, day);
-                        const current_date = new Date();
-                        if(current_date < date){
-                            const oneDay = 24 * 60 * 60 * 1000;
-                            diffDays = Math.round(Math.abs((current_date - date) / oneDay));
-                        }
-                    }
+    const provRes = await fetch(providersUrl);
+    const provData = await provRes.json();
+    console.log(provData);
+    var germany = provData.results.DE;
 
-                    if (!germany) {
-                        res.render('media', {media: rows[0], route: 'movie', finish: rows2[0], stream: [], settings: getSettings(), days: diffDays});
-                    } else {
-                        console.log(germany.flatrate)
-                        res.render('media', {media: rows[0], route: 'movie', finish: rows2[0], stream: germany.flatrate, settings: getSettings(), days: diffDays});
-                    }
-                }
-            });
+    const input = row1.upcoming;
+    var diffDays = 0
+    if (input) {
+        const [day, month, year] = input.split(".");
+        const date = new Date(year, month - 1, day);
+        const current_date = new Date();
+        if (current_date < date) {
+            const oneDay = 24 * 60 * 60 * 1000;
+            diffDays = Math.round(Math.abs((current_date - date) / oneDay));
         }
-    });
+    }
+
+    if (!germany) {
+        res.render('media', {
+            media: row1,
+            route: 'movie',
+            finish: row2,
+            stream: [],
+            settings: getSettings(),
+            days: diffDays
+        });
+    } else {
+        console.log(germany.flatrate)
+        res.render('media', {
+            media: row1,
+            route: 'movie',
+            finish: row2,
+            stream: germany.flatrate,
+            settings: getSettings(),
+            days: diffDays
+        });
+    }
 });
 
 router.get('/edit/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
-
-    var query = "SELECT * FROM movie WHERE id = ?;";
-    db.all(query, [req.params.id], function (err, rows) {
-        if(err){
-            console.log(err);
-        }else{
-            res.render('media-form', { title: 'Movies', route: 'movie', media: rows[0] });
-        }
-    });
+    const db = new Database('backlog.db');
+    const row = db.prepare("SELECT * FROM movie WHERE id = ?").get(req.params.id);
+    res.render('media-form', { title: 'Movies', route: 'movie', media: row });
 });
 
 router.post('/edit/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
+    const db = new Database('backlog.db');
 
     var name = req.body.name;
     var year = Number(req.body.year);
@@ -184,10 +170,9 @@ router.post('/edit/:id', function(req, res, next) {
         }
     }
 
-    const sql = "Update movie SET " +
+    db.prepare("Update movie SET " +
         "name=?, year=?, genre=?, country=?, description=?, studio=?, director=?, length=?, cast=?, header_space=?, score=?, upcoming=?" +
-        "WHERE id = ?"
-    db.run(sql, [name, year, genre, country, description, studio, director, length, cast, header_space, score, upcoming, req.params.id]);
+        "WHERE id = ?").run(name, year, genre, country, description, studio, director, length, cast, header_space, score, upcoming, req.params.id)
 
     res.redirect('/movie/detail/'+req.params.id);
 });
@@ -197,7 +182,7 @@ router.get('/finish/:id', function(req, res, next) {
 })
 
 router.post('/finish/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
+    const db = new Database('backlog.db');
 
     const id = req.params.id;
     const date = new Date();
@@ -205,50 +190,36 @@ router.post('/finish/:id', function(req, res, next) {
     const valuation = req.body.valuation;
     const like = req.body.like;
 
-    const sql = "INSERT INTO movie_finished (id, date, rating, valuation, like)" +
-        "VALUES (?, ?, ?, ?, ?)";
-    db.run(sql, [id, date, rating, valuation, like]);
-
-    const sql2 = "UPDATE movie SET status = ? WHERE id = ?";
-    db.run(sql2, ["finished", id]);
+    db.prepare("INSERT INTO movie_finished (id, date, rating, valuation, like)" +
+        "VALUES (?, ?, ?, ?, ?)").run(id, date, rating, valuation, like)
+    db.prepare("UPDATE movie SET status = ? WHERE id = ?").run("finished", id)
 
     res.redirect('/movie/detail/' + id);
 })
 
 router.get('/repeat/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
-
+    const db = new Database('backlog.db');
     const id = req.params.id;
-    const sql2 = "UPDATE movie_finished SET finishcount = finishcount + 1 WHERE id = ?";
-    db.run(sql2, [id]);
-
+    db.prepare("UPDATE movie_finished SET finishcount = finishcount + 1 WHERE id = ?").run(id);
     res.redirect('/movie/detail/' + id);
 })
 
 router.get('/editval/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
-
-    var query = "SELECT * FROM movie_finished WHERE id = ?;";
-    db.all(query, [req.params.id], function (err, rows) {
-        if(err){
-            console.log(err);
-        }else{
-            res.render('media-finish', { route: 'movie', vals: rows[0], id: req.body.id });
-        }
-    });
+    const db = new Database('backlog.db');
+    const val = db.prepare("SELECT * FROM movie_finished WHERE id = ?").get(req.params.id)
+    res.render('media-finish', { route: 'movie', vals: val, id: req.body.id });
 })
 
 router.post('/editval/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
+    const db = new Database('backlog.db');
 
     const rating = req.body.rating;
     const valuation = req.body.valuation;
     const like = req.body.like;
 
-    const sql = "Update movie_finished SET " +
+    db.prepare("Update movie_finished SET " +
         "rating=?, valuation=?, like=?" +
-        "WHERE id = ?"
-    db.run(sql, [rating, valuation, like, req.params.id]);
+        "WHERE id = ?").run(rating, valuation, like, req.params.id)
 
     res.redirect('/movie/detail/' + req.params.id);
 })

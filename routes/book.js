@@ -1,19 +1,12 @@
 var express = require('express');
-const sqlite3 = require("sqlite3");
+const Database = require('better-sqlite3');
 var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
-
-    var query = "SELECT id, name, status FROM book ORDER BY name ASC";
-    db.all(query, function (err, rows) {
-        if(err){
-            console.log(err);
-        }else{
-            res.render('media-list', { title: 'Books', route: 'book', list: rows});
-        }
-    });
+    const db = new Database('./backlog.db');
+    const rows = db.prepare("SELECT id, name, status FROM book ORDER BY name ASC").all();
+    res.render('media-list', { title: 'Books', route: 'book', list: rows });
 });
 
 router.get('/add', function(req, res, next) {
@@ -22,7 +15,7 @@ router.get('/add', function(req, res, next) {
 });
 
 router.post('/add', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
+    const db = new Database('./backlog.db');
 
     var name = req.body.name;
     var year = Number(req.body.year);
@@ -48,60 +41,42 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    const sql = "INSERT INTO book (name, year, genre, country, description, status, added, author, length, publisher, illustrator, header_space, upcoming)" +
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    db.run(sql, [name, year, genre, country, description, status, date_added, author, length, publisher, illustrator, header_space, upcoming]);
+    db.prepare("INSERT INTO book (name, year, genre, country, description, status, added, author, length, publisher, illustrator, header_space, upcoming)" +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+        .run(name, year, genre, country, description, status, date_added, author, length, publisher, illustrator, header_space, upcoming)
 
     res.redirect('/book')
 })
 
 router.get('/detail/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
+    const db = new Database('./backlog.db');
 
-    var query = "SELECT * FROM book WHERE id = ?;";
-    db.all(query, [req.params.id], function (err, rows) {
-        if(err){
-            console.log(err);
-        }else{
-            var query = "SELECT * FROM book_finished WHERE id = ?";
-            db.all(query, [req.params.id], function (err, rows2) {
-                if(err){
-                    console.log(err);
-                }else{
-                    const input = rows[0].upcoming;
-                    var diffDays = 0
-                    if(input){
-                        const [day, month, year] = input.split(".");
-                        const date = new Date(year, month - 1, day);
-                        const current_date = new Date();
-                        if(current_date < date){
-                            const oneDay = 24 * 60 * 60 * 1000;
-                            diffDays = Math.round(Math.abs((current_date - date) / oneDay));
-                        }
-                    }
+    const row1 = db.prepare("SELECT * FROM book WHERE id = ?").get(req.params.id)
+    const row2 = db.prepare("SELECT * FROM book_finished WHERE id = ?").run(req.params.id)
 
-                    res.render('media', { media: rows[0], route: 'book', finish: rows2[0], days: diffDays });
-                }
-            });
+    const input = row1.upcoming;
+    var diffDays = 0
+    if(input){
+        const [day, month, year] = input.split(".");
+        const date = new Date(year, month - 1, day);
+        const current_date = new Date();
+        if(current_date < date){
+            const oneDay = 24 * 60 * 60 * 1000;
+            diffDays = Math.round(Math.abs((current_date - date) / oneDay));
         }
-    });
+    }
+
+    res.render('media', { media: row1, route: 'book', finish: row2, days: diffDays });
 });
 
 router.get('/edit/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
-
-    var query = "SELECT * FROM book WHERE id = ?;";
-    db.all(query, [req.params.id], function (err, rows) {
-        if(err){
-            console.log(err);
-        }else{
-            res.render('media-form', { title: 'Book', route: 'book', media: rows[0] });
-        }
-    });
+    const db = new Database('./backlog.db');
+    const rows = db.prepare("SELECT * FROM book WHERE id = ?").get(req.params.id);
+    res.render('media-form', { title: 'Book', route: 'book', media: rows });
 });
 
 router.post('/edit/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
+    const db = new Database('./backlog.db');
 
     var name = req.body.name;
     var year = Number(req.body.year);
@@ -141,21 +116,18 @@ router.post('/edit/:id', function(req, res, next) {
         }
     }
 
-    const sql = "Update book SET " +
+    db.prepare("Update book SET " +
         "name=?, year=?, genre=?, country=?, description=?, author=?, length=?, publisher=?, illustrator=?, header_space=?, upcoming=?" +
-        "WHERE id = ?"
-    db.run(sql, [name, year, genre, country, description, author, length, publisher, illustrator, header_space, upcoming, req.params.id]);
+        "WHERE id = ?")
+        .run(name, year, genre, country, description, author, length, publisher, illustrator, header_space, upcoming, req.params.id)
 
     res.redirect('/book/detail/'+req.params.id);
 });
 
 router.get('/start/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
-
+    const db = new Database('./backlog.db');
     const id = req.params.id;
-    const sql2 = "UPDATE book SET status = ? WHERE id = ?";
-    db.run(sql2, ["started", id]);
-
+    db.prepare("UPDATE book SET status = ? WHERE id = ?").run("started", id)
     res.redirect('/book/detail/' + id);
 })
 
@@ -164,7 +136,7 @@ router.get('/finish/:id', function(req, res, next) {
 })
 
 router.post('/finish/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
+    const db = new Database('./backlog.db');
 
     const id = req.params.id;
     const date = new Date();
@@ -172,51 +144,36 @@ router.post('/finish/:id', function(req, res, next) {
     const valuation = req.body.valuation;
     const like = req.body.like;
 
-    const sql = "INSERT INTO book_finished (id, date, rating, valuation, like)" +
-        "VALUES (?, ?, ?, ?, ?)";
-    db.run(sql, [id, date, rating, valuation, like]);
-
-    const sql2 = "UPDATE book SET status = ? WHERE id = ?";
-    db.run(sql2, ["finished", id]);
+    db.prepare("INSERT INTO book_finished (id, date, rating, valuation, like)" +
+        "VALUES (?, ?, ?, ?, ?)").run(id, date, rating, valuation, like)
+    db.prepare("UPDATE book SET status = ? WHERE id = ?").run("finished", id)
 
     res.redirect('/book/detail/' + id);
 })
 
 router.get('/repeat/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
-
+    const db = new Database('./backlog.db');
     const id = req.params.id;
-    const sql2 = "UPDATE book_finished SET finishcount = finishcount + 1 WHERE id = ?";
-    db.run(sql2, [id]);
-
+    db.prepare("UPDATE book_finished SET finishcount = finishcount + 1 WHERE id = ?").run(id)
     res.redirect('/book/detail/' + id);
 })
 
 router.get('/editval/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
-
-    var query = "SELECT * FROM book_finished WHERE id = ?;";
-    db.all(query, [req.params.id], function (err, rows) {
-        if(err){
-            console.log(err);
-        }else{
-            res.render('media-finish', { route: 'book', vals: rows[0], id: req.body.id });
-        }
-    });
+    const db = new Database('./backlog.db');
+    const rows = db.prepare("SELECT * FROM book_finished WHERE id = ?").get(req.params.id);
+    res.render('media-finish', { route: 'book', vals: rows, id: req.body.id });
 })
 
 router.post('/editval/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
+    const db = new Database('./backlog.db');
 
     const rating = req.body.rating;
     const valuation = req.body.valuation;
     const like = req.body.like;
 
-    const sql = "Update book_finished SET " +
+    db.prepare("Update book_finished SET " +
         "rating=?, valuation=?, like=?" +
-        "WHERE id = ?"
-    db.run(sql, [rating, valuation, like, req.params.id]);
-
+        "WHERE id = ?").run(rating, valuation, like, req.params.id)
     res.redirect('/book/detail/' + req.params.id);
 })
 

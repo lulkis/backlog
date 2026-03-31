@@ -119,6 +119,12 @@
                         Create new List
                     </div>
                 </a>
+
+                <% for(var k = 0; k < listy.length; k++){ %>
+                    <a href="/list/<%= listy[k].id %>">
+                        <div><%= listy[k].name %></div>
+                    </a>
+                <% } %>
             </div>
 
         </div>

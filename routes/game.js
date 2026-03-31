@@ -1,19 +1,12 @@
 var express = require('express');
-const sqlite3 = require("sqlite3");
+const Database = require('better-sqlite3');
 var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
-
-    var query = "SELECT id, name, status FROM game ORDER BY name ASC";
-    db.all(query, function (err, rows) {
-        if(err){
-            console.log(err);
-        }else{
-            res.render('media-list', { title: 'Games', route: 'game', list: rows});
-        }
-    });
+    const db = new Database('backlog.db');
+    const rows = db.prepare("SELECT id, name, status FROM game ORDER BY name ASC").all()
+    res.render('media-list', { title: 'Games', route: 'game', list: rows});
 });
 
 router.get('/add', function(req, res, next) {
@@ -22,7 +15,7 @@ router.get('/add', function(req, res, next) {
 });
 
 router.post('/add', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
+    const db = new Database('backlog.db');
 
     var name = req.body.name;
     var year = Number(req.body.year);
@@ -56,71 +49,44 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    const sql = "INSERT INTO game (name, year, genre, country, description, status, added, developer, publisher, header_space, score, cast, upcoming)" +
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    db.run(sql, [name, year, genre, country, description, status, date_added, developer, publisher, header_space, score, cast, upcoming]);
+    db.prepare("INSERT INTO game (name, year, genre, country, description, status, added, developer, publisher, header_space, score, cast, upcoming)" +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)").run(name, year, genre, country, description, status, date_added, developer, publisher, header_space, score, cast, upcoming)
 
     db.close()
     res.redirect('/game')
 })
 
 router.get('/detail/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
-    const db2 = new sqlite3.Database('hltb.db');
+    const db = new Database('backlog.db');
+    const db2 = new Database('hltb.db');
 
-    var query = "SELECT * FROM game WHERE id = ?;";
-    db.all(query, [req.params.id], function (err, rows) {
-        if(err){
-            console.log(err);
-        }else{
-            var query = "SELECT * FROM game_finished WHERE id = ?";
-            db.all(query, [req.params.id], function (err, rows2) {
-                if(err){
-                    console.log(err);
-                }else{
+    const row1 = db.prepare("SELECT * FROM game WHERE id = ?").get(req.params.id);
+    const row2 = db.prepare("SELECT * FROM game_finished WHERE id = ?").get(req.params.id);
+    const hltb2 = db2.prepare("SELECT * FROM games WHERE title = ? OR title = ?").get(row1.name, row1.name+'('+row1.year+')')
 
-                    var query2 = "SELECT * FROM games WHERE title = ? OR title = ?;";
-                    db2.all(query2, [rows[0].name, rows[0].name+'('+rows[0].year+')'], function (err, hltb) {
-                        if(err){
-                            console.log(err);
-                        }else{
-                            console.log(hltb);
-                            const input = rows[0].upcoming;
-                            var diffDays = 0
-                            if(input){
-                                const [day, month, year] = input.split(".");
-                                const date = new Date(year, month - 1, day);
-                                const current_date = new Date();
-                                if(current_date < date){
-                                    const oneDay = 24 * 60 * 60 * 1000;
-                                    diffDays = Math.round(Math.abs((current_date - date) / oneDay));
-                                }
-                            }
-
-                            res.render('media', { media: rows[0], route: 'game', finish: rows2[0], hltb: hltb[0], days: diffDays});
-                        }
-                    });
-                }
-            });
+    const input = row1.upcoming;
+    var diffDays = 0
+    if(input){
+        const [day, month, year] = input.split(".");
+        const date = new Date(year, month - 1, day);
+        const current_date = new Date();
+        if(current_date < date){
+            const oneDay = 24 * 60 * 60 * 1000;
+            diffDays = Math.round(Math.abs((current_date - date) / oneDay));
         }
-    });
+    }
+
+    res.render('media', { media: row1, route: 'game', finish: row2, hltb: hltb2, days: diffDays});
 });
 
 router.get('/edit/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
-
-    var query = "SELECT * FROM game WHERE id = ?;";
-    db.all(query, [req.params.id], function (err, rows) {
-        if(err){
-            console.log(err);
-        }else{
-            res.render('media-form', { title: 'Game', route: 'game', media: rows[0] });
-        }
-    });
+    const db = new Database('backlog.db');
+    const rows = db.prepare("SELECT * FROM game WHERE id = ?").get(req.params.id);
+    res.render('media-form', { title: 'Game', route: 'game', media: rows });
 });
 
 router.post('/edit/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
+    const db = new Database('backlog.db');
 
     var name = req.body.name;
     var year = Number(req.body.year);
@@ -160,21 +126,17 @@ router.post('/edit/:id', function(req, res, next) {
         }
     }
 
-    const sql = "Update game SET " +
+    db.prepare("Update game SET " +
         "name=?, year=?, genre=?, country=?, description=?, developer=?, publisher=?, header_space=?, score=?, cast=?, upcoming=?" +
-        "WHERE id = ?"
-    db.run(sql, [name, year, genre, country, description, developer, publisher, header_space, score, cast, upcoming, req.params.id]);
+        "WHERE id = ?").run(name, year, genre, country, description, developer, publisher, header_space, score, cast, upcoming, req.params.id)
 
     res.redirect('/game/detail/'+req.params.id);
 });
 
 router.get('/start/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
-
+    const db = new Database('backlog.db');
     const id = req.params.id;
-    const sql2 = "UPDATE game SET status = ? WHERE id = ?";
-    db.run(sql2, ["started", id]);
-
+    db.prepare("UPDATE game SET status = ? WHERE id = ?").run("started", id)
     res.redirect('/game/detail/' + id);
 })
 
@@ -183,7 +145,7 @@ router.get('/finish/:id', function(req, res, next) {
 })
 
 router.post('/finish/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
+    const db = new Database('backlog.db');
 
     const id = req.params.id;
     const date = new Date();
@@ -191,50 +153,37 @@ router.post('/finish/:id', function(req, res, next) {
     const valuation = req.body.valuation;
     const like = req.body.like;
 
-    const sql = "INSERT INTO game_finished (id, date, rating, valuation, like)" +
-        "VALUES (?, ?, ?, ?, ?)";
-    db.run(sql, [id, date, rating, valuation, like]);
+    db.prepare("INSERT INTO game_finished (id, date, rating, valuation, like)" +
+        "VALUES (?, ?, ?, ?, ?)").run(id, date, rating, valuation, like)
 
-    const sql2 = "UPDATE game SET status = ? WHERE id = ?";
-    db.run(sql2, ["finished", id]);
+    db.prepare("UPDATE game SET status = ? WHERE id = ?").run("finished", id)
 
     res.redirect('/game/detail/' + id);
 })
 
 router.get('/repeat/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
-
+    const db = new Database('backlog.db');
     const id = req.params.id;
-    const sql2 = "UPDATE game_finished SET finishcount = finishcount + 1 WHERE id = ?";
-    db.run(sql2, [id]);
-
+    db.prepare("UPDATE game_finished SET finishcount = finishcount + 1 WHERE id = ?").run(id);
     res.redirect('/game/detail/' + id);
 })
 
 router.get('/editval/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
-
-    var query = "SELECT * FROM game_finished WHERE id = ?;";
-    db.all(query, [req.params.id], function (err, rows) {
-        if(err){
-            console.log(err);
-        }else{
-            res.render('media-finish', { route: 'game', vals: rows[0], id: req.body.id });
-        }
-    });
+    const db = new Database('backlog.db');
+    const rows = db.prepare("SELECT * FROM game_finished WHERE id = ?").get(req.params.id);
+    res.render('media-finish', { route: 'game', vals: rows, id: req.body.id });
 })
 
 router.post('/editval/:id', function(req, res, next) {
-    const db = new sqlite3.Database('backlog.db');
+    const db = new Database('backlog.db');
 
     const rating = req.body.rating;
     const valuation = req.body.valuation;
     const like = req.body.like;
 
-    const sql = "Update game_finished SET " +
+    db.prepare("Update game_finished SET " +
         "rating=?, valuation=?, like=?" +
-        "WHERE id = ?"
-    db.run(sql, [rating, valuation, like, req.params.id]);
+        "WHERE id = ?").run(rating, valuation, like, req.params.id)
 
     res.redirect('/game/detail/' + req.params.id);
 })

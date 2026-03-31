@@ -1,17 +1,12 @@
-import sqlite3 from "sqlite3";
+import Database from "better-sqlite3";
 import fs from "fs";
 import csv from "csv-parser";
 
 export function setup_database() {
     //Datenbanken
-    const db = new sqlite3.Database('backlog.db', (err) => {
-        if (err) {
-            return console.error(err.message);
-        }
-        console.log('Connected to the backlog database.');
-    });
+    const db = new Database('backlog.db');
 
-    db.run(
+    db.exec(
         "CREATE TABLE IF NOT EXISTS movie (" +
         "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
         "name VARCHAR(128) NOT NULL," +
@@ -31,7 +26,7 @@ export function setup_database() {
         ");"
     );
 
-    db.run(
+    db.exec(
         "CREATE TABLE IF NOT EXISTS series (" +
         "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
         "name VARCHAR(128) NOT NULL," +
@@ -53,7 +48,7 @@ export function setup_database() {
         ");"
     );
 
-    db.run(
+    db.exec(
         "CREATE TABLE IF NOT EXISTS book (" +
         "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
         "name VARCHAR(128) NOT NULL," +
@@ -72,7 +67,7 @@ export function setup_database() {
         ");"
     );
 
-    db.run(
+    db.exec(
         "CREATE TABLE IF NOT EXISTS game (" +
         "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
         "name VARCHAR(128) NOT NULL," +
@@ -91,7 +86,7 @@ export function setup_database() {
         ");"
     );
 
-    db.run(
+    db.exec(
         "CREATE TABLE IF NOT EXISTS movie_finished (" +
         "id INTEGER PRIMARY KEY NOT NULL," +
         "date VARCHAR(128)," +
@@ -103,7 +98,7 @@ export function setup_database() {
         ");"
     );
 
-    db.run(
+    db.exec(
         "CREATE TABLE IF NOT EXISTS series_finished (" +
         "id INTEGER PRIMARY KEY NOT NULL," +
         "date VARCHAR(128)," +
@@ -115,7 +110,7 @@ export function setup_database() {
         ");"
     );
 
-    db.run(
+    db.exec(
         "CREATE TABLE IF NOT EXISTS game_finished (" +
         "id INTEGER PRIMARY KEY NOT NULL," +
         "date VARCHAR(128)," +
@@ -127,7 +122,7 @@ export function setup_database() {
         ");"
     );
 
-    db.run(
+    db.exec(
         "CREATE TABLE IF NOT EXISTS book_finished (" +
         "id INTEGER PRIMARY KEY NOT NULL," +
         "date VARCHAR(128)," +
@@ -139,7 +134,7 @@ export function setup_database() {
         ");"
     );
 
-    db.run(
+    db.exec(
         "CREATE TABLE IF NOT EXISTS lists (" +
         "id INTEGER PRIMARY KEY NOT NULL," +
         "name VARCHAR(128)," +
@@ -147,7 +142,7 @@ export function setup_database() {
         ");"
     );
 
-    db.run(
+    db.exec(
         "CREATE TABLE IF NOT EXISTS list_content (" +
         "id INTEGER PRIMARY KEY NOT NULL," +
         "list INT," +
@@ -159,14 +154,9 @@ export function setup_database() {
 
     db.close()
 
-    const db2 = new sqlite3.Database('hltb.db', (err) => {
-        if (err) {
-            return console.error(err.message);
-        }
-        console.log('Connected to the backlog database.');
-    });
+    const db2 = new Database('hltb.db');
 
-    db2.run("CREATE TABLE IF NOT EXISTS games (" +
+    db2.exec("CREATE TABLE IF NOT EXISTS games (" +
         "id INTEGER PRIMARY KEY AUTOINCREMENT," +
         "title TEXT NOT NULL," +
         "main TEXT," +
