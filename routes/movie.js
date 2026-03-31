@@ -18,24 +18,19 @@ router.get('/add', function(req, res, next) {
 
 router.post('/add', function(req, res, next) {
     const db = new Database('backlog.db');
-
-    console.log(req.body);
-
     var name = req.body.name;
     var year = Number(req.body.year);
     var genre = req.body.genre;
     var country = req.body.country;
     var description = req.body.description;
-    var date_added = new Date();
+    var date_added = new Date().toISOString(); // ← Fix
     var status = 'open';
     var studio = req.body.studio;
     var director = req.body.director;
-    var length = req.body.length;
+    var length = Number(req.body.length);          // ← Fix
     var cast = req.body.cast;
-    var header_space = req.body.header_space;
+    var header_space = parseFloat(req.body.header_space); // ← Fix
     var score = req.body.score;
-
-    console.log(req.files);
 
     var path = './public/images/movie/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
     let picture = req.files.foo;
@@ -185,7 +180,7 @@ router.post('/finish/:id', function(req, res, next) {
     const db = new Database('backlog.db');
 
     const id = req.params.id;
-    const date = new Date();
+    const date = new Date().toISOString();
     const rating = req.body.rating;
     const valuation = req.body.valuation;
     const like = req.body.like;

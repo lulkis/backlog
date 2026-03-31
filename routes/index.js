@@ -87,16 +87,16 @@ router.get('/get/:name', function(req, res, next) {
 
 router.get('/search/:name', async function (req, res, next) {
     //SELECT * FROM movie WHERE movie_cast LIKE $1
-    const db = new Database('./backlog.db');
+    const db = new Database('backlog.db');
 
     const rows = db.prepare("SELECT * FROM movie WHERE movie.cast LIKE ? ORDER BY movie.year DESC ")
-        .run('%' + req.params.name + '%')
+        .all('%' + req.params.name + '%')
 
     const rows2 = db.prepare("SELECT * FROM series WHERE series.cast LIKE ? ORDER BY series.year")
-        .run('%' + req.params.name + '%')
+        .all('%' + req.params.name + '%')
 
     const rows3 = db.prepare("SELECT * FROM game WHERE game.cast LIKE ? ORDER BY game.year")
-        .run('%' + req.params.name + '%')
+        .all('%' + req.params.name + '%')
 
     var search = "general"
     const pth = path.join(__dirname, "../public/images/actors/" + req.params.name.replaceAll(".", "") + ".jpg");
@@ -148,10 +148,17 @@ router.get('/list/:id', function(req, res, next) {
     const rows2 = db.prepare("SELECT lc.id, lc.type, m.name, m.year, m.status, m.genre " +
         "FROM list_content lc " +
         "JOIN movie m ON lc.media = m.id " +
-        "WHERE lc.type = 'movie' AND lc.list = ?").all(rows.id)
+        "WHERE lc.type = 'movie' AND lc.list = ?" +
+
+        "UNION ALL " +
+
+        "SELECT lc.id, lc.type, g.name, g.year, g.status, g.genre\n" +
+        "FROM list_content lc\n" +
+        "JOIN game g ON lc.media = g.id\n" +
+        "WHERE lc.type = 'game' AND lc.list = ?").all(rows.id, rows.id)
 
     console.log(rows2);
-    res.render('list-detail', { list: rows });
+    res.render('list-detail', { list: rows, content: rows2});
 })
 
 async function fileExists(path) {

@@ -113,15 +113,15 @@
             <hr>
             <h2>Lists</h2>
 
-            <div>
-                <a href="/createlist">
+            <div class="list-grid">
+                <a class="list-box shadow click-anim" href="/createlist">
                     <div>
                         Create new List
                     </div>
                 </a>
 
                 <% for(var k = 0; k < listy.length; k++){ %>
-                    <a href="/list/<%= listy[k].id %>">
+                    <a class="list-box shadow click-anim" href="/list/<%= listy[k].id %>">
                         <div><%= listy[k].name %></div>
                     </a>
                 <% } %>

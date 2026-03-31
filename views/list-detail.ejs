@@ -5,7 +5,6 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/form-style.css' />
     <link rel='stylesheet' href='/stylesheets/color-style.css' />
-    <link rel='stylesheet' href='/stylesheets/finish-style.css' />
 </head>
 <body>
 <a class="outer shadow click-anim" href="/">
@@ -16,6 +15,20 @@
     <div class="container">
         <h1><%= list.name%></h1>
         <p><%= list.description%></p>
+
+        <hr>
+
+        <div class="list-grid">
+            <% for(var i = 0; i < content.length; i++) { %>
+                <div class="list-image"
+                     style="background-image: url(/images/<%=content[i].type%>/<%= content[i].name.toLowerCase()
+                        .replaceAll(" ", "_")
+                        .replaceAll(":", "")
+                        .replaceAll("'", "")
+                        .replaceAll("´", "")  %>.jpg);">
+                </div>
+            <% } %>
+        </div>
     </div>
 </main>
 

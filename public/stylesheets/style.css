@@ -55,3 +55,25 @@ html{
 .click-anim:hover {
     transform: scale(1.05, 1.05);
 }
+
+.list-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+}
+
+.list-image {
+    height: 260px;
+    background-size: cover;
+    background-position: center;
+}
+
+.list-box {
+    background-color: var(--accent-one);
+    height: 75px;
+    color: var(--highlight);
+    text-align: center;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 10px;
+}

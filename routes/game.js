@@ -23,7 +23,7 @@ router.post('/add', function(req, res, next) {
     var country = req.body.country;
     var header_space = req.body.header_space;
     var description = req.body.description;
-    var date_added = new Date();
+    var date_added = new Date().toISOString();
     var status = 'open';
     var developer = req.body.developer;
     var publisher = req.body.publisher;
@@ -148,7 +148,7 @@ router.post('/finish/:id', function(req, res, next) {
     const db = new Database('backlog.db');
 
     const id = req.params.id;
-    const date = new Date();
+    const date = new Date().toISOString();
     const rating = req.body.rating;
     const valuation = req.body.valuation;
     const like = req.body.like;
