@@ -60,6 +60,7 @@ router.post('/add', function(req, res, next) {
         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     db.run(sql, [name, year, genre, country, description, status, date_added, developer, publisher, header_space, score, cast, upcoming]);
 
+    db.close()
     res.redirect('/game')
 })
 

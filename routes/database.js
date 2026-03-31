@@ -139,6 +139,22 @@ export function setup_database() {
         ");"
     );
 
+    db.run(
+        "CREATE TABLE IF NOT EXISTS lists (" +
+        "id INTEGER PRIMARY KEY NOT NULL," +
+        "name VARCHAR(128)," +
+        "description TEXT" +
+        ");"
+    );
+
+    db.run(
+        "CREATE TABLE IF NOT EXISTS list_content (" +
+        "id INTEGER PRIMARY KEY NOT NULL," +
+        "media INT," +
+        "type TEXT" +
+        ");"
+    );
+
     db.close()
 
     const db2 = new sqlite3.Database('hltb.db', (err) => {

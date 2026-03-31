@@ -161,6 +161,25 @@ router.get('/director/:name', function(req, res, next) {
     });
 })
 
+
+//From here on Lists
+router.get('/createlist', function(req, res, next) {
+    res.render('list-form', {});
+})
+
+router.post('/createlist', function(req, res, next) {
+    const db = new sqlite3.Database('backlog.db');
+
+    const name = req.body.name
+    const description = req.body.description
+
+    const sql = "INSERT INTO lists (name, description)" +
+        "VALUES (?, ?)";
+    db.run(sql, [name, description]);
+    db.close()
+    res.redirect('/');
+})
+
 async function fileExists(path) {
     try {
         await access(path, constants.F_OK);
