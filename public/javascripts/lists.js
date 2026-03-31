@@ -33,11 +33,7 @@ function list_add(list, id, type) {
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                console.log(id);
-                console.log(type);
-                console.log(name);
-
-                console.log("Lief Gut");
+                document.getElementById('list-menu').style.display = 'none';
             }
         });
 }

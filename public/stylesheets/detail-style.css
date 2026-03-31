@@ -221,14 +221,15 @@ h4 > a:hover,
 .list-menu {
     position: absolute;
 
-    background-color: black;
+    background-color: #505050;
     width: 100px;
     top: 60px;
 
-    display: none;
+    border-radius: 5px;
 }
 
 .list_element {
+    padding: 10px;
     cursor: pointer;
 }
 

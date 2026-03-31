@@ -66,6 +66,8 @@ html{
     height: 260px;
     background-size: cover;
     background-position: center;
+
+    border-radius: 10px;
 }
 
 .list-box {
