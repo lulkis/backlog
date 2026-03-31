@@ -61,25 +61,25 @@ router.get('/get/:name', function(req, res, next) {
         "WHERE CONCAT(movie.name, movie.director, movie.cast, movie.studio, movie.score) " +
         "LIKE ? " +
         "ORDER BY movie.year DESC ")
-        .run('%'+req.params.name+'%')
+        .all('%'+req.params.name+'%')
 
     const rows2 = db.prepare("SELECT * FROM series " +
         "WHERE CONCAT(series.name, series.idea, series.cast, series.studio, series.score) " +
         "LIKE ? " +
         "ORDER BY series.year")
-        .run('%'+req.params.name+'%')
+        .all('%'+req.params.name+'%')
 
     const rows3 = db.prepare("SELECT * FROM game " +
         "WHERE CONCAT(game.name, game.publisher, game.developer, game.score) " +
         "LIKE ? " +
         "ORDER BY game.year")
-        .run('%'+req.params.name+'%')
+        .all('%'+req.params.name+'%')
 
     const rows4 = db.prepare("SELECT * FROM book " +
         "WHERE CONCAT(book.name, book.author) " +
         "LIKE ? " +
         "ORDER BY book.year")
-        .run('%'+req.params.name+'%')
+        .all('%'+req.params.name+'%')
 
     res.render('search', { name: req.params.name,
         list: rows, list2: rows2, list3: rows3, list4: rows4, search_type: "general"});
