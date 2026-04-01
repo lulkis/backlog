@@ -25,4 +25,15 @@ router.post('/add', async (req, res) => {
     res.json({ success: true });
 });
 
+router.post('/remove', async (req, res) => {
+    const db = new Database('./backlog.db');
+
+    const list = req.body.list;
+
+    db.prepare("DELETE FROM list_content WHERE list = ?").run(parseInt(list))
+    db.prepare("DELETE FROM lists WHERE id = ?").run(parseInt(list))
+
+    res.json({ success: true });
+});
+
 module.exports = router;

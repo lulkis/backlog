@@ -37,3 +37,15 @@ function list_add(list, id, type) {
             }
         });
 }
+
+function list_remove(id) {
+    fetch('/api/remove', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ list: id })
+    })
+        .then(res => res.json())
+        .then(data => {
+            window.location.href = "/";
+    });
+}

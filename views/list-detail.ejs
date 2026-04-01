@@ -5,6 +5,7 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/form-style.css' />
     <link rel='stylesheet' href='/stylesheets/color-style.css' />
+    <link rel='stylesheet' href='/stylesheets/detail-style.css' />
 </head>
 <body>
 <a class="outer shadow click-anim" href="/">
@@ -14,8 +15,18 @@
 <main>
     <div class="container">
         <h1><%= list.name%></h1>
-        <p><%= list.description%></p>
 
+        <div class="two-grid">
+            <p><%= list.description%></p>
+            <div class="base">
+
+                <a onclick="list_remove(<%= list.id%>)">
+                    <div class="detail-button shadow click-anim">
+                        <img src="/images/icons/delete.png" height="30px">
+                    </div>
+                </a>
+            </div>
+        </div>
         <hr>
 
         <div class="list-grid">
@@ -35,5 +46,6 @@
 <div class="footer">
     <img src="/images/icons/orchid_heart_red.png" height="50px">
 </div>
+<script src="/javascripts/lists.js"></script>
 </body>
 </html>
