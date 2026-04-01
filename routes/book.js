@@ -52,7 +52,7 @@ router.get('/detail/:id', function(req, res, next) {
     const db = new Database('./backlog.db');
 
     const row1 = db.prepare("SELECT * FROM book WHERE id = ?").get(req.params.id)
-    const row2 = db.prepare("SELECT * FROM book_finished WHERE id = ?").run(req.params.id)
+    const row2 = db.prepare("SELECT * FROM book_finished WHERE id = ?").get(req.params.id)
 
     const input = row1.upcoming;
     var diffDays = 0
