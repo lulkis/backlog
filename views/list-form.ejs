@@ -17,9 +17,9 @@
         <h1>Create New List</h1>
 
         <form method='post'>
-            <input name="name" id="name" placeholder="Name" type="text">
+            <input name="name" id="name" placeholder="Name" type="text" value="<%=list.name%>">
             <br>
-            <textarea rows="7" name="description" id="description" placeholder="Description" type="text" ></textarea>
+            <textarea rows="7" name="description" id="description" placeholder="Description" type="text" ><%=list.description%></textarea>
             <br>
             <button class="shadow" type="submit">Send</button>
         </form>

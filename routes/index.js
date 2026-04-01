@@ -127,7 +127,7 @@ router.get('/director/:name', function(req, res, next) {
 
 //From here on Lists
 router.get('/createlist', function(req, res, next) {
-    res.render('list-form', {});
+    res.render('list-form', {list: {name: "", description: ""}});
 })
 
 router.post('/createlist', function(req, res, next) {
@@ -137,6 +137,26 @@ router.post('/createlist', function(req, res, next) {
     const description = req.body.description
 
     db.prepare("INSERT INTO lists (name, description) VALUES (?, ?)").run(name, description)
+
+    res.redirect('/');
+})
+
+router.get('/editlist/:id', function(req, res, next) {
+    const db = new Database('backlog.db');
+    const name = req.params.id
+    const list = db.prepare("SELECT name, description FROM lists WHERE id = ?").get(name)
+
+    res.render('list-form', {list: list});
+})
+
+router.post('/editlist/:id', function(req, res, next) {
+    const db = new Database('backlog.db');
+
+    const id = req.params.id
+    const name = req.body.name
+    const description = req.body.description
+
+    db.prepare("UPDATE lists SET name=?, description=? WHERE id = ?").run(name, description, id)
 
     res.redirect('/');
 })
