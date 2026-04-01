@@ -165,28 +165,28 @@ router.get('/list/:id', function(req, res, next) {
     const db = new Database('backlog.db');
     const rows = db.prepare("SELECT * FROM lists WHERE id = ?").get(req.params.id)
 
-    const rows2 = db.prepare("SELECT lc.id, lc.type, m.name, m.year, m.status, m.genre " +
+    const rows2 = db.prepare("SELECT lc.id, lc.type, m.id, m.name, m.year, m.status, m.genre " +
         "FROM list_content lc " +
         "JOIN movie m ON lc.media = m.id " +
         "WHERE lc.type = 'movie' AND lc.list = ?" +
 
         "UNION ALL " +
 
-        "SELECT lc.id, lc.type, g.name, g.year, g.status, g.genre\n" +
+        "SELECT lc.id, lc.type, g.id, g.name, g.year, g.status, g.genre\n" +
         "FROM list_content lc\n" +
         "JOIN game g ON lc.media = g.id\n" +
         "WHERE lc.type = 'game' AND lc.list = ?" +
 
         "UNION ALL " +
 
-        "SELECT lc.id, lc.type, b.name, b.year, b.status, b.genre\n" +
+        "SELECT lc.id, lc.type, b.id, b.name, b.year, b.status, b.genre\n" +
         "FROM list_content lc\n" +
         "JOIN book b ON lc.media = b.id\n" +
         "WHERE lc.type = 'book' AND lc.list = ?" +
 
         "UNION ALL " +
 
-        "SELECT lc.id, lc.type, s.name, s.year, s.status, s.genre\n" +
+        "SELECT lc.id, lc.type, s.id, s.name, s.year, s.status, s.genre\n" +
         "FROM list_content lc\n" +
         "JOIN series s ON lc.media = s.id\n" +
         "WHERE lc.type = 'series' AND lc.list = ?").all(rows.id, rows.id, rows.id, rows.id)
