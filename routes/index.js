@@ -43,7 +43,7 @@ router.get('/', function(req, res, next) {
         "     ) AS Alle_Daten\n" +
         "GROUP BY status;").all()
 
-    const row4 = db.prepare("SELECT id, name FROM lists;").all()
+    const row4 = db.prepare("SELECT id, name, color FROM lists;").all()
 
     res.render('index', { title: 'Express',
         recent: row,
@@ -135,8 +135,9 @@ router.post('/createlist', function(req, res, next) {
 
     const name = req.body.name
     const description = req.body.description
+    const color = req.body.color
 
-    db.prepare("INSERT INTO lists (name, description) VALUES (?, ?)").run(name, description)
+    db.prepare("INSERT INTO lists (name, description, color) VALUES (?, ?, ?)").run(name, description, '#' + color)
 
     res.redirect('/');
 })
@@ -155,8 +156,9 @@ router.post('/editlist/:id', function(req, res, next) {
     const id = req.params.id
     const name = req.body.name
     const description = req.body.description
+    const color = req.body.color
 
-    db.prepare("UPDATE lists SET name=?, description=? WHERE id = ?").run(name, description, id)
+    db.prepare("UPDATE lists SET name=?, description=?, color=? WHERE id = ?").run(name, description, '#'+color, id)
 
     res.redirect('/');
 })

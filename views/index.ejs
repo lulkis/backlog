@@ -121,7 +121,8 @@
                 </a>
 
                 <% for(var k = 0; k < listy.length; k++){ %>
-                    <a class="list-box shadow click-anim" href="/list/<%= listy[k].id %>">
+                    <a class="list-box shadow click-anim" href="/list/<%= listy[k].id %>"
+                        style="background-color: <%= listy[k].color%>">
                         <div><%= listy[k].name %></div>
                     </a>
                 <% } %>

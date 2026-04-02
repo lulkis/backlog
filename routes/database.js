@@ -139,6 +139,7 @@ export function setup_database() {
         "id INTEGER PRIMARY KEY NOT NULL," +
         "name VARCHAR(128)," +
         "description TEXT" +
+        "color VARCHAR(10)" +
         ");"
     );
 

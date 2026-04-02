@@ -14,26 +14,27 @@
 
 <main>
     <div class="container">
-        <h1><%= list.name%></h1>
+        <div class="list-header" style="background-color: <%= list.color%>">
+            <h1><%= list.name%></h1>
 
-        <div class="two-grid">
-            <p><%= list.description%></p>
-            <div class="base">
+            <div class="two-grid">
+                <p><%= list.description%></p>
+                <div class="base">
 
-                <a onclick="list_remove(<%= list.id%>)">
-                    <div class="detail-button shadow click-anim">
-                        <img src="/images/icons/delete.png" height="30px">
-                    </div>
-                </a>
+                    <a onclick="list_remove(<%= list.id%>)">
+                        <div class="detail-button shadow click-anim">
+                            <img src="/images/icons/delete.png" height="30px">
+                        </div>
+                    </a>
 
-                <a href="/editlist/<%= list.id%>">
-                    <div class="detail-button shadow click-anim">
-                        <img src="/images/icons/edit.png" height="30px">
-                    </div>
-                </a>
+                    <a href="/editlist/<%= list.id%>">
+                        <div class="detail-button shadow click-anim">
+                            <img src="/images/icons/edit.png" height="30px">
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
-        <hr>
 
         <div class="list-grid">
             <% for(var i = 0; i < content.length; i++) { %>
