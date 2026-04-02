@@ -330,6 +330,20 @@
                 </p>
             </div>
         <%}%>
+
+        <% if(inlist.length !== 0) {%>
+        <hr>
+        <h3>Is in List</h3>
+        <div class="list-grid">
+            <%for(var i = 0; i < inlist.length; i++) {%>
+                <a class="list-box shadow click-anim" href="/list/<%= inlist[i].id %>"
+                   style="background-color: <%= inlist[i].color%>">
+                    <div><%= inlist[i].name %></div>
+                </a>
+            <%}%>
+        </div>
+        <%}%>
+
     </div>
     <script src="/javascripts/lists.js"></script>
 

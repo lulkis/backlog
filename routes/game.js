@@ -63,6 +63,8 @@ router.get('/detail/:id', function(req, res, next) {
     const row1 = db.prepare("SELECT * FROM game WHERE id = ?").get(req.params.id);
     const row2 = db.prepare("SELECT * FROM game_finished WHERE id = ?").get(req.params.id);
     const hltb2 = db2.prepare("SELECT * FROM games WHERE title = ? OR title = ?").get(row1.name, row1.name+'('+row1.year+')')
+    const inlist = db.prepare("SELECT l.id, l.name, l.color FROM lists l " +
+        "JOIN list_content lc ON l.id = lc.list WHERE lc.type = 'game' AND lc.media=?").all(req.params.id)
 
     const input = row1.upcoming;
     var diffDays = 0
@@ -76,7 +78,7 @@ router.get('/detail/:id', function(req, res, next) {
         }
     }
 
-    res.render('media', { media: row1, route: 'game', finish: row2, hltb: hltb2, days: diffDays});
+    res.render('media', { media: row1, route: 'game', finish: row2, hltb: hltb2, days: diffDays, inlist: inlist });
 });
 
 router.get('/edit/:id', function(req, res, next) {

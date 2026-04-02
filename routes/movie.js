@@ -61,6 +61,10 @@ router.get('/detail/:id', async function (req, res, next) {
 
     const row1 = db.prepare("SELECT * FROM movie WHERE movie.id = ?").get(req.params.id)
     const row2 = db.prepare("SELECT * FROM movie_finished WHERE id = ?").get(req.params.id)
+    const inlist = db.prepare("SELECT l.id, l.name, l.color FROM lists l " +
+        "JOIN list_content lc ON l.id = lc.list WHERE lc.type = 'movie' AND lc.media=?").all(req.params.id)
+
+    console.log(inlist)
 
     const API_KEY = process.env.API_KEY;
     const query = row1.name;
@@ -72,7 +76,6 @@ router.get('/detail/:id', async function (req, res, next) {
     var movieId = 10
     try {
         movieId = searchData.results[0].id;
-        console.log(movieId);
     } catch (err) {
     }
 
@@ -80,7 +83,6 @@ router.get('/detail/:id', async function (req, res, next) {
 
     const provRes = await fetch(providersUrl);
     const provData = await provRes.json();
-    console.log(provData);
     var germany = provData.results.DE;
 
     const input = row1.upcoming;
@@ -102,7 +104,8 @@ router.get('/detail/:id', async function (req, res, next) {
             finish: row2,
             stream: [],
             settings: getSettings(),
-            days: diffDays
+            days: diffDays,
+            inlist: inlist
         });
     } else {
         console.log(germany.flatrate)
@@ -112,7 +115,8 @@ router.get('/detail/:id', async function (req, res, next) {
             finish: row2,
             stream: germany.flatrate,
             settings: getSettings(),
-            days: diffDays
+            days: diffDays,
+            inlist: inlist
         });
     }
 });

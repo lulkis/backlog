@@ -53,6 +53,8 @@ router.get('/detail/:id', function(req, res, next) {
 
     const row1 = db.prepare("SELECT * FROM book WHERE id = ?").get(req.params.id)
     const row2 = db.prepare("SELECT * FROM book_finished WHERE id = ?").get(req.params.id)
+    const inlist = db.prepare("SELECT l.id, l.name, l.color FROM lists l " +
+        "JOIN list_content lc ON l.id = lc.list WHERE lc.type = 'book' AND lc.media=?").all(req.params.id)
 
     const input = row1.upcoming;
     var diffDays = 0
@@ -66,7 +68,7 @@ router.get('/detail/:id', function(req, res, next) {
         }
     }
 
-    res.render('media', { media: row1, route: 'book', finish: row2, days: diffDays });
+    res.render('media', { media: row1, route: 'book', finish: row2, days: diffDays, inlist: inlist });
 });
 
 router.get('/edit/:id', function(req, res, next) {
