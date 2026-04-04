@@ -26,10 +26,22 @@
                     <input type="checkbox" id="like" name="like" value="true"
                     <%if(vals.like === "true"){%>
                         checked
-                            <%}%>
+                    <%}%>
                     >
                     <span class="checkmark"></span>
                 </label>
+
+                <% if(route === 'movie') { %>
+                <div>
+                    <label for="medium">How did you watch it?</label>
+                    <select id="medium" name="medium">
+                        <option value="cinema" <%= vals.medium === "cinema" ? "selected" : "" %>>Cinema</option>
+                        <option value="streaming" <%= vals.medium === "streaming" ? "selected" : "" %>>Streaming</option>
+                        <option value="physical" <%= vals.medium === "physical" ? "selected" : "" %>>DVD/Blu-Ray</option>
+                        <option value="high-seas" <%= vals.medium === "high-seas" ? "selected" : "" %>>High Seas</option>
+                    </select>
+                </div>
+                <% } %>
 
                 <button class="shadow" type="submit">Send</button>
             </form>

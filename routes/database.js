@@ -92,6 +92,7 @@ export function setup_database() {
         "date VARCHAR(128)," +
         "rating INTEGER," +
         "valuation TEXT," +
+        "medium VARCHAR(128)," +
         "like BOOLEAN," +
         "finishcount INTEGER default 1," +
         "FOREIGN KEY(id) REFERENCES movie(id)" +

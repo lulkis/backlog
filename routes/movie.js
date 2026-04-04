@@ -177,7 +177,7 @@ router.post('/edit/:id', function(req, res, next) {
 });
 
 router.get('/finish/:id', function(req, res, next) {
-    res.render('media-finish', { route: 'movie', vals: {rating: "", valuation: "", like: false, id: req.params.id} });
+    res.render('media-finish', { route: 'movie', vals: {rating: "", valuation: "", like: false, id: req.params.id, medium: 'streaming'} });
 })
 
 router.post('/finish/:id', function(req, res, next) {
@@ -188,9 +188,10 @@ router.post('/finish/:id', function(req, res, next) {
     const rating = req.body.rating;
     const valuation = req.body.valuation;
     const like = req.body.like;
+    const medium = req.body.medium;
 
-    db.prepare("INSERT INTO movie_finished (id, date, rating, valuation, like)" +
-        "VALUES (?, ?, ?, ?, ?)").run(id, date, rating, valuation, like)
+    db.prepare("INSERT INTO movie_finished (id, date, rating, valuation, like, medium)" +
+        "VALUES (?, ?, ?, ?, ?, ?)").run(id, date, rating, valuation, like, medium)
     db.prepare("UPDATE movie SET status = ? WHERE id = ?").run("finished", id)
 
     res.redirect('/movie/detail/' + id);
@@ -215,10 +216,11 @@ router.post('/editval/:id', function(req, res, next) {
     const rating = req.body.rating;
     const valuation = req.body.valuation;
     const like = req.body.like;
+    const medium = req.body.medium;
 
     db.prepare("Update movie_finished SET " +
-        "rating=?, valuation=?, like=?" +
-        "WHERE id = ?").run(rating, valuation, like, req.params.id)
+        "rating=?, valuation=?, like=?, medium=?" +
+        "WHERE id = ?").run(rating, valuation, like, medium, req.params.id)
 
     res.redirect('/movie/detail/' + req.params.id);
 })
