@@ -236,3 +236,12 @@ h4 > a:hover,
 .list_element:hover {
     background-color: #333333;
 }
+
+.l-color {
+    color: var(--highlight);
+    text-decoration: none;
+}
+
+.l-color:hover {
+    color: var(--action);
+}

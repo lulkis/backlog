@@ -15,7 +15,7 @@
 
 .search-grid{
     display: grid;
-    grid-template-columns:  100px 250px 1fr;
+    grid-template-columns:  100px 550px 1fr;
     padding: 5px;
 }
 

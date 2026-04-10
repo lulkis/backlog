@@ -195,15 +195,34 @@
                         <img src="/images/studios/<%= media.studio %>.png" height="55px" alt="<%= media.studio %>">
                     </p>
 
-                    <span><b>Score:</b> <%= media.score %></span><br>
+                <span><b>Score: </b>
+                    <% let arr = media.score.split(", ")
+                    for(var i=0; i<arr.length; i++){
+                    %>
+                        <a class="l-color" href="/get/<%= arr[i]%>"><%= arr[i]%></a><%if(i != arr.length-1){%>,<%}%>
+                    <%}%>
+                </span><br>
+
                 <%}%>
                 <% if(route === 'series') {%>
                     <span><b>Studio:</b> <%= media.studio %></span><br>
-                    <span><b>Score:</b> <%= media.score %></span><br>
+                    <span><b>Score: </b>
+                        <% let arr = media.score.split(", ")
+                        for(var i=0; i<arr.length; i++){
+                        %>
+                            <a class="l-color" href="/get/<%= arr[i]%>"><%= arr[i]%></a><%if(i != arr.length-1){%>,<%}%>
+                        <%}%>
+                    </span><br>
                 <%}%>
                 <% if(route === 'game') {%>
                     <span><b>Publisher:</b> <%= media.publisher %></span><br>
-                    <span><b>Score:</b> <%= media.score %></span><br>
+                    <span><b>Score: </b>
+                        <% let arr = media.score.split(", ")
+                        for(var i=0; i<arr.length; i++){
+                        %>
+                            <a class="l-color" href="/get/<%= arr[i]%>"><%= arr[i]%></a><%if(i != arr.length-1){%>,<%}%>
+                        <%}%>
+                    </span><br>
                 <%}%>
                 <% if(route === 'book') {%>
                     <span><b>Length:</b> <%= media.length %></span><br>
