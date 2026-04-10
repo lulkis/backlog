@@ -11,7 +11,7 @@ main {
 }
 
 html{
-    font-family: "Funnel Display", sans-serif;
+    font-family: "IBM Plex Mono", monospace;
     background-color: var(--base);
     color: var(--highlight);
 }
