@@ -42,19 +42,23 @@
                         <h4>By <a href="/get/<%= media.author%>"><%= media.author%></a></h4>
                     <%}%>
                     <% if( route === 'movie'){%>
-                        <h4>By <a href="/get/<%= media.director%>"><i><%= media.director%></i></a></h4>
+                        <h4>By
+                            <% let arr = media.director.split(", ")
+                            for(var i=0; i<arr.length; i++){
+                            %>
+                                <a href="/get/<%= arr[i]%>"><i><%= arr[i]%></i></a><%if(i != arr.length-1){%>,<%}%>
+                            <%}%>
+                        </h4>
                     <%}%>
                     <% if( route === 'game'){%>
                         <h4>By <a href="/get/<%= media.developer%>"><%= media.developer%></a></h4>
                     <%}%>
                     <% if( route === 'series'){%>
                         <h4>By
-                            <% let arr = media.idea.split(",")
+                            <% let arr = media.idea.split(", ")
                                 for(var i=0; i<arr.length; i++){
                             %>
-                                <a href="/get/<%= arr[i]%>"><i><%= arr[i]%></i></a>
-                                <%if(i != arr.length-1){%>,
-                                <%}%>
+                                <a href="/get/<%= arr[i]%>"><i><%= arr[i]%></i></a><%if(i != arr.length-1){%>,<%}%>
                             <%}%>
                         </h4>
                     <%}%>

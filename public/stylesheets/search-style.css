@@ -51,12 +51,17 @@
 
 .status-box {
     background-color: var(--accent-two);
-    height: 66px;
-    width: 66px;
-    border-radius: 15px;
+    height: 36px;
+    width: 36px;
+    border-radius: 5px;
 
     justify-self: end;
     align-self: center;
+}
+
+.status-box > img {
+    height: 20px;
+    width: 20px;
 }
 
 .status-box > img{

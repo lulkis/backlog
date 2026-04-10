@@ -57,46 +57,63 @@ router.get('/get/:name', function(req, res, next) {
     //SELECT * FROM movie WHERE movie_cast LIKE $1
     const db = new Database('./backlog.db');
 
-    const rows = db.prepare("SELECT * FROM movie " +
+    const rows = db.prepare("SELECT id, name, year, director as maker, 'movie' AS route FROM movie " +
         "WHERE CONCAT(movie.name, movie.director, movie.cast, movie.studio, movie.score) " +
         "LIKE ? " +
         "ORDER BY movie.year DESC ")
         .all('%'+req.params.name+'%')
 
-    const rows2 = db.prepare("SELECT * FROM series " +
+    const rows2 = db.prepare("SELECT id, name, year, idea as maker, 'series' AS route FROM series " +
         "WHERE CONCAT(series.name, series.idea, series.cast, series.studio, series.score) " +
         "LIKE ? " +
         "ORDER BY series.year")
         .all('%'+req.params.name+'%')
 
-    const rows3 = db.prepare("SELECT * FROM game " +
+    const rows3 = db.prepare("SELECT id, name, year, developer as maker, 'game' AS route FROM game " +
         "WHERE CONCAT(game.name, game.publisher, game.developer, game.score) " +
         "LIKE ? " +
         "ORDER BY game.year")
         .all('%'+req.params.name+'%')
 
-    const rows4 = db.prepare("SELECT * FROM book " +
+    const rows4 = db.prepare("SELECT id, name, year, author as maker, 'book' AS route FROM book " +
         "WHERE CONCAT(book.name, book.author) " +
         "LIKE ? " +
         "ORDER BY book.year")
         .all('%'+req.params.name+'%')
 
+    const items = {
+        movie: rows,
+        series: rows2,
+        game: rows3,
+        book: rows4
+    }
+
     res.render('search', { name: req.params.name,
-        list: rows, list2: rows2, list3: rows3, list4: rows4, search_type: "general"});
+        list: items, search_type: "general"});
 })
 
 router.get('/search/:name', async function (req, res, next) {
     //SELECT * FROM movie WHERE movie_cast LIKE $1
     const db = new Database('backlog.db');
 
-    const rows = db.prepare("SELECT * FROM movie WHERE movie.cast LIKE ? ORDER BY movie.year DESC ")
+    const rows = db.prepare("SELECT id, name, year, director as maker, 'movie' AS route FROM movie " +
+        "WHERE movie.cast LIKE ? ORDER BY movie.year DESC ")
         .all('%' + req.params.name + '%')
 
-    const rows2 = db.prepare("SELECT * FROM series WHERE series.cast LIKE ? ORDER BY series.year")
+    const rows2 = db.prepare("SELECT id, name, year, idea as maker, 'series' AS route FROM series " +
+        "WHERE series.cast LIKE ? ORDER BY series.year")
         .all('%' + req.params.name + '%')
 
-    const rows3 = db.prepare("SELECT * FROM game WHERE game.cast LIKE ? ORDER BY game.year")
+    const rows3 = db.prepare("SELECT id, name, year, developer as maker, 'game' AS route FROM game " +
+        "WHERE game.cast LIKE ? ORDER BY game.year")
         .all('%' + req.params.name + '%')
+
+    const items = {
+        movie: rows,
+        series: rows2,
+        game: rows3,
+        book: []
+    }
 
     var search = "general"
     const pth = path.join(__dirname, "../public/images/actors/" + req.params.name.replaceAll(".", "") + ".jpg");
@@ -108,10 +125,7 @@ router.get('/search/:name', async function (req, res, next) {
 
     res.render('search', {
         name: req.params.name,
-        list: rows,
-        list2: rows2,
-        list3: rows3,
-        list4: [],
+        list: items,
         search_type: search
     });
 })
@@ -119,9 +133,19 @@ router.get('/search/:name', async function (req, res, next) {
 router.get('/director/:name', function(req, res, next) {
     //SELECT * FROM movie WHERE movie_cast LIKE $1
     const db = new Database('backlog.db');
-    const rows = db.prepare("SELECT * FROM movie WHERE movie.director LIKE ?").all('%'+req.params.name+'%')
-    const rows2 = db.prepare("SELECT * FROM series WHERE series.idea LIKE ?").all('%'+req.params.name+'%')
-    res.render('search', { name: req.params.name, list: rows, list2: rows2, list3: [], list4: [], search_type: "director"});
+    const rows = db.prepare("SELECT id, name, year, director as maker, 'movie' AS route FROM movie " +
+        "WHERE movie.director LIKE ?").all('%'+req.params.name+'%')
+    const rows2 = db.prepare("SELECT id, name, year, idea as maker, 'series' AS route FROM series " +
+        "WHERE series.idea LIKE ?").all('%'+req.params.name+'%')
+
+    const items = {
+        movie: rows,
+        series: rows2,
+        game: [],
+        book: []
+    }
+
+    res.render('search', { name: req.params.name, list: items, search_type: "director"});
 })
 
 
