@@ -4,6 +4,7 @@ const { access } = require("fs/promises");
 const { constants } = require("fs");
 var router = express.Router();
 const path = require("path");
+const {getSettings, updateSetting} = require("../settings");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -220,6 +221,16 @@ router.get('/list/:id', function(req, res, next) {
     console.log(rows2);
     res.render('list-detail', { list: rows, content: rows2});
 })
+
+router.get('/settings', function(req, res, next) {
+    res.render('settings', {settings: getSettings()});
+})
+
+router.post('/settings', function(req, res, next) {
+    updateSetting("time_in_minutes", req.body.m_in_min === "on")
+    res.redirect("/");
+})
+
 
 async function fileExists(path) {
     try {

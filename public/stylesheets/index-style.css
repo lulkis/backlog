@@ -126,3 +126,24 @@ h1 {
     background-size: cover;
     opacity: 0.5;
 }
+
+.settings-box {
+    height: 50px;
+    width: 50px;
+
+    background-color: var(--action);
+
+    position: absolute;
+    margin: 20px;
+    right: 0px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.settings-box:hover {
+    cursor: pointer;
+}
+
+.settings-box > img {
+    height: 100%;
+}
