@@ -36,4 +36,18 @@ router.post('/remove', async (req, res) => {
     res.json({ success: true });
 });
 
+router.get('/remove/:list/:element', async (req, res) => {
+    const db = new Database('./backlog.db');
+
+    const list = req.params.list
+    const element = req.params.element
+
+    console.log(list);
+    console.log(element);
+
+    await db.prepare("DELETE FROM list_content WHERE list = ? AND media = ?").run(parseInt(list), parseInt(element))
+
+    res.redirect("/list/" + list.toString());
+});
+
 module.exports = router;

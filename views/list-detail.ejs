@@ -6,6 +6,7 @@
     <link rel='stylesheet' href='/stylesheets/form-style.css' />
     <link rel='stylesheet' href='/stylesheets/color-style.css' />
     <link rel='stylesheet' href='/stylesheets/detail-style.css' />
+    <link rel='stylesheet' href='/stylesheets/listing-style.css' />
 </head>
 <body>
 <a class="outer shadow click-anim" href="/">
@@ -38,15 +39,18 @@
 
         <div class="list-grid">
             <% for(var i = 0; i < content.length; i++) { %>
-                <a href="/<%= content[i].type %>/detail/<%= content[i].id%>">
+                <div onclick="goToDetail(event, '/<%= content[i].type %>/detail/<%= content[i].id %>')">
                     <div class="list-image shadow click-anim"
                          style="background-image: url(/images/<%=content[i].type%>/<%= content[i].name.toLowerCase()
                                  .replaceAll(" ", "_")
                                  .replaceAll(":", "")
                                  .replaceAll("'", "")
                                  .replaceAll("´", "")  %>.jpg);">
+                        <a class="delete-button shadow" href="/api/remove/<%= list.id%>/<%= content[i].id%>">
+                            <img src="/images/icons/delete.png">
+                        </a>
                     </div>
-                </a>
+                </div>
             <% } %>
         </div>
     </div>

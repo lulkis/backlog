@@ -49,3 +49,9 @@ function list_remove(id) {
             window.location.href = "/";
     });
 }
+
+function goToDetail(event, link) {
+    if (event.target.closest("a")) return;
+
+    window.location.href = link;
+}
