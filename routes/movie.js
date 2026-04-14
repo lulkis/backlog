@@ -64,61 +64,57 @@ router.get('/detail/:id', async function (req, res, next) {
     const inlist = db.prepare("SELECT l.id, l.name, l.color FROM lists l " +
         "JOIN list_content lc ON l.id = lc.list WHERE lc.type = 'movie' AND lc.media=?").all(req.params.id)
 
+    let straming_info = [];
     console.log(inlist)
 
-    const API_KEY = process.env.API_KEY;
-    const query = row1.name;
-    const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=de-DE`;
+    const settings = getSettings();
 
-    const searchRes = await fetch(searchUrl);
-    const searchData = await searchRes.json()
+    if(settings["streaming"] === true) {
+        const API_KEY = process.env.API_KEY;
+        const query = row1.name;
+        const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=de-DE`;
 
-    var movieId = 10
-    try {
-        movieId = searchData.results[0].id;
-    } catch (err) {
-    }
+        const searchRes = await fetch(searchUrl);
+        const searchData = await searchRes.json()
 
-    const providersUrl = `https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=${API_KEY}`;
+        var movieId = 10
+        try {
+            movieId = searchData.results[0].id;
+        } catch (err) {
+        }
 
-    const provRes = await fetch(providersUrl);
-    const provData = await provRes.json();
-    var germany = provData.results.DE;
+        const providersUrl = `https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=${API_KEY}`;
 
-    const input = row1.upcoming;
-    var diffDays = 0
-    if (input) {
-        const [day, month, year] = input.split(".");
-        const date = new Date(year, month - 1, day);
-        const current_date = new Date();
-        if (current_date < date) {
-            const oneDay = 24 * 60 * 60 * 1000;
-            diffDays = Math.round(Math.abs((current_date - date) / oneDay));
+        const provRes = await fetch(providersUrl);
+        const provData = await provRes.json();
+        var germany = provData.results.DE;
+
+        const input = row1.upcoming;
+        var diffDays = 0
+        if (input) {
+            const [day, month, year] = input.split(".");
+            const date = new Date(year, month - 1, day);
+            const current_date = new Date();
+            if (current_date < date) {
+                const oneDay = 24 * 60 * 60 * 1000;
+                diffDays = Math.round(Math.abs((current_date - date) / oneDay));
+            }
+        }
+
+        if(germany){
+            straming_info = germany.flatrate
         }
     }
 
-    if (!germany) {
-        res.render('media', {
-            media: row1,
-            route: 'movie',
-            finish: row2,
-            stream: [],
-            settings: getSettings(),
-            days: diffDays,
-            inlist: inlist
-        });
-    } else {
-        console.log(germany.flatrate)
-        res.render('media', {
-            media: row1,
-            route: 'movie',
-            finish: row2,
-            stream: germany.flatrate,
-            settings: getSettings(),
-            days: diffDays,
-            inlist: inlist
-        });
-    }
+    res.render('media', {
+        media: row1,
+        route: 'movie',
+        finish: row2,
+        stream: straming_info,
+        settings: settings,
+        days: diffDays,
+        inlist: inlist
+    });
 });
 
 router.get('/edit/:id', function(req, res, next) {

@@ -228,6 +228,7 @@ router.get('/settings', function(req, res, next) {
 
 router.post('/settings', function(req, res, next) {
     updateSetting("time_in_minutes", req.body.m_in_min === "on")
+    updateSetting("streaming", req.body.streaming === "on")
     res.redirect("/");
 })
 
