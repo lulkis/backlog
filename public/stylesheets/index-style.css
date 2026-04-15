@@ -147,3 +147,28 @@ h1 {
 .settings-box > img {
     height: 100%;
 }
+
+
+/* CSS for Lists in the Index Page */
+.list-box-add {
+    height: 75px;
+    text-align: center;
+    padding: 10px;
+}
+
+.list-box-add img {
+    height: 75px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.list-box {
+    background-color: var(--accent-one);
+    height: 75px;
+    color: var(--highlight);
+    text-align: center;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 10px;
+    line-height: 75px;
+}

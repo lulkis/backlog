@@ -3,10 +3,10 @@
 <head>
     <title>New List</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/stylesheets/form-style.css' />
     <link rel='stylesheet' href='/stylesheets/color-style.css' />
-    <link rel='stylesheet' href='/stylesheets/detail-style.css' />
+
     <link rel='stylesheet' href='/stylesheets/listing-style.css' />
+    <link rel='stylesheet' href='/stylesheets/grids.css' />
 </head>
 <body>
 <a class="outer shadow click-anim" href="/">
@@ -22,17 +22,18 @@
                 <p><%= list.description%></p>
                 <div class="base">
 
+                    <a href="/editlist/<%= list.id%>">
+                        <div class="detail-button shadow click-anim">
+                            <img src="/images/icons/edit.png" height="30px">
+                        </div>
+                    </a>
+
                     <a onclick="list_remove(<%= list.id%>)">
                         <div class="detail-button shadow click-anim">
                             <img src="/images/icons/delete.png" height="30px">
                         </div>
                     </a>
 
-                    <a href="/editlist/<%= list.id%>">
-                        <div class="detail-button shadow click-anim">
-                            <img src="/images/icons/edit.png" height="30px">
-                        </div>
-                    </a>
                 </div>
             </div>
         </div>

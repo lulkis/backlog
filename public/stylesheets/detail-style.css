@@ -7,7 +7,6 @@
 }
 
 .image{
-    /*background-image: url("/images/movies/palm_springs.jpg");*/
     background-position: 0 13%;
     background-size: cover;
     height: 400px;
@@ -40,19 +39,7 @@ hr {
     height: 100%;
 }
 
-.base {
-    /*
-    display: grid;
-    grid-template-columns: auto auto;
-    gap: 0;
-    place-items: end;
-*/
-    display: grid;
-    grid-auto-flow: column;
-    gap: 10px;
-    width: max-content;
-    place-items: end;
-}
+
 
 .tag {
     background-color: var(--accent-two);

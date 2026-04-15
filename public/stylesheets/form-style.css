@@ -69,3 +69,21 @@ button {
     max-width: 100%;
     display: block;
 }
+
+/* Form Stuff for the Lists */
+.color-box {
+    display: inline-block;
+    height: 55px;
+    width: 70px;
+
+    border-radius: 10px;
+    outline: 1px solid #aaaaaa;
+}
+
+input[type = "radio"] {
+    display: none;
+}
+
+.color-box:has(input:checked) {
+    outline: 2px solid #171717;
+}

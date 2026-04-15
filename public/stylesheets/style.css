@@ -50,68 +50,25 @@ html{
 
 .click-anim {
     transition-duration: 0.3s;
+    cursor: pointer;
 }
 
 .click-anim:hover {
     transform: scale(1.05, 1.05);
 }
 
-.list-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 1rem;
-}
 
-.list-image {
-    height: 275px;
-    background-size: cover;
-    background-position: center;
-
-    border-radius: 10px;
-
-    position: relative;
-}
-
-.list-box {
-    background-color: var(--accent-one);
-    height: 75px;
-    color: var(--highlight);
-    text-align: center;
-    text-decoration: none;
+/* Some Shared Things, used in List and Media Details */
+.detail-button {
+    background-color: var(--action);
+    height: 35px;
+    width: 35px;
     padding: 10px;
-    border-radius: 10px;
-
-    line-height: 75px;
+    border-radius: 15px;
 }
 
-.list-box-add {
-    height: 75px;
-    text-align: center;
-    padding: 10px;
-}
-
-.list-box-add img {
-    height: 75px;
-    margin-left: auto;
-    margin-right: auto;
-
-}
-
-.color-box {
-    display: inline-block;
-    height: 55px;
-    width: 70px;
-
-    border-radius: 10px;
-    outline: 1px solid #aaaaaa;
-}
-
-input[type = "radio"] {
-    display: none;
-}
-
-.color-box:has(input:checked) {
-    outline: 2px solid #171717;
+.detail-button > img {
+    height: 100%;
 }
 
 .base {
@@ -120,11 +77,11 @@ input[type = "radio"] {
     gap: 10px;
     width: max-content;
     place-items: end;
+
+    grid-column: r;
 }
 
-.list-header {
-    padding: 15px;
-    border-radius: 25px;
-    margin-bottom: 30px;
-    margin-top: 30px;
+.two-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
