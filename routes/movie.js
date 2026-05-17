@@ -20,13 +20,13 @@ router.post('/add', function(req, res, next) {
     var genre = req.body.genre;
     var country = req.body.country;
     var description = req.body.description;
-    var date_added = new Date().toISOString(); // ← Fix
+    var date_added = new Date().toISOString();
     var status = 'open';
     var studio = req.body.studio;
     var director = req.body.director;
-    var length = Number(req.body.length);          // ← Fix
+    var length = Number(req.body.length);
     var cast = req.body.cast;
-    var header_space = parseFloat(req.body.header_space); // ← Fix
+    var header_space = parseFloat(req.body.header_space);
     var score = req.body.score;
 
     var path = './public/images/movie/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'

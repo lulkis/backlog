@@ -1,5 +1,5 @@
 var express = require('express');
-const Database = require('better-sqlite3');
+const {db} = require("../db.js");
 const { access } = require("fs/promises");
 const { constants } = require("fs");
 var router = express.Router();
@@ -8,8 +8,6 @@ const {getSettings, updateSetting} = require("../settings");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    const db = new Database('./backlog.db');
-
     const row = db.prepare("SELECT movie.id, movie.name, movie.added, 'movie' AS route FROM movie WHERE movie.status = 'open'\n" +
         "UNION\n" +
         "SELECT series.id, series.name, series.added, 'series' AS route FROM series WHERE series.status = 'open' OR series.status = 'started'\n" +
@@ -55,9 +53,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/get/:name', function(req, res, next) {
-    //SELECT * FROM movie WHERE movie_cast LIKE $1
-    const db = new Database('./backlog.db');
-
     const rows = db.prepare("SELECT id, name, year, status, director as maker, 'movie' AS route FROM movie " +
         "WHERE CONCAT(movie.name, movie.director, movie.cast, movie.studio, movie.score) " +
         "LIKE ? " +
@@ -94,9 +89,6 @@ router.get('/get/:name', function(req, res, next) {
 })
 
 router.get('/search/:name', async function (req, res, next) {
-    //SELECT * FROM movie WHERE movie_cast LIKE $1
-    const db = new Database('backlog.db');
-
     const rows = db.prepare("SELECT id, name, year, status, director as maker, 'movie' AS route FROM movie " +
         "WHERE movie.cast LIKE ? ORDER BY movie.year DESC ")
         .all('%' + req.params.name + '%')
@@ -132,8 +124,6 @@ router.get('/search/:name', async function (req, res, next) {
 })
 
 router.get('/director/:name', function(req, res, next) {
-    //SELECT * FROM movie WHERE movie_cast LIKE $1
-    const db = new Database('backlog.db');
     const rows = db.prepare("SELECT id, name, year, status, director as maker, 'movie' AS route FROM movie " +
         "WHERE movie.director LIKE ?").all('%'+req.params.name+'%')
     const rows2 = db.prepare("SELECT id, name, year, status, idea as maker, 'series' AS route FROM series " +
@@ -156,8 +146,6 @@ router.get('/createlist', function(req, res, next) {
 })
 
 router.post('/createlist', function(req, res, next) {
-    const db = new Database('backlog.db');
-
     const name = req.body.name
     const description = req.body.description
     const color = req.body.color
@@ -168,7 +156,6 @@ router.post('/createlist', function(req, res, next) {
 })
 
 router.get('/editlist/:id', function(req, res, next) {
-    const db = new Database('backlog.db');
     const name = req.params.id
     const list = db.prepare("SELECT name, description FROM lists WHERE id = ?").get(name)
 
@@ -176,8 +163,6 @@ router.get('/editlist/:id', function(req, res, next) {
 })
 
 router.post('/editlist/:id', function(req, res, next) {
-    const db = new Database('backlog.db');
-
     const id = req.params.id
     const name = req.body.name
     const description = req.body.description
@@ -189,7 +174,6 @@ router.post('/editlist/:id', function(req, res, next) {
 })
 
 router.get('/list/:id', function(req, res, next) {
-    const db = new Database('backlog.db');
     const rows = db.prepare("SELECT * FROM lists WHERE id = ?").get(req.params.id)
 
     const rows2 = db.prepare("SELECT lc.id, lc.type, m.id, m.name, m.year, m.status, m.genre " +
