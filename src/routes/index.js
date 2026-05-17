@@ -1,10 +1,10 @@
 const express = require('express');
 const {db} = require("../utils/db.js");
-const { access } = require("fs/promises");
-const { constants } = require("fs");
 const router = express.Router();
 const path = require("path");
 const {getSettings, updateSetting} = require("../utils/settings");
+
+const listService = require("../services/list.service");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -43,13 +43,11 @@ router.get('/', function(req, res, next) {
             "     ) AS Alle_Daten\n" +
             "GROUP BY status;").all()
 
-        const row4 = db.prepare("SELECT id, name, color FROM lists;").all()
-
         res.render('index', { title: 'Backlog',
             recent: row,
             finish: row2,
             counts: row3,
-            listy: row4
+            listy: listService.getAllLists()
         });
     } catch (err) {
         console.log("Database Error: " + err.message);
@@ -164,84 +162,28 @@ router.get('/createlist', function(req, res, next) {
 })
 
 router.post('/createlist', function(req, res, next) {
-    const name = req.body.name
-    const description = req.body.description
-    const color = req.body.color
-
-    try {
-        db.prepare("INSERT INTO lists (name, description, color) VALUES (?, ?, ?)").run(name, description, '#' + color)
-
-        res.redirect('/');
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    listService.createList(req.body);
+    res.redirect('/');
 })
 
 router.get('/editlist/:id', function(req, res, next) {
-    try {
-        const name = req.params.id
-        const list = db.prepare("SELECT name, description FROM lists WHERE id = ?").get(name)
-
-        res.render('list-form', {list: list});
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    res.render('list-form', {list: listService.getListDetailById(id)});
 })
 
 router.post('/editlist/:id', function(req, res, next) {
-    const id = req.params.id
-    const name = req.body.name
-    const description = req.body.description
-    const color = req.body.color
-
-    try {
-        db.prepare("UPDATE lists SET name=?, description=?, color=? WHERE id = ?").run(name, description, '#'+color, id)
-
-        res.redirect('/');
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    listService.updateListDetails(id, req.body);
+    res.redirect('/');
 })
 
 router.get('/list/:id', function(req, res, next) {
-    try {
-        const rows = db.prepare("SELECT * FROM lists WHERE id = ?").get(req.params.id)
-
-        const rows2 = db.prepare("SELECT lc.id, lc.type, m.id, m.name, m.year, m.status, m.genre " +
-            "FROM list_content lc " +
-            "JOIN movie m ON lc.media = m.id " +
-            "WHERE lc.type = 'movie' AND lc.list = ?" +
-
-            "UNION ALL " +
-
-            "SELECT lc.id, lc.type, g.id, g.name, g.year, g.status, g.genre\n" +
-            "FROM list_content lc\n" +
-            "JOIN game g ON lc.media = g.id\n" +
-            "WHERE lc.type = 'game' AND lc.list = ?" +
-
-            "UNION ALL " +
-
-            "SELECT lc.id, lc.type, b.id, b.name, b.year, b.status, b.genre\n" +
-            "FROM list_content lc\n" +
-            "JOIN book b ON lc.media = b.id\n" +
-            "WHERE lc.type = 'book' AND lc.list = ?" +
-
-            "UNION ALL " +
-
-            "SELECT lc.id, lc.type, s.id, s.name, s.year, s.status, s.genre\n" +
-            "FROM list_content lc\n" +
-            "JOIN series s ON lc.media = s.id\n" +
-            "WHERE lc.type = 'series' AND lc.list = ?").all(rows.id, rows.id, rows.id, rows.id)
-
-        console.log(rows2);
-        res.render('list-detail', { list: rows, content: rows2});
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    const full_list = listService.getFullListById(id);
+    res.render('list-detail', {
+        list: full_list.detail,
+        content: full_list.content,
+    });
 })
 
 router.get('/settings', function(req, res, next) {
@@ -253,15 +195,5 @@ router.post('/settings', function(req, res, next) {
     updateSetting("streaming", req.body.streaming === "on")
     res.redirect("/");
 })
-
-
-async function fileExists(path) {
-    try {
-        await access(path, constants.F_OK);
-        return true;
-    } catch {
-        return false;
-    }
-}
 
 module.exports = router;

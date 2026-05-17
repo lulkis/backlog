@@ -1,4 +1,6 @@
 const path = require('path');
+const { access } = require("fs/promises");
+const { constants } = require("fs");
 
 function cleanPath(input) {
     const cleaned = input.toLowerCase()
@@ -31,9 +33,19 @@ function saveHeaderImage(name, route, image) {
     image.mv(path, function(err) {})
 }
 
+async function fileExists(path) {
+    try {
+        await access(path, constants.F_OK);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
 module.exports = {
     cleanPath,
     daysToRelease,
     saveCoverImage,
-    saveHeaderImage
+    saveHeaderImage,
+    fileExists
 }
