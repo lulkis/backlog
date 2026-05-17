@@ -7,7 +7,7 @@ var logger = require('morgan');
 
 var dotenv = require('dotenv').config() // ← hier raus
 
-const { getSettings } = require("./settings");
+const { getSettings } = require("./utils/settings");
 
 var indexRouter = require('./routes/index');
 var moviesRouter = require('./routes/movie');

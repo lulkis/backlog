@@ -1,5 +1,5 @@
 var express = require('express');
-const {db, db2} = require("../db.js");
+const {db, db2} = require("../utils/db.js");
 var router = express.Router();
 
 /* GET home page. */

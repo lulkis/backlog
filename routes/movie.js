@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const {db} = require("../db.js");
-const { getSettings } = require("../settings");
+const {db} = require("../utils/db.js");
+const { getSettings } = require("../utils/settings");
 
 router.get('/', function(req, res, next) {
     try {

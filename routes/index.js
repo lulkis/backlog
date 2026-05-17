@@ -1,10 +1,10 @@
 var express = require('express');
-const {db} = require("../db.js");
+const {db} = require("../utils/db.js");
 const { access } = require("fs/promises");
 const { constants } = require("fs");
 var router = express.Router();
 const path = require("path");
-const {getSettings, updateSetting} = require("../settings");
+const {getSettings, updateSetting} = require("../utils/settings");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
