@@ -1,7 +1,7 @@
 const persistence = require('../persistence/movie.db.js');
 const { getSettings } = require('../utils/settings');
 const { daysToRelease, saveImage, saveCoverImage, saveHeaderImage} = require('../utils/utils');
-const {db} = require("../utils/db");
+const { validateMovie } = require('../validators/movie.validator')
 
 function createMovie(data){
     const movie = {
@@ -19,7 +19,7 @@ function createMovie(data){
         header_space: parseFloat(data.header_space),
         score: data.score,
     }
-
+    validateMovie(movie);
     persistence.saveMovie(movie);
 }
 
@@ -37,7 +37,7 @@ async function getAllMovieInfoById(id){
     const settings = getSettings();
     let streaming = [];
     if(settings["streaming"]) {
-        await streaming = getStreamingInfo(movie.name)
+        streaming = await getStreamingInfo(movie.name)
     }
 
     return {
