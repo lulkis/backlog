@@ -20,9 +20,9 @@ router.get('/add',  function(req, res, next) {
     }
 });
 
-router.post('/add', async function(req, res, next) {
+router.post('/add',  function(req, res, next) {
     try {
-        service.saveMovieImages(cleanPath(req.body.name), req.files.foo, req.files.foo2);
+        service.saveMovieImages(cleanPath(req.body.name), req.files?.foo, req.files?.foo2);
         service.createMovie(req.body)
         res.redirect('/movie')
     } catch (err) {
@@ -89,7 +89,7 @@ router.post('/finish/:id', function(req, res, next) {
 
 router.get('/repeat/:id', function(req, res, next) {
     try {
-        const id = req.params.id;
+        const id = parseInt(req.params.id);
         service.seenMovieAgain(id)
         res.redirect('/movie/detail/' + id);
     } catch (err) {
