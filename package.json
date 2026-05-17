@@ -3,7 +3,8 @@
   "version": "1.3.16",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "jest"
   },
   "dependencies": {
     "better-sqlite3": "^12.8.0",
@@ -17,5 +18,8 @@
     "howlongtobeat": "^1.4.1",
     "http-errors": "~1.6.3",
     "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2"
   }
 }
