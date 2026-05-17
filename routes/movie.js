@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const {db} = require("../utils/db.js");
 const { getSettings } = require("../utils/settings");
-const {cleanPath} = require("../utils/utils");
+const { cleanPath, daysToRelease } = require("../utils/utils");
 
 router.get('/', function(req, res, next) {
     try {
@@ -97,16 +97,7 @@ router.get('/detail/:id', async function (req, res, next) {
         }
 
         const input = row1.upcoming;
-        let diffDays = 0
-        if (input) {
-            const [day, month, year] = input.split(".");
-            const date = new Date(year, month - 1, day);
-            const current_date = new Date();
-            if (current_date < date) {
-                const oneDay = 24 * 60 * 60 * 1000;
-                diffDays = Math.round(Math.abs((current_date - date) / oneDay));
-            }
-        }
+        const diffDays = daysToRelease(input);
 
         res.render('media', {
             media: row1,

@@ -1,6 +1,6 @@
 var express = require('express');
 const {db, db2} = require("../utils/db.js");
-const {cleanPath} = require("../utils/utils");
+const {cleanPath, daysToRelease} = require("../utils/utils");
 var router = express.Router();
 
 /* GET home page. */
@@ -77,16 +77,7 @@ router.get('/detail/:id', function(req, res, next) {
             "JOIN list_content lc ON l.id = lc.list WHERE lc.type = 'game' AND lc.media=?").all(req.params.id)
 
         const input = row1.upcoming;
-        let diffDays = 0
-        if(input){
-            const [day, month, year] = input.split(".");
-            const date = new Date(year, month - 1, day);
-            const current_date = new Date();
-            if(current_date < date){
-                const oneDay = 24 * 60 * 60 * 1000;
-                diffDays = Math.round(Math.abs((current_date - date) / oneDay));
-            }
-        }
+        const diffDays = daysToRelease(input);
 
         res.render('media', { media: row1, route: 'game', finish: row2, hltb: hltb2, days: diffDays, inlist: inlist });
     } catch (err) {

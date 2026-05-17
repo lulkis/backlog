@@ -8,6 +8,20 @@ function cleanPath(input) {
     return path.basename(cleaned);
 }
 
+function daysToRelease(input_date){
+    if(input_date){
+        const [day, month, year] = input_date.split(".");
+        const date = new Date(year, month - 1, day);
+        const current_date = new Date();
+        if (current_date < date) {
+            const oneDay = 24 * 60 * 60 * 1000;
+            return Math.round(Math.abs((current_date - date) / oneDay));
+        }
+    }
+    return 0;
+}
+
 module.exports = {
-    cleanPath
+    cleanPath,
+    daysToRelease
 }
