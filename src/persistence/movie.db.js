@@ -21,7 +21,6 @@ function saveMovie(movie) {
             )
     } catch (err) {
         console.log("Database Error: " + err.message);
-        next(err);
     }
 }
 
@@ -30,7 +29,6 @@ function getAllMovies() {
         return db.prepare("SELECT id, name, status FROM movie ORDER BY name ASC").all()
     } catch (err) {
         console.log("Database Error: " + err.message);
-        next(err);
     }
 }
 
@@ -39,7 +37,6 @@ function getMovieById(id){
         return db.prepare("SELECT * FROM movie WHERE movie.id = ?").get(id)
     } catch (err) {
         console.log("Database Error: " + err.message);
-        next(err);
     }
 }
 
@@ -48,7 +45,6 @@ function getMovieValuationById(id){
         return db.prepare("SELECT * FROM movie_finished WHERE id = ?").get(id)
     } catch (err) {
         console.log("Database Error: " + err.message);
-        next(err);
     }
 }
 
@@ -58,16 +54,14 @@ function getListInfoByMovieId(id){
             "JOIN list_content lc ON l.id = lc.list WHERE lc.type = 'movie' AND lc.media=?").all(id)
     } catch (err) {
         console.log("Database Error: " + err.message);
-        next(err);
     }
 }
 
 function seenMovieAgain(id){
     try {
-        db.prepare("SELECT * FROM movie_finished WHERE id = ?").get(id)
+        db.prepare("UPDATE movie_finished SET finishcount = finishcount + 1 WHERE id = ?").run(id);
     } catch (err) {
         console.log("Database Error: " + err.message);
-        next(err);
     }
 }
 
@@ -91,7 +85,6 @@ function updateMovie(id, movie) {
             )
     } catch (err) {
         console.log("Database Error: " + err.message);
-        next(err);
     }
 }
 
@@ -103,7 +96,6 @@ function finishMovie(valuation){
         db.prepare("UPDATE movie SET status = ? WHERE id = ?").run("finished", valuation.id)
     } catch (err) {
         console.log("Database Error: " + err.message);
-        next(err);
     }
 }
 
@@ -115,7 +107,6 @@ function updateValuation(valuation){
             .run(valuation.rating, valuation.valuation, valuation.like, valuation.medium, valuation.id)
     } catch (err) {
         console.log("Database Error: " + err.message);
-        next(err);
     }
 }
 
