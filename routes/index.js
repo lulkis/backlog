@@ -1,8 +1,8 @@
-var express = require('express');
+const express = require('express');
 const {db} = require("../utils/db.js");
 const { access } = require("fs/promises");
 const { constants } = require("fs");
-var router = express.Router();
+const router = express.Router();
 const path = require("path");
 const {getSettings, updateSetting} = require("../utils/settings");
 
@@ -45,7 +45,7 @@ router.get('/', function(req, res, next) {
 
         const row4 = db.prepare("SELECT id, name, color FROM lists;").all()
 
-        res.render('index', { title: 'Express',
+        res.render('index', { title: 'Backlog',
             recent: row,
             finish: row2,
             counts: row3,
@@ -121,9 +121,7 @@ router.get('/search/:name', async function (req, res, next) {
 
         let search = "general"
         const pth = path.join(__dirname, "../public/images/actors/" + req.params.name.replaceAll(".", "") + ".jpg");
-        console.log(pth);
         if (await fileExists(pth)) {
-            console.log("Datei existiert");
             search = "actor";
         }
 
