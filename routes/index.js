@@ -119,7 +119,7 @@ router.get('/search/:name', async function (req, res, next) {
             book: []
         }
 
-        var search = "general"
+        let search = "general"
         const pth = path.join(__dirname, "../public/images/actors/" + req.params.name.replaceAll(".", "") + ".jpg");
         console.log(pth);
         if (await fileExists(pth)) {

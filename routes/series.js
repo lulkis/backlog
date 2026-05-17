@@ -20,39 +20,37 @@ router.get('/add', function(req, res, next) {
 });
 
 router.post('/add', function(req, res, next) {
-    var name = req.body.name;
-    var year = Number(req.body.year);
-    var year_end = Number(req.body.year_end);
-    var genre = req.body.genre;
-    var country = req.body.country;
-    var description = req.body.description;
-    var date_added = new Date().toISOString();
-    var header_space = req.body.header_space;
-    var status = 'open';
-    var idea = req.body.idea;
-    var studio = req.body.studio;
-    var cast = req.body.cast;
-    var episodes = req.body.episodes;
-    var score = req.body.score;
-    var upcoming = req.body.upcoming;
+    const name = req.body.name;
+    const year = Number(req.body.year);
+    const year_end = Number(req.body.year_end);
+    const genre = req.body.genre;
+    const country = req.body.country;
+    const description = req.body.description;
+    const date_added = new Date().toISOString();
+    const header_space = req.body.header_space;
+    const status = 'open';
+    const idea = req.body.idea;
+    const studio = req.body.studio;
+    const cast = req.body.cast;
+    const episodes = req.body.episodes;
+    const score = req.body.score;
+    const upcoming = req.body.upcoming;
 
     const clean_name = cleanPath(name);
-    var path = './public/images/series/'+ clean_name +'.jpg'
+    const path = './public/images/series/'+ clean_name +'.jpg'
     let picture = req.files.foo;
     picture.mv(path, function(err) {
         if(err){
             console.log(err)
         }
-        console.log("Succ")
     });
 
-    var path2 = './public/images/series/header/'+ clean_name +'.jpg'
+    const path2 = './public/images/series/header/'+ clean_name +'.jpg'
     let picture2 = req.files.foo2;
     picture2.mv(path2, function(err) {
         if(err){
             console.log(err)
         }
-        console.log("Succ")
     });
 
     try {
@@ -75,7 +73,7 @@ router.get('/detail/:id', function(req, res, next) {
             "JOIN list_content lc ON l.id = lc.list WHERE lc.type = 'series' AND lc.media=?").all(req.params.id)
 
         const input = row1.upcoming;
-        var diffDays = 0
+        let diffDays = 0
         if(input){
             const [day, month, year] = input.split(".");
             const date = new Date(year, month - 1, day);
@@ -104,20 +102,20 @@ router.get('/edit/:id', function(req, res, next) {
 });
 
 router.post('/edit/:id', function(req, res, next) {
-    var name = req.body.name;
-    var year = Number(req.body.year);
-    var year_end = Number(req.body.year_end);
-    var genre = req.body.genre;
-    var country = req.body.country;
-    var description = req.body.description;
-    var header_space = req.body.header_space;
-    var idea = req.body.idea;
-    var studio = req.body.studio;
-    var cast = req.body.cast;
-    var episodes = req.body.episodes;
-    var score = req.body.score;
-    var cancelled;
-    var upcoming = req.body.upcoming;
+    const name = req.body.name;
+    const year = Number(req.body.year);
+    const year_end = Number(req.body.year_end);
+    const genre = req.body.genre;
+    const country = req.body.country;
+    const description = req.body.description;
+    const header_space = req.body.header_space;
+    const idea = req.body.idea;
+    const studio = req.body.studio;
+    const cast = req.body.cast;
+    const episodes = req.body.episodes;
+    const score = req.body.score;
+    let cancelled;
+    const upcoming = req.body.upcoming;
     if(req.body.cancelled === "1") {
         cancelled = 1;
     } else {
@@ -138,7 +136,7 @@ router.post('/edit/:id', function(req, res, next) {
             });
 
         }
-        var path2 = './public/images/series/header/'+ clean_name +'.jpg'
+        const path2 = './public/images/series/header/'+ clean_name +'.jpg'
 
         if (req.files.foo2 != null){
             let picture2 = req.files.foo2;
@@ -146,7 +144,6 @@ router.post('/edit/:id', function(req, res, next) {
                 if(err){
                     console.log(err)
                 }
-                console.log("Succ")
             });
         }
     }

@@ -25,22 +25,22 @@ router.get('/add', function(req, res, next) {
 });
 
 router.post('/add', function(req, res, next) {
-    var name = req.body.name;
-    var year = Number(req.body.year);
-    var genre = req.body.genre;
-    var country = req.body.country;
-    var header_space = req.body.header_space;
-    var description = req.body.description;
-    var date_added = new Date().toISOString();
-    var status = 'open';
-    var developer = req.body.developer;
-    var publisher = req.body.publisher;
-    var score = req.body.score;
-    var cast = req.body.cast;
-    var upcoming = req.body.upcoming;
+    const name = req.body.name;
+    const year = Number(req.body.year);
+    const genre = req.body.genre;
+    const country = req.body.country;
+    const header_space = req.body.header_space;
+    const description = req.body.description;
+    const date_added = new Date().toISOString();
+    const status = 'open';
+    const developer = req.body.developer;
+    const publisher = req.body.publisher;
+    const score = req.body.score;
+    const cast = req.body.cast;
+    const upcoming = req.body.upcoming;
 
     const clean_name = cleanPath(name);
-    var path = './public/images/game/'+ clean_name +'.jpg'
+    const path = './public/images/game/'+ clean_name +'.jpg'
     let picture = req.files.foo;
     picture.mv(path, function(err) {
         if(err){
@@ -49,7 +49,7 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    var path2 = './public/images/game/header/'+ clean_name +'.jpg'
+    const path2 = './public/images/game/header/'+ clean_name +'.jpg'
     let picture2 = req.files.foo2;
     picture2.mv(path2, function(err) {
         if(err){
@@ -77,7 +77,7 @@ router.get('/detail/:id', function(req, res, next) {
             "JOIN list_content lc ON l.id = lc.list WHERE lc.type = 'game' AND lc.media=?").all(req.params.id)
 
         const input = row1.upcoming;
-        var diffDays = 0
+        let diffDays = 0
         if(input){
             const [day, month, year] = input.split(".");
             const date = new Date(year, month - 1, day);
@@ -106,17 +106,17 @@ router.get('/edit/:id', function(req, res, next) {
 });
 
 router.post('/edit/:id', function(req, res, next) {
-    var name = req.body.name;
-    var year = Number(req.body.year);
-    var genre = req.body.genre;
-    var country = req.body.country;
-    var description = req.body.description;
-    var developer = req.body.developer;
-    var publisher = req.body.publisher;
-    var header_space = req.body.header_space;
-    var score = req.body.score;
-    var cast = req.body.cast;
-    var upcoming = req.body.upcoming;
+    const name = req.body.name;
+    const year = Number(req.body.year);
+    const genre = req.body.genre;
+    const country = req.body.country;
+    const description = req.body.description;
+    const developer = req.body.developer;
+    const publisher = req.body.publisher;
+    const header_space = req.body.header_space;
+    const score = req.body.score;
+    const cast = req.body.cast;
+    const upcoming = req.body.upcoming;
 
     if(req.files != null){
         const clean_name = cleanPath(name);
@@ -132,7 +132,7 @@ router.post('/edit/:id', function(req, res, next) {
             });
 
         }
-        var path2 = './public/images/series/game/'+ clean_name +'.jpg'
+        const path2 = './public/images/series/game/'+ clean_name +'.jpg'
 
         if (req.files.foo2 != null){
             let picture2 = req.files.foo2;
