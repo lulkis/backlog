@@ -4,6 +4,13 @@ function validateMovie(movie) {
     }
 }
 
+function validateMovieValidation(validation){
+    if (!validation.rating || isNaN(validation.rating) || validation.rating <= 0 || validation.rating >= 10) {
+        throw new Error("Rating has to be a Number from 1 to 10 ");
+    }
+}
+
 module.exports = {
     validateMovie,
+    validateMovieValidation
 }
