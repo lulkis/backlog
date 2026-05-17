@@ -1,70 +1,119 @@
 var express = require('express');
 var router = express.Router();
-const {db} = require("../utils/db.js");
 const { getSettings } = require("../utils/settings");
-const { cleanPath, daysToRelease } = require("../utils/utils");
+const { cleanPath } = require("../utils/utils");
 const service = require("../services/movie.service");
 
 router.get('/', function(req, res, next) {
-    res.render('media-list', { title: 'Movies', route: 'movie' , list: service.getAllMovies()});
+    try {
+        res.render('media-list', { title: 'Movies', route: 'movie' , list: service.getAllMovies()});
+    } catch (err) {
+        next(err);
+    }
 });
 
-router.get('/add', function(req, res, next) {
-    res.render('media-form', { title: 'Movies', route: 'movie', media: service.getEmptyMovie() });
+router.get('/add',  function(req, res, next) {
+    try {
+        res.render('media-form', { title: 'Movies', route: 'movie', media: service.getEmptyMovie() });
+    } catch (err) {
+        next(err);
+    }
 });
 
 router.post('/add', async function(req, res, next) {
-    service.saveMovieImages(cleanPath(req.body.name), req.files.foo, req.files.foo2);
-    service.createMovie(req.body)
-    res.redirect('/movie')
+    try {
+        service.saveMovieImages(cleanPath(req.body.name), req.files.foo, req.files.foo2);
+        service.createMovie(req.body)
+        res.redirect('/movie')
+    } catch (err) {
+        next(err);
+    }
 })
 
 router.get('/detail/:id', async function (req, res, next) {
-    const data = service.getAllMovieInfoById(parseInt(req.params.id));
-    console.log(data.finish)
-    res.render('media', {
-        media: data.movie,
-        route: 'movie',
-        finish: data.valuation,
-        stream: data.stream,
-        settings: getSettings(),
-        days: data.days,
-        inlist: data.lists
-    });
+    try {
+        const id = parseInt(req.params.id);
+        const data = await service.getAllMovieInfoById(id);
+        res.render('media', {
+            media: data.movie,
+            route: 'movie',
+            finish: data.valuation,
+            stream: data.stream,
+            settings: getSettings(),
+            days: data.days,
+            inlist: data.lists
+        });
+    } catch (err) {
+        next(err);
+    }
 });
 
 router.get('/edit/:id', function(req, res, next) {
-    res.render('media-form', { title: 'Movies', route: 'movie', media: service.getMovieById(parseInt(req.params.id)) });
+    try {
+        const id = parseInt(req.params.id);
+        res.render('media-form', { title: 'Movies', route: 'movie', media: service.getMovieById(id) });
+    } catch (err) {
+        next(err);
+    }
 });
 
 router.post('/edit/:id', function(req, res, next) {
-    service.saveMovieImages(cleanPath(req.body.name), req.files?.foo, req.files?.foo2);
-    service.updateMovie(parseInt(req.params.id), req.body)
-    res.redirect('/movie/detail/'+req.params.id);
+    try {
+        const id = parseInt(req.params.id);
+        service.saveMovieImages(cleanPath(req.body.name), req.files?.foo, req.files?.foo2);
+        service.updateMovie(id, req.body)
+        res.redirect('/movie/detail/'+id);
+    } catch (err) {
+        next(err);
+    }
 });
 
 router.get('/finish/:id', function(req, res, next) {
-    res.render('media-finish', { route: 'movie', vals: service.getEmptyValuation(req.params.id) });
+    try {
+        const id = parseInt(req.params.id);
+        res.render('media-finish', { route: 'movie', vals: service.getEmptyValuation(id) });
+    } catch (err) {
+        next(err);
+    }
 })
 
 router.post('/finish/:id', function(req, res, next) {
-    service.finishMovie(parseInt(req.params.id), req.body);
-    res.redirect('/movie/detail/' + req.params.id);
+    try {
+        const id = parseInt(req.params.id);
+        service.finishMovie(id, req.body);
+        res.redirect('/movie/detail/' + id);
+    } catch (err) {
+        next(err);
+    }
 })
 
 router.get('/repeat/:id', function(req, res, next) {
-    const id = req.params.id;
-    service.seenMovieAgain(id)
-    res.redirect('/movie/detail/' + id);
+    try {
+        const id = req.params.id;
+        service.seenMovieAgain(id)
+        res.redirect('/movie/detail/' + id);
+    } catch (err) {
+        next(err);
+    }
 })
 
 router.get('/editval/:id', function(req, res, next) {
-    res.render('media-finish', { route: 'movie', vals: service.getMovieValuationById(req.body.id), id: req.body.id });
+    try {
+        const id = parseInt(req.params.id);
+        res.render('media-finish', { route: 'movie', vals: service.getMovieValuationById(id), id: id });
+    } catch (err) {
+        next(err);
+    }
 })
 
 router.post('/editval/:id', function(req, res, next) {
-
-    res.redirect('/movie/detail/' + req.params.id);
+    try {
+        const id = parseInt(req.params.id);
+        service.updateValuation(id, req.body)
+        res.redirect('/movie/detail/' + id);
+    } catch (err) {
+        next(err);
+    }
 })
 
 module.exports = router;

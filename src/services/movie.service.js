@@ -31,13 +31,13 @@ function getEmptyMovie(){
     return { name: "", year: "", genre: "", country: "" , description: "", studio: "", director: "", length: "", cast: "", header_space: 0 };
 }
 
-function getAllMovieInfoById(id){
+async function getAllMovieInfoById(id){
     const movie = persistence.getMovieById(id);
 
     const settings = getSettings();
     let streaming = [];
     if(settings["streaming"]) {
-        streaming = getStreamingInfo(movie.name)
+        await streaming = getStreamingInfo(movie.name)
     }
 
     return {
@@ -156,5 +156,6 @@ module.exports = {
     getEmptyValuation,
     saveMovieImages,
     updateMovie,
-    finishMovie
+    finishMovie,
+    updateValuation
 };
