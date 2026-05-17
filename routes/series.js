@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const {db} = require("../utils/db.js");
+const {cleanPath} = require("../utils/utils");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -35,7 +36,8 @@ router.post('/add', function(req, res, next) {
     var score = req.body.score;
     var upcoming = req.body.upcoming;
 
-    var path = './public/images/series/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
+    const clean_name = cleanPath(name);
+    var path = './public/images/series/'+ clean_name +'.jpg'
     let picture = req.files.foo;
     picture.mv(path, function(err) {
         if(err){
@@ -44,7 +46,7 @@ router.post('/add', function(req, res, next) {
         console.log("Succ")
     });
 
-    var path2 = './public/images/series/header/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
+    var path2 = './public/images/series/header/'+ clean_name +'.jpg'
     let picture2 = req.files.foo2;
     picture2.mv(path2, function(err) {
         if(err){
@@ -123,7 +125,8 @@ router.post('/edit/:id', function(req, res, next) {
     }
 
     if(req.files != null){
-        const path = './public/images/series/' + name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "")  + '.jpg';
+        const clean_name = cleanPath(name);
+        const path = './public/images/series/' + clean_name  + '.jpg';
 
         if (req.files.foo != null){
             let picture = req.files.foo;
@@ -135,7 +138,7 @@ router.post('/edit/:id', function(req, res, next) {
             });
 
         }
-        var path2 = './public/images/series/header/'+ name.toLowerCase().replaceAll(" ", "_").replaceAll(":", "") +'.jpg'
+        var path2 = './public/images/series/header/'+ clean_name +'.jpg'
 
         if (req.files.foo2 != null){
             let picture2 = req.files.foo2;
