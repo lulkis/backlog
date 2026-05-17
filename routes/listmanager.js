@@ -1,16 +1,13 @@
-const Database = require('better-sqlite3');
+const {db} = require("../db.js");
 const express = require("express");
 const router = express.Router();
 
 router.get('/lists', function(req, res) {
-    const db = new Database('./backlog.db');
     const thing = db.prepare("SELECT id, name FROM lists").all();
     res.json(thing);
 });
 
 router.post('/add', async (req, res) => {
-    const db = new Database('./backlog.db');
-
     const list = req.body.list;
     const media = req.body.media;
     const type = req.body.type;
@@ -26,8 +23,6 @@ router.post('/add', async (req, res) => {
 });
 
 router.post('/remove', async (req, res) => {
-    const db = new Database('./backlog.db');
-
     const list = req.body.list;
 
     db.prepare("DELETE FROM list_content WHERE list = ?").run(parseInt(list))
@@ -37,8 +32,6 @@ router.post('/remove', async (req, res) => {
 });
 
 router.get('/remove/:list/:element', async (req, res) => {
-    const db = new Database('./backlog.db');
-
     const list = req.params.list
     const element = req.params.element
 

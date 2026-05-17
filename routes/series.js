@@ -1,10 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const Database = require('better-sqlite3');
+const {db} = require("../db.js");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    const db = new Database('backlog.db');
     const rows = db.prepare("SELECT id, name, status FROM series ORDER BY name ASC").all()
     res.render('media-list', { title: 'Series', route: 'series', list: rows});
 });
@@ -15,9 +14,7 @@ router.get('/add', function(req, res, next) {
 });
 
 router.post('/add', function(req, res, next) {
-    const db = new Database('backlog.db');
 
-    console.log(req.body);
 
     var name = req.body.name;
     var year = Number(req.body.year);
@@ -61,7 +58,6 @@ router.post('/add', function(req, res, next) {
 })
 
 router.get('/detail/:id', function(req, res, next) {
-    const db = new Database('backlog.db');
     const row1 = db.prepare("SELECT * FROM series WHERE id = ?").get(req.params.id);
     const row2 = db.prepare("SELECT * FROM series_finished WHERE id = ?").get(req.params.id);
     const inlist = db.prepare("SELECT l.id, l.name, l.color FROM lists l " +
@@ -83,14 +79,11 @@ router.get('/detail/:id', function(req, res, next) {
 });
 
 router.get('/edit/:id', function(req, res, next) {
-    const db = new Database('backlog.db');
     const rows = db.prepare("SELECT * FROM series WHERE id = ?").get(req.params.id);
     res.render('media-form', { title: 'Series', route: 'series', media: rows });
 });
 
 router.post('/edit/:id', function(req, res, next) {
-    const db = new Database('backlog.db');
-
     var name = req.body.name;
     var year = Number(req.body.year);
     var year_end = Number(req.body.year_end);
@@ -148,7 +141,6 @@ router.post('/edit/:id', function(req, res, next) {
 });
 
 router.get('/start/:id', function(req, res, next) {
-    const db = new Database('backlog.db');
     const id = req.params.id;
     db.prepare("UPDATE series SET status = ? WHERE id = ?").run("started", id)
     res.redirect('/series/detail/' + id);
@@ -159,8 +151,6 @@ router.get('/finish/:id', function(req, res, next) {
 })
 
 router.post('/finish/:id', function(req, res, next) {
-    const db = new Database('backlog.db');
-
     const id = req.params.id;
     const date = new Date().toISOString();
     const rating = req.body.rating;
@@ -175,28 +165,23 @@ router.post('/finish/:id', function(req, res, next) {
 })
 
 router.get('/new/:id', function(req, res, next) {
-    const db = new Database('backlog.db');
     const id = req.params.id;
     db.prepare("UPDATE series SET status = ? WHERE id = ?").run("open", id)
     res.redirect('/series/detail/' + id);
 })
 
 router.get('/repeat/:id', function(req, res, next) {
-    const db = new Database('backlog.db');
     const id = req.params.id;
     db.prepare("UPDATE series_finished SET finishcount = finishcount + 1 WHERE id = ?").run("open", id)
     res.redirect('/series/detail/' + id);
 })
 
 router.get('/editval/:id', function(req, res, next) {
-    const db = new Database('backlog.db');
     const rows = db.prepare("SELECT * FROM series_finished WHERE id = ?").get(req.params.id);
     res.render('media-finish', { route: 'series', vals: rows, id: req.body.id });
 })
 
 router.post('/editval/:id', function(req, res, next) {
-    const db = new Database('backlog.db');
-
     const rating = req.body.rating;
     const valuation = req.body.valuation;
     const like = req.body.like;
