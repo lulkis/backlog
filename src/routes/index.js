@@ -5,54 +5,16 @@ const path = require("path");
 const {getSettings, updateSetting} = require("../utils/settings");
 
 const listService = require("../services/list.service");
+const indexService = require("../services/index.service");
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
-    try {
-        const row = db.prepare("SELECT movie.id, movie.name, movie.added, 'movie' AS route FROM movie WHERE movie.status = 'open'\n" +
-            "UNION\n" +
-            "SELECT series.id, series.name, series.added, 'series' AS route FROM series WHERE series.status = 'open' OR series.status = 'started'\n" +
-            "UNION\n" +
-            "SELECT book.id, book.name, book.added, 'book' AS route FROM book WHERE book.status = 'open' OR book.status = 'started'\n" +
-            "UNION\n" +
-            "SELECT game.id, game.name, game.added, 'game' AS route FROM game WHERE game.status = 'open' OR game.status = 'started'\n" +
-            "ORDER BY added DESC LIMIT 5").all();
-
-        const row2 = db.prepare("SELECT movie.name, movie.id, movie_finished.date, 'movie' AS route FROM movie\n" +
-            "INNER JOIN movie_finished ON movie.id = movie_finished.id\n" +
-            "UNION\n" +
-            "SELECT series.name, series.id, series_finished.date, 'series' AS route FROM series\n" +
-            "INNER JOIN series_finished ON series.id = series_finished.id\n" +
-            "UNION\n" +
-            "SELECT book.name, book.id, book_finished.date, 'book' AS route FROM book\n" +
-            "INNER JOIN book_finished ON book.id = book_finished.id\n" +
-            "UNION\n" +
-            "SELECT game.name, game.id, game_finished.date, 'game' AS route FROM game\n" +
-            "INNER JOIN game_finished ON game.id = game_finished.id\n" +
-            "ORDER BY date DESC LIMIT 5").all()
-
-        const row3 = db.prepare("SELECT status, COUNT(*) as count\n" +
-            "FROM (\n" +
-            "         SELECT status FROM movie\n" +
-            "         UNION ALL\n" +
-            "         SELECT status FROM series\n" +
-            "         UNION ALL\n" +
-            "         SELECT status FROM book\n" +
-            "         UNION ALL\n" +
-            "         SELECT status FROM game\n" +
-            "     ) AS Alle_Daten\n" +
-            "GROUP BY status;").all()
-
-        res.render('index', { title: 'Backlog',
-            recent: row,
-            finish: row2,
-            counts: row3,
-            listy: listService.getAllLists()
-        });
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const homepage = indexService.getHomepageComponents();
+    res.render('index', { title: 'Backlog',
+        recent: homepage.recent_added,
+        finish: homepage.recent_finished,
+        counts: homepage.backlog_stats,
+        listy: listService.getAllLists()
+    });
 });
 
 router.get('/get/:name', function(req, res, next) {
