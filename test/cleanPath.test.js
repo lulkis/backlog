@@ -1,4 +1,4 @@
-const { cleanPath } = require('../utils/utils');
+const { cleanPath } = require('../src/utils/utils');
 
 test('Leerzeichen werden zu Unterstrichen', () => {
     expect(cleanPath('The Dark Knight')).toBe('the_dark_knight');

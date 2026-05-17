@@ -7,18 +7,18 @@ var logger = require('morgan');
 
 var dotenv = require('dotenv').config() // ← hier raus
 
-const { getSettings } = require("./utils/settings");
+const { getSettings } = require("./src/utils/settings");
 
-var indexRouter = require('./routes/index');
-var moviesRouter = require('./routes/movie');
-var gamesRouter = require('./routes/game');
-var booksRouter = require('./routes/book');
-var seriesRouter = require('./routes/series');
+var indexRouter = require('./src/routes/index');
+var moviesRouter = require('./src/routes/movie');
+var gamesRouter = require('./src/routes/game');
+var booksRouter = require('./src/routes/book');
+var seriesRouter = require('./src/routes/series');
 
 var app = express();
 
-var list = require("./routes/listmanager.js");
-var t = require("./routes/database.js");
+var list = require("./src/routes/listmanager.js");
+var t = require("./src/routes/database.js");
 t.setup_database();
 
 app.use((req, res, next) => {

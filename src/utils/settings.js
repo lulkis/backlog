@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const SETTINGS_PATH = path.join(__dirname, "../settings.json");
+const SETTINGS_PATH = path.join(__dirname, "../../settings.json");
 
 let settings = JSON.parse(
     fs.readFileSync(SETTINGS_PATH, "utf-8")
