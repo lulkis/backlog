@@ -3,239 +3,68 @@ var router = express.Router();
 const {db} = require("../utils/db.js");
 const { getSettings } = require("../utils/settings");
 const { cleanPath, daysToRelease } = require("../utils/utils");
+const service = require("../services/movie.service");
 
 router.get('/', function(req, res, next) {
-    try {
-        const rows = db.prepare("SELECT id, name, status FROM movie ORDER BY name ASC").all()
-        res.render('media-list', { title: 'Movies', route: 'movie' , list: rows});
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    res.render('media-list', { title: 'Movies', route: 'movie' , list: service.getAllMovies()});
 });
 
 router.get('/add', function(req, res, next) {
-    const media = { name: "", year: "", genre: "", country: "" , description: "", studio: "", director: "", length: "", cast: "", header_space: 0 };
-    res.render('media-form', { title: 'Movies', route: 'movie', media: media });
+    res.render('media-form', { title: 'Movies', route: 'movie', media: service.getEmptyMovie() });
 });
 
-router.post('/add', function(req, res, next) {
-    const name = req.body.name;
-    const year = Number(req.body.year);
-    const genre = req.body.genre;
-    const country = req.body.country;
-    const description = req.body.description;
-    const date_added = new Date().toISOString();
-    const status = 'open';
-    const studio = req.body.studio;
-    const director = req.body.director;
-    const length = Number(req.body.length);
-    const cast = req.body.cast;
-    const header_space = parseFloat(req.body.header_space);
-    const score = req.body.score;
-
-    const clean_name = cleanPath(name);
-    const path = './public/images/movie/'+ clean_name +'.jpg'
-    let picture = req.files.foo;
-    picture.mv(path, function(err) {
-        if(err){
-            console.log(err)
-        }
-    });
-
-    const path2 = './public/images/movie/header/'+ clean_name +'.jpg'
-    let picture2 = req.files.foo2;
-    picture2.mv(path2, function(err) {
-        if(err){
-            console.log(err)
-        }
-    });
-
-    try {
-        db.prepare("INSERT INTO movie (name, year, genre, country, description, status, added, studio, director, length, cast, header_space, score)" +
-            "   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)").run(name, year, genre, country, description, status, date_added, studio, director, length, cast, header_space, score)
-
-        res.redirect('/movie')
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+router.post('/add', async function(req, res, next) {
+    service.saveMovieImages(cleanPath(req.body.name), req.files.foo, req.files.foo2);
+    service.createMovie(req.body)
+    res.redirect('/movie')
 })
 
 router.get('/detail/:id', async function (req, res, next) {
-    try {
-        const row1 = db.prepare("SELECT * FROM movie WHERE movie.id = ?").get(req.params.id)
-        const row2 = db.prepare("SELECT * FROM movie_finished WHERE id = ?").get(req.params.id)
-        const inlist = db.prepare("SELECT l.id, l.name, l.color FROM lists l " +
-            "JOIN list_content lc ON l.id = lc.list WHERE lc.type = 'movie' AND lc.media=?").all(req.params.id)
-        const settings = getSettings();
-
-        let straming_info = [];
-        if(settings["streaming"] === true) {
-            let movieId = null;
-
-            try {
-                const API_KEY = process.env.API_KEY;
-                const query = row1.name;
-                const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=de-DE`;
-                const searchRes = await fetch(searchUrl);
-                const searchData = await searchRes.json();
-
-                movieId = searchData.results[0].id;
-
-                const providersUrl = `https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=${API_KEY}`;
-                const provRes = await fetch(providersUrl);
-                const provData = await provRes.json();
-                const germany = provData.results.DE;
-
-                if (germany) {
-                    straming_info = germany.flatrate;
-                }
-            } catch (err) {
-                console.log("Streaming API Fehler:", err.message);
-            }
-        }
-
-        const input = row1.upcoming;
-        const diffDays = daysToRelease(input);
-
-        res.render('media', {
-            media: row1,
-            route: 'movie',
-            finish: row2,
-            stream: straming_info,
-            settings: settings,
-            days: diffDays,
-            inlist: inlist
-        });
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const data = service.getAllMovieInfoById(parseInt(req.params.id));
+    console.log(data.finish)
+    res.render('media', {
+        media: data.movie,
+        route: 'movie',
+        finish: data.valuation,
+        stream: data.stream,
+        settings: getSettings(),
+        days: data.days,
+        inlist: data.lists
+    });
 });
 
 router.get('/edit/:id', function(req, res, next) {
-    try {
-        const row = db.prepare("SELECT * FROM movie WHERE id = ?").get(req.params.id);
-        res.render('media-form', { title: 'Movies', route: 'movie', media: row });
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    res.render('media-form', { title: 'Movies', route: 'movie', media: service.getMovieById(parseInt(req.params.id)) });
 });
 
 router.post('/edit/:id', function(req, res, next) {
-    const name = req.body.name;
-    const year = Number(req.body.year);
-    const genre = req.body.genre;
-    const country = req.body.country;
-    const description = req.body.description;
-    const studio = req.body.studio;
-    const director = req.body.director;
-    const length = req.body.length;
-    const cast = req.body.cast;
-    const header_space = req.body.header_space;
-    const score = req.body.score;
-    const upcoming = req.body.upcoming;
-
-    if(req.files != null){
-        const clean_name = cleanPath(name);
-        const path = './public/images/movies/' + clean_name  + '.jpg';
-
-        if (req.files.foo != null){
-            let picture = req.files.foo;
-            picture.mv(path, function(err) {
-                if(err){
-                    console.log(err)
-                }
-            });
-
-        }
-        const path2 = './public/images/movies/header/'+ clean_name +'.jpg'
-
-        if (req.files.foo2 != null){
-            let picture2 = req.files.foo2;
-            picture2.mv(path2, function(err) {
-                if(err){
-                    console.log(err)
-                }
-            });
-        }
-    }
-
-    try {
-        db.prepare("Update movie SET " +
-            "name=?, year=?, genre=?, country=?, description=?, studio=?, director=?, length=?, cast=?, header_space=?, score=?, upcoming=?" +
-            "WHERE id = ?").run(name, year, genre, country, description, studio, director, length, cast, header_space, score, upcoming, req.params.id)
-
-        res.redirect('/movie/detail/'+req.params.id);
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    service.saveMovieImages(cleanPath(req.body.name), req.files?.foo, req.files?.foo2);
+    service.updateMovie(parseInt(req.params.id), req.body)
+    res.redirect('/movie/detail/'+req.params.id);
 });
 
 router.get('/finish/:id', function(req, res, next) {
-    res.render('media-finish', { route: 'movie', vals: {rating: "", valuation: "", like: false, id: req.params.id, medium: 'streaming'} });
+    res.render('media-finish', { route: 'movie', vals: service.getEmptyValuation(req.params.id) });
 })
 
 router.post('/finish/:id', function(req, res, next) {
-    const id = req.params.id;
-    const date = new Date().toISOString();
-    const rating = req.body.rating;
-    const valuation = req.body.valuation;
-    const like = req.body.like;
-    const medium = req.body.medium;
-
-    try {
-        db.prepare("INSERT INTO movie_finished (id, date, rating, valuation, like, medium)" +
-            "VALUES (?, ?, ?, ?, ?, ?)").run(id, date, rating, valuation, like, medium)
-        db.prepare("UPDATE movie SET status = ? WHERE id = ?").run("finished", id)
-
-        res.redirect('/movie/detail/' + id);
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    service.finishMovie(parseInt(req.params.id), req.body);
+    res.redirect('/movie/detail/' + req.params.id);
 })
 
 router.get('/repeat/:id', function(req, res, next) {
-    try {
-        const id = req.params.id;
-        db.prepare("UPDATE movie_finished SET finishcount = finishcount + 1 WHERE id = ?").run(id);
-        res.redirect('/movie/detail/' + id);
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = req.params.id;
+    service.seenMovieAgain(id)
+    res.redirect('/movie/detail/' + id);
 })
 
 router.get('/editval/:id', function(req, res, next) {
-    try {
-        const val = db.prepare("SELECT * FROM movie_finished WHERE id = ?").get(req.params.id)
-        res.render('media-finish', { route: 'movie', vals: val, id: req.body.id });
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    res.render('media-finish', { route: 'movie', vals: service.getMovieValuationById(req.body.id), id: req.body.id });
 })
 
 router.post('/editval/:id', function(req, res, next) {
-    const rating = req.body.rating;
-    const valuation = req.body.valuation;
-    const like = req.body.like;
-    const medium = req.body.medium;
 
-    try {
-        db.prepare("Update movie_finished SET " +
-            "rating=?, valuation=?, like=?, medium=?" +
-            "WHERE id = ?").run(rating, valuation, like, medium, req.params.id)
-
-        res.redirect('/movie/detail/' + req.params.id);
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    res.redirect('/movie/detail/' + req.params.id);
 })
 
 module.exports = router;

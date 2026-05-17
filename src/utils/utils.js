@@ -21,7 +21,19 @@ function daysToRelease(input_date){
     return 0;
 }
 
+function saveCoverImage(name, route, image) {
+    const path = './public/images/' + route +'/'+ name +'.jpg'
+    image.mv(path, function(err) {})
+}
+
+function saveHeaderImage(name, route, image) {
+    const path = './public/images/' + route +'/header/'+ name +'.jpg'
+    image.mv(path, function(err) {})
+}
+
 module.exports = {
     cleanPath,
-    daysToRelease
+    daysToRelease,
+    saveCoverImage,
+    saveHeaderImage
 }
