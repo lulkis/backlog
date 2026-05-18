@@ -176,13 +176,17 @@ h1 {
 
 /*From here on Media Of The Day CSS*/
 .motd {
-    background-color: var(--stats);
+    display: grid;
+    grid-template-columns: 370px 1fr;
 
+    background-color: var(--stats);
+    border-radius: 15px;
 }
 
 .motd > img {
     width: 350px;
     margin: 20px;
+    border-radius: 15px;
 }
 
 .motd > div {
