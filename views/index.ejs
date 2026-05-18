@@ -57,6 +57,16 @@
                 </script>
             </div>
 
+            <h2 class="up-titles">Media Of The Day</h2>
+            <div class="motd two-grid">
+                <img src="/images/<%= motd.route%>/<%= motd.path%>.jpg"/>
+
+                <div>
+                    <h2><%=motd.name%></h2>
+                    <p><%=motd.description%></p>
+                </div>
+            </div>
+
             <h2 class="up-titles">Recently Added</h2>
             <div class="recent-box">
                 <% for(var i = 0; i < recent.length; i++){ %>

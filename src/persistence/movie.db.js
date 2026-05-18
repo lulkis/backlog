@@ -110,6 +110,14 @@ function updateValuation(valuation){
     }
 }
 
+function getMovieCount(){
+    try {
+        return db.prepare("SELECT COUNT(*) as count FROM movie").get().count
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
 module.exports = {
     saveMovie,
     getAllMovies,
@@ -119,5 +127,6 @@ module.exports = {
     seenMovieAgain,
     updateMovie,
     finishMovie,
-    updateValuation
+    updateValuation,
+    getMovieCount
 };

@@ -116,6 +116,14 @@ function updateValuation(id, valuation){
     }
 }
 
+function getBookCount(){
+    try {
+        return db.prepare("SELECT COUNT(*) as count FROM book").get().count
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
 module.exports = {
     getAllBooks,
     createBook,
@@ -126,5 +134,6 @@ module.exports = {
     startBook,
     readBookAgain,
     finishedBook,
-    updateValuation
+    updateValuation,
+    getBookCount
 }

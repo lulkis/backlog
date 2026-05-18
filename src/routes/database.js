@@ -154,6 +154,16 @@ export function setup_database() {
         ");"
     );
 
+    db.exec(
+        "CREATE TABLE IF NOT EXISTS daily_media (" +
+        "date TEXT PRIMARY KEY NOT NULL," +
+        "name TEXT," +
+        "description TEXT," +
+        "route TEXT," +
+        "path TEXT" +
+        ");"
+    );
+
     db.close()
 
     const db2 = new Database('hltb.db');

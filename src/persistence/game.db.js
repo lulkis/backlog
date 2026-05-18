@@ -8,6 +8,24 @@ function getAllGames() {
     }
 }
 
+function getGameById(id) {
+    try {
+        return db.prepare("SELECT * FROM game WHERE id = ?").get(id)
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
+function getGameCount(){
+    try {
+        return db.prepare("SELECT COUNT(*) as count FROM game").get().count
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
 module.exports = {
-    getAllGames
+    getAllGames,
+    getGameById,
+    getGameCount
 }

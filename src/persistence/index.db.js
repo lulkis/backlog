@@ -52,8 +52,34 @@ function getBacklogStats() {
     }
 }
 
+function getMediaOfTheDay(date){
+    try {
+        return db.prepare("SELECT * FROM daily_media WHERE date = ?").get(date)
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
+function addMediaOfTheDay(motd){
+    try {
+        db.prepare("INSERT INTO daily_media (date, name, description, route, path)" +
+            "VALUES (?, ?, ?, ?, ?)")
+            .run(
+                motd.date,
+                motd.name,
+                motd.description,
+                motd.route,
+                motd.path,
+            )
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
 module.exports = {
     getFiveRecentAdded,
     getFiveRecentFinished,
     getBacklogStats,
+    getMediaOfTheDay,
+    addMediaOfTheDay
 }

@@ -16,7 +16,8 @@ router.get('/', function(req, res, next) {
             recent: homepage.recent_added,
             finish: homepage.recent_finished,
             counts: homepage.backlog_stats,
-            listy: listService.getAllLists()
+            listy: listService.getAllLists(),
+            motd: homepage.media_of_the_day,
         });
     } catch (err) {
         next(err);
