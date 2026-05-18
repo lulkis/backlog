@@ -8,6 +8,12 @@ function getHomepageComponents(){
     }
 }
 
+function getMediaOfTheDay() {
+    const number = new Date().toISOString().slice(0, 10);
+    console.log(number.replaceAll("-", ""))
+}
+
 module.exports = {
-    getHomepageComponents
+    getHomepageComponents,
+    getMediaOfTheDay
 }
