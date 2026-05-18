@@ -2,11 +2,11 @@ const express = require('express');
 const {db} = require("../utils/db.js");
 const router = express.Router();
 const path = require("path");
-const {getSettings, updateSetting} = require("../utils/settings");
 const {fileExists} = require("../utils/utils");
 
 const listService = require("../services/list.service");
 const indexService = require("../services/index.service");
+const settingsService = require("../services/settings.service");
 
 router.get('/', function(req, res, next) {
     try {
@@ -174,12 +174,11 @@ router.get('/list/:id', function(req, res, next) {
 })
 
 router.get('/settings', function(req, res, next) {
-    res.render('settings', {settings: getSettings()});
+    res.render('settings', {settings: settingsService.getSettings()});
 })
 
 router.post('/settings', function(req, res, next) {
-    updateSetting("time_in_minutes", req.body.m_in_min === "on")
-    updateSetting("streaming", req.body.streaming === "on")
+    settingsService.getSettingById(req.body)
     res.redirect("/");
 })
 
