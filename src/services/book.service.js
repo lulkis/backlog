@@ -41,7 +41,7 @@ function getAllBookInfoById(id){
         book: book,
         valuation: persistence.getBookValuationById(id),
         lists: persistence.getListsForBookById(id),
-        upcoming_days: daysToRelease(book.upcoming),
+        days: daysToRelease(book.upcoming),
     }
 }
 

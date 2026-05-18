@@ -45,7 +45,7 @@ async function getAllMovieInfoById(id){
         valuation: persistence.getMovieValuationById(id),
         lists: persistence.getListInfoByMovieId(id),
         streaming_info: streaming,
-        upcoming_days: daysToRelease(movie.upcoming),
+        days: daysToRelease(movie.upcoming),
     }
 }
 
