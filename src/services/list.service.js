@@ -35,10 +35,37 @@ function getAllLists(){
     return persistence.getAllLists()
 }
 
+function getAllLists_Minimum(){
+    return persistence.getAllLists_Minimum()
+}
+
+function insertMovieIntoList(data){
+    const media = {
+        media: data.media,
+        type: data.type,
+    }
+    persistence.insertMovieIntoList(data.list, media);
+}
+
+function deleteList(data){
+    const id = parseInt(data.id);
+    persistence.deleteList(id)
+}
+
+function deleteMediaFromList(data){
+    const id = data.list
+    const media = data.element
+    persistence.deleteMediaFromList(id, media);
+}
+
 module.exports = {
     createList,
     getListDetailById,
     getFullListById,
     updateListDetails,
-    getAllLists
+    getAllLists,
+    getAllLists_Minimum,
+    insertMovieIntoList,
+    deleteList,
+    deleteMediaFromList
 }

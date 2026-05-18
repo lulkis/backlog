@@ -69,10 +69,51 @@ function getAllLists(){
     }
 }
 
+function getAllLists_Minimum() {
+    try {
+        return db.prepare("SELECT id, name FROM lists").all();
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
+function insertMovieIntoList(list, media){
+    try {
+        db.prepare("INSERT INTO list_content (list, media, type)" +
+            "VALUES (?, ?, ?)")
+            .run(list,
+                media.media,
+                media.type)
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
+function deleteList(id){
+    try {
+        db.prepare("DELETE FROM list_content WHERE list = ?").run(id)
+        db.prepare("DELETE FROM lists WHERE id = ?").run(id)
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
+function deleteMediaFromList(id, media){
+    try {
+        db.prepare("DELETE FROM list_content WHERE list = ? AND media = ?").run(id, media)
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
 module.exports = {
     createList,
     getListDetailById,
     getListContentById,
     updateListDetails,
-    getAllLists
+    getAllLists,
+    getAllLists_Minimum,
+    insertMovieIntoList,
+    deleteList,
+    deleteMediaFromList
 };

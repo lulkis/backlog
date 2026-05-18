@@ -1,52 +1,34 @@
-const {db} = require("../utils/db.js");
 const express = require("express");
 const router = express.Router();
 
+const service = require("../services/list.service");
+
 router.get('/lists', function(req, res) {
-    try {
-        const thing = db.prepare("SELECT id, name FROM lists").all();
-        res.json(thing);
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-    }
+    res.json(service.getAllLists_Minimum());
 });
 
 router.post('/add', async (req, res) => {
-    const list = req.body.list;
-    const media = req.body.media;
-    const type = req.body.type;
-
     try {
-        db.prepare("INSERT INTO list_content (list, media, type)" +
-            "VALUES (?, ?, ?)").run(parseInt(list), parseInt(media), type)
-
+        service.insertMovieIntoList(req.body);
         res.json({ success: true });
     } catch (err) {
-        console.log("Database Error: " + err.message);
+        res.json({ success: false });
     }
 });
 
 router.post('/remove', async (req, res) => {
-    const list = req.body.list;
-
     try {
-        db.prepare("DELETE FROM list_content WHERE list = ?").run(parseInt(list))
-        db.prepare("DELETE FROM lists WHERE id = ?").run(parseInt(list))
-
+        service.deleteList(req.body);
         res.json({ success: true });
     } catch (err) {
-        console.log("Database Error: " + err.message);
+        res.json({ success: false });
     }
 });
 
-router.get('/remove/:list/:element', async (req, res) => {
-    const list = req.params.list
-    const element = req.params.element
-
+router.get('/remove/:list/:element',  (req, res) => {
     try {
-        await db.prepare("DELETE FROM list_content WHERE list = ? AND media = ?").run(parseInt(list), parseInt(element))
-
-        res.redirect("/list/" + list.toString());
+        service.deleteMediaFromList(req.body)
+        res.redirect("/list/" + req.body.list.toString());
     } catch (err) {
         console.log("Database Error: " + err.message);
     }
