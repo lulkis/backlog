@@ -3,15 +3,10 @@ const {db, db2} = require("../utils/db.js");
 const {cleanPath, daysToRelease} = require("../utils/utils");
 var router = express.Router();
 
-/* GET home page. */
+const service = require('../services/game.service')
+
 router.get('/', function(req, res, next) {
-    try {
-        const rows = db.prepare("SELECT id, name, status FROM game ORDER BY name ASC").all()
-        res.render('media-list', { title: 'Games', route: 'game', list: rows});
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    res.render('media-list', { title: 'Games', route: 'game', list: service.getAllGames()});
 });
 
 router.get('/add', function(req, res, next) {
