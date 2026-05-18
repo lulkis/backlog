@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const { getSettings } = require("../utils/settings");
 const { cleanPath } = require("../utils/utils");
 const service = require("../services/movie.service");

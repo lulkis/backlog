@@ -1,6 +1,6 @@
-var express = require('express');
+const express = require('express');
 const {cleanPath} = require("../utils/utils.js");
-var router = express.Router();
+const router = express.Router();
 
 const service = require("../services/book.service");
 
