@@ -3,6 +3,7 @@ const {db} = require("../utils/db.js");
 const router = express.Router();
 const path = require("path");
 const {getSettings, updateSetting} = require("../utils/settings");
+const {fileExists} = require("../utils/utils");
 
 const listService = require("../services/list.service");
 const indexService = require("../services/index.service");
