@@ -5,6 +5,8 @@ const gamePersistence = require("../persistence/game.db");
 const seriesPersistence = require("../persistence/series.db");
 
 const utils = require("../utils/utils");
+const path = require("path");
+const {fileExists} = require("../utils/utils");
 
 function getHomepageComponents(){
     return {
@@ -64,7 +66,36 @@ function getMediaOfTheDay() {
     return m;
 }
 
+function getBasicSearchQueryAll(search){
+    return {
+        movie: persistence.getGeneralGetResultMovie(search),
+        series: persistence.getGeneralGetResultSeries(search),
+        game: persistence.getGeneralGetResultGame(search),
+        book: persistence.getGeneralGetResultBook(search),
+    }
+}
+
+function getActorSearchQueryAll(search){
+    return {
+        movie: persistence.getActorGetResultMovie(search),
+        series: persistence.getActorGetResultSeries(search),
+        game: persistence.getActorGetResultGame(search),
+        book: [],
+    }
+}
+
+async function actorImageTest(search){
+    const pth = path.join(__dirname, "../../public/images/actors/" + search.replaceAll(".", "") + ".jpg");
+    if (await fileExists(pth)) {
+        return "actor";
+    }
+    return "general"
+}
+
 module.exports = {
     getHomepageComponents,
-    getMediaOfTheDay
+    getMediaOfTheDay,
+    getBasicSearchQueryAll,
+    getActorSearchQueryAll,
+    actorImageTest
 }

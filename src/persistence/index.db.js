@@ -76,10 +76,97 @@ function addMediaOfTheDay(motd){
     }
 }
 
+function getGeneralGetResultMovie(search){
+    try {
+        return db.prepare("SELECT id, name, year, status, director as maker, 'movie' AS route FROM movie " +
+            "WHERE CONCAT(movie.name, movie.director, movie.cast, movie.studio, movie.score) " +
+            "LIKE ? " +
+            "ORDER BY movie.year DESC ")
+            .all('%'+search+'%')
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
+function getGeneralGetResultSeries(search){
+    try {
+        return db.prepare("SELECT id, name, year, status, idea as maker, 'series' AS route FROM series " +
+            "WHERE CONCAT(series.name, series.idea, series.cast, series.studio, series.score) " +
+            "LIKE ? " +
+            "ORDER BY series.year")
+            .all('%'+search+'%')
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
+function getGeneralGetResultGame(search){
+    try {
+        return db.prepare("SELECT id, name, year, status, developer as maker, 'game' AS route FROM game " +
+            "WHERE CONCAT(game.name, game.publisher, game.developer, game.score) " +
+            "LIKE ? " +
+            "ORDER BY game.year")
+            .all('%'+search+'%')
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
+function getGeneralGetResultBook(search){
+    try {
+        return db.prepare("SELECT id, name, year, status, author as maker, 'book' AS route FROM book " +
+            "WHERE CONCAT(book.name, book.author) " +
+            "LIKE ? " +
+            "ORDER BY book.year")
+            .all('%'+search+'%')
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
+
+function getActorGetResultMovie(search){
+    try {
+        return db.prepare("SELECT id, name, year, status, director as maker, 'movie' AS route FROM movie " +
+            "WHERE movie.cast LIKE ? ORDER BY movie.year DESC ")
+            .all('%' + search + '%')
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
+function getActorGetResultSeries(search){
+    try {
+        return db.prepare("SELECT id, name, year, status, idea as maker, 'series' AS route FROM series " +
+            "WHERE series.cast LIKE ? ORDER BY series.year")
+            .all('%' + search + '%')
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
+function getActorGetResultGame(search){
+    try {
+        return db.prepare("SELECT id, name, year, status, developer as maker, 'game' AS route FROM game " +
+            "WHERE game.cast LIKE ? ORDER BY game.year")
+            .all('%' + search + '%')
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
+
 module.exports = {
     getFiveRecentAdded,
     getFiveRecentFinished,
     getBacklogStats,
     getMediaOfTheDay,
-    addMediaOfTheDay
+    addMediaOfTheDay,
+    getGeneralGetResultMovie,
+    getGeneralGetResultSeries,
+    getGeneralGetResultGame,
+    getGeneralGetResultBook,
+    getActorGetResultMovie,
+    getActorGetResultSeries,
+    getActorGetResultGame
 }

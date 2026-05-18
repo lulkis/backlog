@@ -1,8 +1,5 @@
 const express = require('express');
-const {db} = require("../utils/db.js");
 const router = express.Router();
-const path = require("path");
-const {fileExists} = require("../utils/utils");
 
 const listService = require("../services/list.service");
 const indexService = require("../services/index.service");
@@ -25,105 +22,20 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/get/:name', function(req, res, next) {
-    try {
-        const rows = db.prepare("SELECT id, name, year, status, director as maker, 'movie' AS route FROM movie " +
-            "WHERE CONCAT(movie.name, movie.director, movie.cast, movie.studio, movie.score) " +
-            "LIKE ? " +
-            "ORDER BY movie.year DESC ")
-            .all('%'+req.params.name+'%')
-
-        const rows2 = db.prepare("SELECT id, name, year, status, idea as maker, 'series' AS route FROM series " +
-            "WHERE CONCAT(series.name, series.idea, series.cast, series.studio, series.score) " +
-            "LIKE ? " +
-            "ORDER BY series.year")
-            .all('%'+req.params.name+'%')
-
-        const rows3 = db.prepare("SELECT id, name, year, status, developer as maker, 'game' AS route FROM game " +
-            "WHERE CONCAT(game.name, game.publisher, game.developer, game.score) " +
-            "LIKE ? " +
-            "ORDER BY game.year")
-            .all('%'+req.params.name+'%')
-
-        const rows4 = db.prepare("SELECT id, name, year, status, author as maker, 'book' AS route FROM book " +
-            "WHERE CONCAT(book.name, book.author) " +
-            "LIKE ? " +
-            "ORDER BY book.year")
-            .all('%'+req.params.name+'%')
-
-        const items = {
-            movie: rows,
-            series: rows2,
-            game: rows3,
-            book: rows4
-        }
-
-        res.render('search', { name: req.params.name,
-            list: items, search_type: "general"});
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    res.render('search', { name: req.params.name,
+        list: indexService.getBasicSearchQueryAll(req.params.name),
+        search_type: "general"
+    });
 })
 
 router.get('/search/:name', async function (req, res, next) {
-    try {
-        const rows = db.prepare("SELECT id, name, year, status, director as maker, 'movie' AS route FROM movie " +
-            "WHERE movie.cast LIKE ? ORDER BY movie.year DESC ")
-            .all('%' + req.params.name + '%')
-
-        const rows2 = db.prepare("SELECT id, name, year, status, idea as maker, 'series' AS route FROM series " +
-            "WHERE series.cast LIKE ? ORDER BY series.year")
-            .all('%' + req.params.name + '%')
-
-        const rows3 = db.prepare("SELECT id, name, year, status, developer as maker, 'game' AS route FROM game " +
-            "WHERE game.cast LIKE ? ORDER BY game.year")
-            .all('%' + req.params.name + '%')
-
-        const items = {
-            movie: rows,
-            series: rows2,
-            game: rows3,
-            book: []
-        }
-
-        let search = "general"
-        const pth = path.join(__dirname, "../../public/images/actors/" + req.params.name.replaceAll(".", "") + ".jpg");
-        if (await fileExists(pth)) {
-            search = "actor";
-        }
-
-        res.render('search', {
-            name: req.params.name,
-            list: items,
-            search_type: search
-        });
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const items = indexService.getActorSearchQueryAll(req.params.name);
+    res.render('search', {
+        name: req.params.name,
+        list: items,
+        search_type: await indexService.actorImageTest(req.params.name)
+    });
 })
-
-router.get('/director/:name', function(req, res, next) {
-    try {
-        const rows = db.prepare("SELECT id, name, year, status, director as maker, 'movie' AS route FROM movie " +
-            "WHERE movie.director LIKE ?").all('%'+req.params.name+'%')
-        const rows2 = db.prepare("SELECT id, name, year, status, idea as maker, 'series' AS route FROM series " +
-            "WHERE series.idea LIKE ?").all('%'+req.params.name+'%')
-
-        const items = {
-            movie: rows,
-            series: rows2,
-            game: [],
-            book: []
-        }
-
-        res.render('search', { name: req.params.name, list: items, search_type: "director"});
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
-})
-
 
 //From here on Lists
 router.get('/createlist', function(req, res, next) {
