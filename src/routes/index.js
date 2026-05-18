@@ -11,6 +11,7 @@ const settingsService = require("../services/settings.service");
 router.get('/', function(req, res, next) {
     try {
         const homepage = indexService.getHomepageComponents();
+        indexService.getMediaOfTheDay()
         res.render('index', { title: 'Backlog',
             recent: homepage.recent_added,
             finish: homepage.recent_finished,

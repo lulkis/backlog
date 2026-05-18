@@ -38,7 +38,7 @@ router.post('/add', function(req, res, next) {
 
     const clean_name = cleanPath(name);
     const path = './public/images/series/'+ clean_name +'.jpg'
-    let picture = req.files.foo;
+    let picture = req.files.cover;
     picture.mv(path, function(err) {
         if(err){
             console.log(err)
@@ -46,7 +46,7 @@ router.post('/add', function(req, res, next) {
     });
 
     const path2 = './public/images/series/header/'+ clean_name +'.jpg'
-    let picture2 = req.files.foo2;
+    let picture2 = req.files.header;
     picture2.mv(path2, function(err) {
         if(err){
             console.log(err)
@@ -118,7 +118,7 @@ router.post('/edit/:id', function(req, res, next) {
         const path = './public/images/series/' + clean_name  + '.jpg';
 
         if (req.files.foo != null){
-            let picture = req.files.foo;
+            let picture = req.files.cover;
             picture.mv(path, function(err) {
                 if(err){
                     console.log(err)
@@ -130,7 +130,7 @@ router.post('/edit/:id', function(req, res, next) {
         const path2 = './public/images/series/header/'+ clean_name +'.jpg'
 
         if (req.files.foo2 != null){
-            let picture2 = req.files.foo2;
+            let picture2 = req.files.header;
             picture2.mv(path2, function(err) {
                 if(err){
                     console.log(err)

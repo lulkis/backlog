@@ -15,7 +15,7 @@ router.get('/add', function(req, res, next) {
 router.post('/add', function(req, res, next) {
     const clean_name = cleanPath(req.body.name);
     service.createBook(req.body)
-    service.saveBookImage(clean_name, req.files?.foo)
+    service.saveBookImage(clean_name, req.files?.cover)
     res.redirect('/book')
 })
 
@@ -38,7 +38,7 @@ router.get('/edit/:id', function(req, res, next) {
 
 router.post('/edit/:id', function(req, res, next) {
     const id = parseInt(req.params.id);
-    service.saveBookImage(cleanPath(req.body.name), req.files?.foo)
+    service.saveBookImage(cleanPath(req.body.name), req.files?.cover)
     service.updateBook(id, req.body)
     res.redirect('/book/detail/' + id);
 });

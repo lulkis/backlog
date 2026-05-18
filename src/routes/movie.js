@@ -22,7 +22,7 @@ router.get('/add',  function(req, res, next) {
 
 router.post('/add',  function(req, res, next) {
     try {
-        service.saveMovieImages(cleanPath(req.body.name), req.files?.foo, req.files?.foo2);
+        service.saveMovieImages(cleanPath(req.body.name), req.files?.cover, req.files?.header);
         service.createMovie(req.body)
         res.redirect('/movie')
     } catch (err) {
@@ -60,7 +60,7 @@ router.get('/edit/:id', function(req, res, next) {
 router.post('/edit/:id', function(req, res, next) {
     try {
         const id = parseInt(req.params.id);
-        service.saveMovieImages(cleanPath(req.body.name), req.files?.foo, req.files?.foo2);
+        service.saveMovieImages(cleanPath(req.body.name), req.files?.cover, req.files?.header);
         service.updateMovie(id, req.body)
         res.redirect('/movie/detail/'+id);
     } catch (err) {
