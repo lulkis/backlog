@@ -1,212 +1,79 @@
 var express = require('express');
-const {db} = require("../utils/db.js");
 const {cleanPath} = require("../utils/utils.js");
-const {daysToRelease} = require("../utils/utils");
 var router = express.Router();
 
-/* GET home page. */
+const service = require("../services/book.service");
+
 router.get('/', function(req, res, next) {
-    try {
-        const rows = db.prepare("SELECT id, name, status FROM book ORDER BY name ASC").all();
-        res.render('media-list', { title: 'Books', route: 'book', list: rows });
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    res.render('media-list', { title: 'Books', route: 'book', list: service.getAllBooks() });
 });
 
 router.get('/add', function(req, res, next) {
-    const media = { name: "", year: "", genre: "", country: "" , description: "", author: "", length: "", publisher: "", illustrator: "" ,header_space: 0};
-    res.render('media-form', { title: 'Books', route: 'book' , media: media });
+    res.render('media-form', { title: 'Books', route: 'book' , media: service.getEmptyBook() });
 });
 
 router.post('/add', function(req, res, next) {
-    const name = req.body.name;
-    const year = Number(req.body.year);
-    const genre = req.body.genre;
-    const country = req.body.country;
-    const description = req.body.description;
-    const date_added = new Date().toISOString();
-    const status = 'open';
-    const header_space = req.body.header_space;
-
-    const author = req.body.author;
-    const length = req.body.length;
-    const publisher = req.body.publisher;
-    const illustrator = req.body.illustrator;
-    const upcoming = req.body.upcoming;
-
-    const clean_name = cleanPath(name);
-    const path = './public/images/book/'+ clean_name +'.jpg'
-    let picture = req.files.foo;
-    picture.mv(path, function(err) {
-        if(err){
-            console.log(err)
-        }
-        console.log("Succ")
-    });
-
-    try {
-        db.prepare("INSERT INTO book (name, year, genre, country, description, status, added, author, length, publisher, illustrator, header_space, upcoming)" +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
-            .run(name, year, genre, country, description, status, date_added, author, length, publisher, illustrator, header_space, upcoming)
-
-        res.redirect('/book')
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const clean_name = cleanPath(req.body.name);
+    service.createBook(req.body)
+    service.saveBookImage(clean_name, req.files?.foo)
+    res.redirect('/book')
 })
 
 router.get('/detail/:id', function(req, res, next) {
-    try {
-        const row1 = db.prepare("SELECT * FROM book WHERE id = ?").get(req.params.id)
-        const row2 = db.prepare("SELECT * FROM book_finished WHERE id = ?").get(req.params.id)
-        const inlist = db.prepare("SELECT l.id, l.name, l.color FROM lists l " +
-            "JOIN list_content lc ON l.id = lc.list WHERE lc.type = 'book' AND lc.media=?").all(req.params.id)
-
-        const input = row1.upcoming;
-        const diffDays = daysToRelease(input);
-
-        res.render('media', { media: row1, route: 'book', finish: row2, days: diffDays, inlist: inlist });
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    const full_details = service.getAllBookInfoById(id);
+    res.render('media', {
+        media: full_details.book,
+        route: 'book',
+        finish: full_details.valuation,
+        days: full_details.days,
+        inlist: full_details.lists,
+    });
 });
 
 router.get('/edit/:id', function(req, res, next) {
-    try {
-        const rows = db.prepare("SELECT * FROM book WHERE id = ?").get(req.params.id);
-        res.render('media-form', { title: 'Book', route: 'book', media: rows });
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    res.render('media-form', { title: 'Book', route: 'book', media: service.getBookById(id) });
 });
 
 router.post('/edit/:id', function(req, res, next) {
-    const name = req.body.name;
-    const year = Number(req.body.year);
-    const genre = req.body.genre;
-    const country = req.body.country;
-    const description = req.body.description;
-    const author = req.body.author;
-    const length = req.body.length;
-    const publisher = req.body.publisher;
-    const illustrator = req.body.illustrator;
-    const header_space = req.body.header_space;
-    const upcoming = req.body.upcoming;
-
-    if(req.files != null){
-        const clean_name = cleanPath(name);
-        const path = './public/images/book/' + clean_name  + '.jpg';
-
-        if (req.files.foo != null){
-            let picture = req.files.foo;
-            picture.mv(path, function(err) {
-                if(err){
-                    console.log(err)
-                }
-                console.log("Succ")
-            });
-
-        }
-        const path2 = './public/images/book/game/'+ clean_name +'.jpg'
-
-        if (req.files.foo2 != null){
-            let picture2 = req.files.foo2;
-            picture2.mv(path2, function(err) {
-                if(err){
-                    console.log(err)
-                }
-                console.log("Succ")
-            });
-        }
-    }
-
-    try {
-        db.prepare("Update book SET " +
-            "name=?, year=?, genre=?, country=?, description=?, author=?, length=?, publisher=?, illustrator=?, header_space=?, upcoming=?" +
-            "WHERE id = ?")
-            .run(name, year, genre, country, description, author, length, publisher, illustrator, header_space, upcoming, req.params.id)
-
-        res.redirect('/book/detail/'+req.params.id);
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    service.saveBookImage(cleanPath(req.body.name), req.files?.foo)
+    service.updateBook(id, req.body)
+    res.redirect('/book/detail/' + id);
 });
 
 router.get('/start/:id', function(req, res, next) {
-    try {
-        const id = req.params.id;
-        db.prepare("UPDATE book SET status = ? WHERE id = ?").run("started", id)
-        res.redirect('/book/detail/' + id);
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    service.startBook(id);
+    res.redirect('/book/detail/' + id);
 })
 
 router.get('/finish/:id', function(req, res, next) {
-    res.render('media-finish', { route: 'book', vals: {rating: "", valuation: "", like: false, id: req.params.id}});
+    res.render('media-finish', { route: 'book', vals: service.getEmptyValuation(parseInt(req.params.id)) });
 })
 
 router.post('/finish/:id', function(req, res, next) {
-    const id = req.params.id;
-    const date = new Date().toISOString();
-    const rating = req.body.rating;
-    const valuation = req.body.valuation;
-    const like = req.body.like;
-
-    try {
-        db.prepare("INSERT INTO book_finished (id, date, rating, valuation, like)" +
-            "VALUES (?, ?, ?, ?, ?)").run(id, date, rating, valuation, like)
-        db.prepare("UPDATE book SET status = ? WHERE id = ?").run("finished", id)
-
-        res.redirect('/book/detail/' + id);
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    service.finishedBook(id, req.body)
+    res.redirect('/book/detail/' + id);
 })
 
 router.get('/repeat/:id', function(req, res, next) {
-    try {
-        const id = req.params.id;
-        db.prepare("UPDATE book_finished SET finishcount = finishcount + 1 WHERE id = ?").run(id)
-        res.redirect('/book/detail/' + id);
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    service.readBookAgain(id);
+    res.redirect('/book/detail/' + id);
 })
 
 router.get('/editval/:id', function(req, res, next) {
-    try {
-        const rows = db.prepare("SELECT * FROM book_finished WHERE id = ?").get(req.params.id);
-        res.render('media-finish', { route: 'book', vals: rows, id: req.body.id });
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    res.render('media-finish', { route: 'book', vals: service.getBookValuationById(id), id: id });
 })
 
 router.post('/editval/:id', function(req, res, next) {
-    const rating = req.body.rating;
-    const valuation = req.body.valuation;
-    const like = req.body.like;
-
-    try {
-        db.prepare("Update book_finished SET " +
-            "rating=?, valuation=?, like=?" +
-            "WHERE id = ?").run(rating, valuation, like, req.params.id)
-        res.redirect('/book/detail/' + req.params.id);
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    service.updateValuation(id, req.body)
+    res.redirect('/book/detail/' + req.params.id);
 })
 
 module.exports = router;
