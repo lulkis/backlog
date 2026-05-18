@@ -1,237 +1,85 @@
-var express = require('express');
-var router = express.Router();
-const {db} = require("../utils/db.js");
-const {cleanPath, daysToRelease} = require("../utils/utils");
+const express = require('express');
+const router = express.Router();
+const {cleanPath} = require("../utils/utils");
 
-/* GET home page. */
+const service = require("../services/series.service");
+
 router.get('/', function(req, res, next) {
-    try {
-        const rows = db.prepare("SELECT id, name, status FROM series ORDER BY name ASC").all()
-        res.render('media-list', { title: 'Series', route: 'series', list: rows});
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    res.render('media-list', { title: 'Series', route: 'series', list: service.getAllSeries()});
 });
 
 router.get('/add', function(req, res, next) {
-    const media = { name: "", year: "", year_end: "", genre: "", country: "" , description: "", idea: "", studio: "", cast: "", episodes: "" ,header_space: 0};
-    res.render('media-form', { title: 'Series', route: 'series' , media: media });
+    res.render('media-form', { title: 'Series', route: 'series' , media: service.getEmptySeries() });
 });
 
 router.post('/add', function(req, res, next) {
-    const name = req.body.name;
-    const year = Number(req.body.year);
-    const year_end = Number(req.body.year_end);
-    const genre = req.body.genre;
-    const country = req.body.country;
-    const description = req.body.description;
-    const date_added = new Date().toISOString();
-    const header_space = req.body.header_space;
-    const status = 'open';
-    const idea = req.body.idea;
-    const studio = req.body.studio;
-    const cast = req.body.cast;
-    const episodes = req.body.episodes;
-    const score = req.body.score;
-    const upcoming = req.body.upcoming;
-
-    const clean_name = cleanPath(name);
-    const path = './public/images/series/'+ clean_name +'.jpg'
-    let picture = req.files.cover;
-    picture.mv(path, function(err) {
-        if(err){
-            console.log(err)
-        }
-    });
-
-    const path2 = './public/images/series/header/'+ clean_name +'.jpg'
-    let picture2 = req.files.header;
-    picture2.mv(path2, function(err) {
-        if(err){
-            console.log(err)
-        }
-    });
-
-    try {
-        db.prepare("INSERT INTO series (name, year, year_end, genre, country, description, status, added, idea, studio, cast, episodes, header_space, score, upcoming)" +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
-            .run(name, year, year_end, genre, country, description, status, date_added, idea, studio, cast, episodes, header_space, score, upcoming)
-
-        res.redirect('/series')
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    service.createSeries(req.body)
+    service.saveSeriesImages(cleanPath(req.body.name), req.files?.cover, req.files?.header)
+    res.redirect('/series')
 })
 
 router.get('/detail/:id', function(req, res, next) {
-    try {
-        const row1 = db.prepare("SELECT * FROM series WHERE id = ?").get(req.params.id);
-        const row2 = db.prepare("SELECT * FROM series_finished WHERE id = ?").get(req.params.id);
-        const inlist = db.prepare("SELECT l.id, l.name, l.color FROM lists l " +
-            "JOIN list_content lc ON l.id = lc.list WHERE lc.type = 'series' AND lc.media=?").all(req.params.id)
-
-        const input = row1.upcoming;
-        const diffDays = daysToRelease(input);
-
-        res.render('media', { media: row1, route: 'series', finish: row2, days: diffDays, inlist: inlist});
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    const info = service.getAllSeriesInformation(id);
+    res.render('media', {
+        media: info.series,
+        route: 'series',
+        finish: info.valuation,
+        days: info.days,
+        inlist: info.inlist
+    });
 });
 
 router.get('/edit/:id', function(req, res, next) {
-    try {
-        const rows = db.prepare("SELECT * FROM series WHERE id = ?").get(req.params.id);
-        res.render('media-form', { title: 'Series', route: 'series', media: rows });
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    res.render('media-form', { title: 'Series', route: 'series', media: service.getSeriesById(id) });
 });
 
 router.post('/edit/:id', function(req, res, next) {
-    const name = req.body.name;
-    const year = Number(req.body.year);
-    const year_end = Number(req.body.year_end);
-    const genre = req.body.genre;
-    const country = req.body.country;
-    const description = req.body.description;
-    const header_space = req.body.header_space;
-    const idea = req.body.idea;
-    const studio = req.body.studio;
-    const cast = req.body.cast;
-    const episodes = req.body.episodes;
-    const score = req.body.score;
-    let cancelled;
-    const upcoming = req.body.upcoming;
-    if(req.body.cancelled === "1") {
-        cancelled = 1;
-    } else {
-        cancelled = 0;
-    }
-
-    if(req.files != null){
-        const clean_name = cleanPath(name);
-        const path = './public/images/series/' + clean_name  + '.jpg';
-
-        if (req.files.foo != null){
-            let picture = req.files.cover;
-            picture.mv(path, function(err) {
-                if(err){
-                    console.log(err)
-                }
-                console.log("Succ")
-            });
-
-        }
-        const path2 = './public/images/series/header/'+ clean_name +'.jpg'
-
-        if (req.files.foo2 != null){
-            let picture2 = req.files.header;
-            picture2.mv(path2, function(err) {
-                if(err){
-                    console.log(err)
-                }
-            });
-        }
-    }
-
-    try {
-        db.prepare("Update series SET " +
-            "name=?, year=?, year_end=?, genre=?, country=?, description=?, idea=?, studio=?, cast=?, episodes=?, header_space=?, cancelled=?, score=?, upcoming=?" +
-            "WHERE id = ?")
-            .run(name, year, year_end, genre, country, description, idea, studio, cast, episodes, header_space, cancelled, score, upcoming, req.params.id)
-
-        res.redirect('/series/detail/'+req.params.id);
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    service.saveSeriesImages(cleanPath(req.body.name), req.files?.cover, req.files?.header)
+    service.updateSeries(id, req.body)
+    res.redirect('/series/detail/' + id);
 });
 
 router.get('/start/:id', function(req, res, next) {
-    try {
-        const id = req.params.id;
-        db.prepare("UPDATE series SET status = ? WHERE id = ?").run("started", id)
-        res.redirect('/series/detail/' + id);
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = req.params.id;
+    service.startSeries(id)
+    res.redirect('/series/detail/' + id);
 })
 
 router.get('/finish/:id', function(req, res, next) {
-    res.render('media-finish', { route: 'series', vals: {rating: "", valuation: "", like: false, id: req.params.id}, id: req.body.id });
+    const id = parseInt(req.params.id);
+    res.render('media-finish', { route: 'series', vals: service.getEmptyValuation(id), id: id });
 })
 
 router.post('/finish/:id', function(req, res, next) {
-    const id = req.params.id;
-    const date = new Date().toISOString();
-    const rating = req.body.rating;
-    const valuation = req.body.valuation;
-    const like = req.body.like;
-
-    try {
-        db.prepare("INSERT INTO series_finished (id, date, rating, valuation, like)" +
-            "VALUES (?, ?, ?, ?, ?)").run(id, date, rating, valuation, like)
-        db.prepare("UPDATE series SET status = ? WHERE id = ?").run("finished", id)
-
-        res.redirect('/series/detail/' + id);
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    service.finishGame(id, req.body)
+    res.redirect('/series/detail/' + id);
 })
 
 router.get('/new/:id', function(req, res, next) {
-    try {
-        const id = req.params.id;
-        db.prepare("UPDATE series SET status = ? WHERE id = ?").run("open", id)
-        res.redirect('/series/detail/' + id);
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    service.newSeason(id)
+    res.redirect('/series/detail/' + id);
 })
 
 router.get('/repeat/:id', function(req, res, next) {
-    try {
-        const id = req.params.id;
-        db.prepare("UPDATE series_finished SET finishcount = finishcount + 1 WHERE id = ?").run("open", id)
-        res.redirect('/series/detail/' + id);
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    service.watchedSeriesAgain(id)
+    res.redirect('/series/detail/' + id);
 })
 
 router.get('/editval/:id', function(req, res, next) {
-    try {
-        const rows = db.prepare("SELECT * FROM series_finished WHERE id = ?").get(req.params.id);
-        res.render('media-finish', { route: 'series', vals: rows, id: req.body.id });
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    res.render('media-finish', { route: 'series', vals: service.getSeriesValuationById(id), id: id });
 })
 
 router.post('/editval/:id', function(req, res, next) {
-    const rating = req.body.rating;
-    const valuation = req.body.valuation;
-    const like = req.body.like;
-
-    try {
-        db.prepare("Update series_finished SET " +
-            "rating=?, valuation=?, like=?" +
-            "WHERE id = ?").run(rating, valuation, like, req.params.id)
-        res.redirect('/series/detail/' + req.params.id);
-    } catch (err) {
-        console.log("Database Error: " + err.message);
-        next(err);
-    }
+    const id = parseInt(req.params.id);
+    service.updateValuation(id, req.body)
+    res.redirect('/series/detail/' + id);
 })
 
 module.exports = router;
