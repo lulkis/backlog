@@ -3,13 +3,10 @@
 <head>
     <title>New List</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/stylesheets/color-style.css' />
-
-    <link rel='stylesheet' href='/stylesheets/listing-style.css' />
-    <link rel='stylesheet' href='/stylesheets/grids.css' />
+    <link rel='stylesheet' href='/stylesheets/pages/lists.css' />
 </head>
 <body>
-<a class="outer shadow click-anim" href="/">
+<a class="navigation-box top-left shadow click-anim" href="/">
     <img src="/images/icons/back_arrow.png" width="100%">
 </a>
 
@@ -18,18 +15,18 @@
         <div class="list-header" style="background-color: <%= list.color%>">
             <h1><%= list.name%></h1>
 
-            <div class="two-grid">
+            <div class="grd-two">
                 <p><%= list.description%></p>
-                <div class="base">
+                <div class="grd-options">
 
                     <a href="/editlist/<%= list.id%>">
-                        <div class="detail-button shadow click-anim">
+                        <div class="navigation-box shadow click-anim">
                             <img src="/images/icons/edit.png" height="30px">
                         </div>
                     </a>
 
                     <a onclick="list_remove(<%= list.id%>)">
-                        <div class="detail-button shadow click-anim">
+                        <div class="navigation-box shadow click-anim">
                             <img src="/images/icons/delete.png" height="30px">
                         </div>
                     </a>
@@ -38,7 +35,7 @@
             </div>
         </div>
 
-        <div class="list-grid">
+        <div class="grd-lists">
             <% for(var i = 0; i < content.length; i++) { %>
                 <div onclick="goToDetail(event, '/<%= content[i].type %>/detail/<%= content[i].id %>')">
                     <div class="list-image shadow click-anim"

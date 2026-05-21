@@ -2,25 +2,22 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-      <link rel='stylesheet' href='/stylesheets/color-style.css' />
-      <link rel='stylesheet' href='/stylesheets/index-style.css' />
-
-      <link rel='stylesheet' href='/stylesheets/grids.css' />
+      <link rel='stylesheet' href='/stylesheets/style.css' />
+      <link rel='stylesheet' href='/stylesheets/pages/index.css' />
   </head>
   <body>
 
     <a href="/settings">
-        <div class="settings-box shadow click-anim">
+        <div class="navigation-box top-right shadow click-anim">
             <img src="/images/icons/settings.png" />
         </div>
     </a>
 
     <main>
         <div class="container">
-            <h1>The Backlog</h1>
+            <h1 class="ttl-main">The Backlog</h1>
 
-            <div class="category-box">
+            <div class="log-boxes grd-logs">
                 <a href="/movie" class="shadow click-anim movie-header">
                     <div>Movies</div>
                 </a>
@@ -46,7 +43,7 @@
                 </a>
             </div>
 
-            <div class="search-grid">
+            <div class="grd-search">
                 <input type="text" class="search-box" placeholder="Search Movies" id="search">
                 <button onclick="searching()" class="search-button shadow">Search</button>
                 <script>
@@ -57,8 +54,8 @@
                 </script>
             </div>
 
-            <h2 class="up-titles">Media Of The Day</h2>
-            <div class="motd shadow">
+            <h2 class="ttl-secondary">Media Of The Day</h2>
+            <div class="motd grd-motd shadow">
                 <img class="shadow" src="/images/<%= motd.route%>/<%= motd.path%>.jpg"/>
 
                 <div>
@@ -67,8 +64,8 @@
                 </div>
             </div>
 
-            <h2 class="up-titles">Recently Added</h2>
-            <div class="recent-box">
+            <h2 class="ttl-secondary">Recently Added</h2>
+            <div class="recent-box grd-recently">
                 <% for(var i = 0; i < recent.length; i++){ %>
                     <a style="background-image: url(/images/<%=recent[i].route%>/<%= recent[i].name.toLowerCase()
                         .replaceAll(" ", "_")
@@ -83,8 +80,8 @@
                 <% } %>
             </div>
 
-            <h2 class="up-titles">Recently Finished</h2>
-            <div class="recent-box">
+            <h2 class="ttl-secondary">Recently Finished</h2>
+            <div class="recent-box grd-recently">
                 <% for(var i = 0; i < finish.length; i++){ %>
                 <a style="background-image: url(/images/<%=finish[i].route%>/<%= finish[i].name.toLowerCase()
                         .replaceAll(" ", "_")
@@ -99,7 +96,7 @@
                 <% } %>
             </div>
 
-            <div class="status-stats shadow">
+            <div class="status-stats grd-status shadow">
                 <div>
                     <h2>Open</h2>
                     <p><%= counts[1].count %></p>
@@ -129,9 +126,9 @@
             </div>
 
             <!-- Backlog Lists -->
-            <h2 class="up-titles">Lists</h2>
+            <h2 class="ttl-secondary">Lists</h2>
 
-            <div class="list-grid">
+            <div class="grd-lists">
                 <a class="list-box-add click-anim" href="/createlist">
                     <div>
                         <img src="/images/icons/add.png">

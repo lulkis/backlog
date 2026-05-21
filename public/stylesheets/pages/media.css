@@ -1,0 +1,207 @@
+@import "shared.css";
+
+/* HEADER: the header of the movie page */
+.header-img {
+    background-position: 0 13%;
+    background-size: cover;
+    height: 400px;
+    width: 100%;
+}
+
+.header-gradient {
+    background-image: linear-gradient(to top , var(--base), rgba(255, 255, 0, 0));
+    position: absolute;
+
+    height: 400px;
+    width: 100%;
+}
+
+/* BOX TO HOVER: all the elements to make these hover boxes */
+.boxtohover {
+    position: relative;
+}
+
+.infotohover {
+    position: absolute;
+    top: -50px;
+    width: max-content;
+
+    padding-left: 5px;
+    padding-right: 5px;
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    background: #000000;
+    border: 1px solid #DFDFDF;
+    color: #ffffff;
+    font-size: 11px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition: opacity 0.2s ease;
+    transition-delay: 1s;
+}
+
+.boxtohover:hover .infotohover {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 1s;
+}
+
+/* COVER: just the style of the media cover image */
+.media-cover{
+    position: relative;
+    top: 0;
+    left: 0;
+    border-radius: 15px;
+}
+
+/* LINKS: mainly changing the color of the links */
+span > a,
+h4 > a,
+.cast-element > a {
+    text-decoration: none;
+    color: var(--highlight);
+}
+
+span > a:hover,
+h4 > a:hover,
+.cast-element > a:hover {
+    color: var(--action);
+}
+
+/* TAGS */
+.tag {
+    background-color: var(--accent-two);
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+/* SEASON: the look how the seasons and episodes are shown */
+.episode-box{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr ;
+}
+
+.season-box {
+    padding: 10px;
+}
+
+/* VALUATION BOX */
+.rating {
+    margin: 0;
+    font-size: 40px;
+}
+
+.finished-box{
+    margin-top: 25px;
+    background-color: var(--stats);
+    padding: 5px 20px 10px 20px;
+    border-radius: 15px;
+}
+
+.edit-val {
+    justify-self: end;
+    align-self: center;
+}
+
+/* REPEAT: makes the number pretty that shows how often media is finished */
+.repeat {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--highlight);
+    text-decoration: none;
+}
+
+/* CANCELLED */
+.cncl-image {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.cncl{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* HLTB: the how long to beat table for games */
+.hltb-box {
+    margin-top: 20px;
+    background-color: var(--stats);
+}
+
+.hltb-grid {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.hltb-grid > div {
+    font-size: large;
+    padding: 10px;
+}
+
+.hltb-grid > div > br{
+    margin-top: 10px;
+}
+
+/* STREAMING: streaming service integration */
+.stream-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, max-content));
+    grid-auto-flow: dense;
+}
+
+.streaming-service {
+    height: 50px;
+    border-radius: 10px;
+}
+
+/* UPCOMING: the upcoming box */
+.upcoming{
+    border-radius: 15px;
+    background-color: var(--upcoming);
+    font-size: 25px;
+    padding: 10px;
+    margin: 5px 5px 20px;
+}
+
+/* LIST: just the list pop-up box */
+.list-menu {
+    position: absolute;
+
+    background-color: #505050;
+    width: 100px;
+    top: 60px;
+
+    border-radius: 5px;
+}
+
+.list_element {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.list_element:hover {
+    background-color: #333333;
+}
+
+.l-color {
+    color: var(--highlight);
+    text-decoration: none;
+}
+
+.l-color:hover {
+    color: var(--action);
+}

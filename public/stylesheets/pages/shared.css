@@ -1,0 +1,55 @@
+/* STATUS BOX: the element where the backlog stats are shown */
+.status-stats{
+    margin: 20px 10px 10px 10px;
+    background-color: var(--stats);
+    border-radius: 15px;
+}
+
+.status-stats > div {
+    text-align: center;
+}
+
+/* LISTS: all list elements */
+.list-box-add {
+    height: 75px;
+    text-align: center;
+    padding: 10px;
+}
+
+.list-box-add img {
+    height: 75px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.list-box {
+    background-color: var(--accent-one);
+    height: 75px;
+    color: var(--highlight);
+    text-align: center;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 10px;
+    line-height: 75px;
+}
+
+/* MEDIA LIST: all the css things for the big media list */
+.media-item {
+    width: 100%;
+    padding: 15px;
+    border-bottom: 1px solid var(--highlight);
+}
+
+.media-item:hover {
+    background-color: var(--accent-one);
+    cursor: pointer;
+}
+
+.media-list {
+    margin-top: 30px;
+}
+
+.media-list > a {
+    text-decoration: none;
+    color: var(--highlight);
+}

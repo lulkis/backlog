@@ -1,0 +1,104 @@
+.top-right {
+    position: absolute;
+    margin: 20px;
+    right: 0;
+    padding: 5px;
+}
+
+.top-left {
+    left: 15px;
+    top: 15px;
+    position: fixed;
+}
+
+/* GRIDS */
+.grd-motd {
+    display: grid;
+    grid-template-columns: 370px 1fr;
+}
+
+.grd-recently {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.grd-lists {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+}
+
+.grd-status {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+}
+
+.grd-logs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.grd-search {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    margin: 10px;
+}
+
+.grd-two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.grd-options {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 10px;
+    width: max-content;
+    place-items: end;
+
+    grid-column: r;
+}
+
+.grd-three {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grd-search-element {
+    display: grid;
+    grid-template-columns:  100px 550px 1fr;
+    padding: 5px;
+}
+
+/* CONTAINER: the main container for everything */
+.container {
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+/* TITLES: alle titel die auftreten können */
+.ttl-main {
+    text-align: center;
+    font-size: 50px;
+}
+
+.ttl-secondary {
+    margin-top: 50px;
+}
+
+/* FOOTER ELEMENTS */
+.footer {
+    background-color: var(--accent-one);
+    width: 100%;
+    height: fit-content;
+
+    margin-top: 50px;
+    text-align: center;
+
+    box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.5);
+}
+
+.footer > img {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}

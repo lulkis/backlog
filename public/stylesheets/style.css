@@ -1,3 +1,6 @@
+@import "colors.css";
+@import "layout.css";
+
 body{
     min-height: 100vh;
     display: flex;
@@ -16,38 +19,22 @@ html{
     color: var(--highlight);
 }
 
-.container {
-    padding-left: 15%;
-    padding-right: 15%;
-}
+/* => FROM HERE SHARED ELEMENTS <= */
 
-.outer {
-    left: 15px;
-    top: 15px;
+/* NAVIGATION BOX */
+.navigation-box {
     background-color: var(--action);
-    color: var(--highlight);
-    position: fixed;
-    border-radius: 10px;
     height: 50px;
     width: 50px;
+
+    border-radius: 10px;
 }
 
-.footer {
-    background-color: var(--accent-one);
-    width: 100%;
-    height: fit-content;
-
-    margin-top: 50px;
-    text-align: center;
-
-    box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.5);
+.navigation-box > img {
+    height: 100%;
 }
 
-.footer > img {
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
-
+/* CLICK ANIMATION */
 .click-anim {
     transition-duration: 0.3s;
     cursor: pointer;
@@ -55,33 +42,4 @@ html{
 
 .click-anim:hover {
     transform: scale(1.05, 1.05);
-}
-
-
-/* Some Shared Things, used in List and Media Details */
-.detail-button {
-    background-color: var(--action);
-    height: 35px;
-    width: 35px;
-    padding: 10px;
-    border-radius: 15px;
-}
-
-.detail-button > img {
-    height: 100%;
-}
-
-.base {
-    display: grid;
-    grid-auto-flow: column;
-    gap: 10px;
-    width: max-content;
-    place-items: end;
-
-    grid-column: r;
-}
-
-.two-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
 }

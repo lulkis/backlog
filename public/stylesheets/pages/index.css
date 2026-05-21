@@ -1,0 +1,110 @@
+@import "shared.css";
+
+/* MOTD: media of the day elements */
+.motd {
+    background-color: var(--stats);
+    border-radius: 15px;
+}
+
+.motd > img {
+    width: 350px;
+    margin: 20px;
+    border-radius: 15px;
+}
+
+.motd > div {
+    margin: 20px;
+}
+
+/* RECENTLY: recently added and finished elements */
+.recent-box > a{
+    background-color: var(--action);
+
+    height: 350px;
+    margin: 10px;
+
+    background-size: cover;
+    background-position: center;
+
+    border-radius: 10px;
+}
+
+.recent-box > a:hover{
+    cursor: pointer;
+}
+
+/* LOG LINKS: the boxes to the links to the different logs */
+.log-boxes > a {
+    background-color: var(--action);
+    color: var(--highlight);
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+
+    text-decoration: none;
+    text-align: center;
+}
+
+.log-boxes > a > div {
+    font-size: 20px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+}
+
+.movie-header {
+    background-image: url("/resources/movie_header.png");
+    background-size: cover;
+}
+
+.series-header {
+    background-image: url("/resources/series_header.png");
+    background-size: cover;
+}
+
+.game-header {
+    background-image: url("/resources/game_header.png");
+    background-size: cover;
+}
+
+.book-header {
+    background-image: url("/resources/book_header.png");
+    background-size: cover;
+}
+
+.audiobook-header {
+    background-image: url("/resources/audiobook_header.png");
+    background-size: cover;
+    opacity: 0.5;
+}
+
+.record-header {
+    background-image: url("/resources/record_header.png");
+    background-size: cover;
+    opacity: 0.5;
+}
+
+/* INDEX SEARCH */
+.search-button {
+    padding: 10px;
+
+    border-style: none;
+    border-radius: 0 10px 10px 0;
+    background-color: var(--action);
+    transition-duration: 0.3s;
+    color: var(--highlight);
+}
+
+.search-button:hover {
+    cursor: pointer;
+    transform: scale(1.05, 1.05);
+}
+
+.search-box {
+    box-sizing: border-box;
+    width: calc(100%); /* 10px left + 10px right */
+
+    padding: 10px;
+    border-style: none;
+    border-radius: 10px 0 0 10px;
+}

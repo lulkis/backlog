@@ -3,19 +3,18 @@
 <head>
     <title>Search</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/stylesheets/color-style.css' />
-    <link rel='stylesheet' href='/stylesheets/search-style.css'>
+    <link rel='stylesheet' href='/stylesheets/pages/search.css' />
 </head>
 <body>
 
-<a class="outer shadow search-button click-anim" onclick="history.back()">
+<a class="navigation-box top-left shadow click-anim" onclick="history.back()">
     <img src="/images/icons/back_arrow.png" width="100%">
 </a>
 
     <main>
         <div class="container">
             <%if(search_type === "actor"){%>
-                <div class="two-grid">
+                <div class="grd-two">
                     <div class="actor-image shadow"
                          style="background-image:url('/images/actors/<%= name.replaceAll(".", "")%>.jpg')"
                     ></div>
@@ -33,7 +32,7 @@
                             <% for (const item of list[route]) { %>
                                 <a href="/<%= route%>/detail/<%=item.id%>">
                                     <div class="lines">
-                                        <div class="search-grid">
+                                        <div class="grd-search-element search-element">
                                             <img class="shadow" src="/images/<%= route%>/<%= item.name.toLowerCase()
                                                     .replaceAll(" ", "_")
                                                     .replaceAll(":", "")

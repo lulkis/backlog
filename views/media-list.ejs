@@ -3,17 +3,16 @@
 <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/stylesheets/listing-style.css' />
-    <link rel='stylesheet' href='/stylesheets/color-style.css' />
+    <link rel='stylesheet' href='/stylesheets/pages/media-list.css' />
 </head>
 <body>
-    <a class="outer shadow click-anim"  href="/">
+    <a class="navigation-box top-left shadow click-anim"  href="/">
         <img src="/images/icons/back_arrow.png" width="100%">
     </a>
 
     <main>
         <div class="container">
-            <h1><%= title%></h1>
+            <h1 class="ttl-main"><%= title%></h1>
 
             <div class="add-wrap">
                 <a class="add-button shadow click-anim" href="<%= route%>/add">
@@ -61,7 +60,7 @@
                 <%}%>
             </div>
 
-            <div class="status-stats shadow">
+            <div class="grd-status status-stats shadow">
                 <div>
                     <h2>Open</h2>
                     <p><%= open%></p>

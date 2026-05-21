@@ -1,0 +1,45 @@
+/* reset.css */
+
+/* Box-sizing für alle Elemente */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Abstände & Schriftgröße zurücksetzen */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Vernünftige Standardwerte für den Body */
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Bilder & Videos nie breiter als ihr Container */
+img, video, svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* Schriftvererbung für Inputs & Buttons erzwingen */
+input, button, textarea, select {
+    font: inherit;
+}
+
+/* Lange Wörter umbrechen statt überlaufen */
+p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+}
+
+/* Listen-Styling entfernen */
+ul, ol {
+    list-style: none;
+}
+
+/* Links ohne Unterstreichung */
+a {
+    text-decoration: none;
+    color: inherit;
+}

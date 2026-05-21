@@ -1,25 +1,6 @@
-.media-list {
-    margin-top: 30px;
-}
+@import "shared.css";
 
-.media-list > a {
-    text-decoration: none;
-    color: var(--highlight);
-}
-
-.media-item {
-    padding: 10px;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.search-grid{
-    display: grid;
-    grid-template-columns:  100px 550px 1fr;
-    padding: 5px;
-}
-
-.search-grid > img {
+.search-element > img {
     height: 150px;
     width: 100px;
 
@@ -28,11 +9,11 @@
     image-rendering: smooth;
 }
 
-.search-grid > div {
+.search-element > div {
     margin: 10px;
 }
 
-.search-grid > div > p {
+.search-element > div > p {
     margin: 10px;
 }
 
@@ -49,6 +30,7 @@
     cursor: pointer;
 }
 
+/* STATUS BOX: shows if an element is open, started or finished */
 .status-box {
     background-color: var(--accent-two);
     height: 36px;
@@ -68,6 +50,7 @@
     padding: 8px;
 }
 
+/* ACTOR: the image of the actor */
 .actor-image {
     background-color: var(--stats);
     height: 250px;
@@ -75,10 +58,4 @@
     margin: 20px;
     border-radius: 180px;
     background-size: cover;
-}
-
-.two-grid {
-    display: grid;
-    grid-auto-flow: column;
-    width: max-content;
 }
