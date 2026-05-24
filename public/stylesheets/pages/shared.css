@@ -53,3 +53,28 @@
     text-decoration: none;
     color: var(--highlight);
 }
+
+/* NAVIGATION BOX */
+.navigation-box {
+    background-color: var(--action);
+    height: 50px;
+    width: 50px;
+
+    border-radius: 10px;
+}
+
+.navigation-box > img {
+    margin: 2px;
+    height: calc(100% - 4px);
+    width: calc(100% - 4px);
+}
+
+/* CLICK ANIMATION */
+.click-anim {
+    transition-duration: 0.3s;
+    cursor: pointer;
+}
+
+.click-anim:hover {
+    transform: scale(1.05, 1.05);
+}

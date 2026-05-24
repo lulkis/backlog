@@ -2,7 +2,7 @@
 
 /* MOTD: media of the day elements */
 .motd {
-    background-color: var(--stats);
+    background-color: var(--motd);
     border-radius: 15px;
 }
 

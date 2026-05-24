@@ -138,7 +138,8 @@ h4 > a:hover,
 /* HLTB: the how long to beat table for games */
 .hltb-box {
     margin-top: 20px;
-    background-color: var(--stats);
+    background-color: var(--hltb);
+    border-radius: 10px;
 }
 
 .hltb-grid {

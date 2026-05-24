@@ -18,28 +18,3 @@ html{
     background-color: var(--base);
     color: var(--highlight);
 }
-
-/* => FROM HERE SHARED ELEMENTS <= */
-
-/* NAVIGATION BOX */
-.navigation-box {
-    background-color: var(--action);
-    height: 50px;
-    width: 50px;
-
-    border-radius: 10px;
-}
-
-.navigation-box > img {
-    height: 100%;
-}
-
-/* CLICK ANIMATION */
-.click-anim {
-    transition-duration: 0.3s;
-    cursor: pointer;
-}
-
-.click-anim:hover {
-    transform: scale(1.05, 1.05);
-}
