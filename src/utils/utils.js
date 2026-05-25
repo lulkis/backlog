@@ -12,7 +12,7 @@ function cleanPath(input) {
 
 function daysToRelease(input_date){
     if(input_date){
-        const [day, month, year] = input_date.split(".");
+        const [year, month, day] = input_date.split("-");
         const date = new Date(year, month - 1, day);
         const current_date = new Date();
         if (current_date < date) {
@@ -21,6 +21,13 @@ function daysToRelease(input_date){
         }
     }
     return 0;
+}
+
+function toDatabaseDate(date){
+    if(date){
+        const [day, month, year] = date.split(".");
+        return year + '-' + month + '-' + day;
+    }
 }
 
 function saveCoverImage(name, route, image) {
@@ -47,5 +54,6 @@ module.exports = {
     daysToRelease,
     saveCoverImage,
     saveHeaderImage,
-    fileExists
+    fileExists,
+    toDatabaseDate
 }

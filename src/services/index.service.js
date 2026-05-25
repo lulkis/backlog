@@ -6,14 +6,17 @@ const seriesPersistence = require("../persistence/series.db");
 
 const utils = require("../utils/utils");
 const path = require("path");
-const {fileExists} = require("../utils/utils");
+const {daysToRelease,fileExists, cleanPath} = require("../utils/utils");
 
 function getHomepageComponents(){
+    const next = getNextUpcoming();
+    console.log(next)
     return {
         recent_added: persistence.getFiveRecentAdded(),
         recent_finished: persistence.getFiveRecentFinished(),
         backlog_stats: persistence.getBacklogStats(),
-        media_of_the_day: getMediaOfTheDay()
+        media_of_the_day: getMediaOfTheDay(),
+        next_upcoming: next,
     }
 }
 
@@ -90,6 +93,13 @@ async function actorImageTest(search){
         return "actor";
     }
     return "general"
+}
+
+function getNextUpcoming(){
+    let next = persistence.getNextUpcoming();
+    next.path = cleanPath(next.name);
+    next.days = daysToRelease(next.upcoming);
+    return next;
 }
 
 module.exports = {

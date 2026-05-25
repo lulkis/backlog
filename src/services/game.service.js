@@ -1,5 +1,5 @@
 const persistence = require('../persistence/game.db');
-const {saveCoverImage, saveHeaderImage} = require("../utils/utils");
+const {saveCoverImage, saveHeaderImage, toDatabaseDate} = require("../utils/utils");
 const { daysToRelease } = require('../utils/utils')
 
 function getAllGames() {
@@ -34,7 +34,7 @@ function createGame(data) {
         publisher: data.publisher,
         score: data.score,
         cast: data.cast,
-        upcoming: data.upcoming,
+        upcoming: toDatabaseDate(data.upcoming),
         owned: data.owned,
     }
     persistence.createGame(game)
@@ -71,7 +71,7 @@ function updateGame(id, data){
         header_space: data.header_space,
         score: data.score,
         cast: data.cast,
-        upcoming: data.upcoming,
+        upcoming: toDatabaseDate(data.upcoming),
         owned: data.owned,
     }
     persistence.updateGame(id, game)

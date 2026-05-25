@@ -137,7 +137,11 @@
         <hr>
         <%if(days > 0){%>
             <div class="upcoming">
-                <b><%= days%></b> <i>days until release</i> - <%= media.upcoming%>
+                <%
+                    const [year, month, day] = media.upcoming.split("-");
+                    const showDate = day + '.' + month + '.' + year;
+                %>
+                <b><%= days%></b> <i>days until release</i> - <%= showDate%>
             </div>
         <%}%>
 

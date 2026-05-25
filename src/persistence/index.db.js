@@ -155,6 +155,29 @@ function getActorGetResultGame(search){
     }
 }
 
+function getNextUpcoming() {
+    try {
+        const now = new Date();
+        const date =
+            now.getFullYear() + '-' +
+            String(now.getMonth() + 1).padStart(2, '0') + '-' +
+            String(now.getDate()).padStart(2, '0');
+
+        const row = db.prepare("SELECT movie.name, movie.upcoming, 'movie' AS route FROM movie WHERE movie.upcoming > ? " +
+            "UNION " +
+            "SELECT series.name, series.upcoming, 'series' AS route FROM series WHERE series.upcoming > ? " +
+            "UNION " +
+            "SELECT book.name, book.upcoming, 'book' AS route FROM book WHERE book.upcoming > ? " +
+            "UNION " +
+            "SELECT game.name, game.upcoming, 'game' AS route FROM game WHERE game.upcoming > ? " +
+            "ORDER BY upcoming ASC LIMIT 1").get(date, date, date, date)
+
+        return row;
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
 
 module.exports = {
     getFiveRecentAdded,
@@ -168,5 +191,6 @@ module.exports = {
     getGeneralGetResultBook,
     getActorGetResultMovie,
     getActorGetResultSeries,
-    getActorGetResultGame
+    getActorGetResultGame,
+    getNextUpcoming
 }

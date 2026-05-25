@@ -1,5 +1,5 @@
 const persistence = require("../persistence/book.db");
-const {saveCoverImage, daysToRelease} = require("../utils/utils");
+const {saveCoverImage, daysToRelease, toDatabaseDate} = require("../utils/utils");
 
 
 function getAllBooks() {
@@ -24,7 +24,7 @@ function createBook(data){
         length: data.length,
         publisher: data.publisher,
         illustrator: data.illustrator,
-        upcoming: data.upcoming,
+        upcoming: toDatabaseDate(data.upcoming),
         owned: data.owned,
     }
     persistence.createBook(book)
@@ -67,7 +67,7 @@ function updateBook(id, data){
         publisher: data.publisher,
         illustrator: data.illustrator,
         header_space: data.header_space,
-        upcoming: data.upcoming,
+        upcoming: toDatabaseDate(data.upcoming),
         owned: data.owned,
     }
     persistence.updateBook(id, book)

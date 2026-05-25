@@ -108,3 +108,15 @@
     border-style: none;
     border-radius: 10px 0 0 10px;
 }
+
+/* NEXT RELEASE: shows the next upcoming media*/
+.next-release {
+    background-color: var(--next);
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.next-release > img {
+    height: 250px;
+    border-radius: 10px;
+}

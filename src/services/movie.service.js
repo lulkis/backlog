@@ -1,6 +1,6 @@
 const persistence = require('../persistence/movie.db.js');
 const { getSettings } = require('../utils/settings');
-const { daysToRelease, saveImage, saveCoverImage, saveHeaderImage} = require('../utils/utils');
+const { toDatabaseDate,daysToRelease, saveImage, saveCoverImage, saveHeaderImage} = require('../utils/utils');
 const { validateMovie } = require('../validators/movie.validator')
 
 function createMovie(data){
@@ -90,7 +90,7 @@ function updateMovie(id, data){
         cast: data.cast,
         header_space: data.header_space,
         score: data.score,
-        upcoming: data.upcoming,
+        upcoming: toDatabaseDate(data.upcoming),
         owned: data.owned,
     }
 

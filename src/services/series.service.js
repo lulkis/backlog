@@ -1,5 +1,5 @@
 const persistence = require("../persistence/series.db");
-const {saveCoverImage, daysToRelease, saveHeaderImage} = require("../utils/utils");
+const {saveCoverImage, daysToRelease, saveHeaderImage, toDatabaseDate} = require("../utils/utils");
 
 function saveSeriesImages(name, cover, header) {
     if(cover){
@@ -35,7 +35,7 @@ function createSeries(data){
         cast: data.cast,
         episodes: data.episodes,
         score: data.score,
-        upcoming: data.upcoming,
+        upcoming: toDatabaseDate(data.upcoming),
         owned: data.owned,
     }
     persistence.createSeries(series)
@@ -104,7 +104,7 @@ function updateSeries(id, data){
         cast: data.cast,
         episodes: data.episodes,
         score: data.score,
-        upcoming: data.upcoming,
+        upcoming: toDatabaseDate(data.upcoming),
         cancelled: parseInt(data.cancelled),
         owned: data.owned,
     }
