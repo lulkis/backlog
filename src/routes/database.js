@@ -23,7 +23,8 @@ export function setup_database() {
         "cast TEXT," +
         "score VARCHAR(128)," +
         "owned VARCHAR(128)," +
-        "CHECK (status IN ('open', 'started', 'finished'))" +
+        "CHECK (status IN ('open', 'started', 'finished'))," +
+        "CHECK (owned IN ('no', 'digital', 'dvd', 'blu-ray'))" +
         ");"
     );
 
@@ -46,7 +47,8 @@ export function setup_database() {
         "cancelled BOOLEAN," +
         "score VARCHAR(128)," +
         "owned VARCHAR(128)," +
-        "CHECK (status IN ('open', 'started', 'finished'))" +
+        "CHECK (status IN ('open', 'started', 'finished'))," +
+        "CHECK (owned IN ('no', 'digital', 'dvd', 'blu-ray'))" +
         ");"
     );
 
@@ -66,7 +68,8 @@ export function setup_database() {
         "publisher VARCHAR(128)," +
         "illustrator VARCHAR(128)," +
         "owned VARCHAR(128)," +
-        "CHECK (status IN ('open', 'started', 'finished'))" +
+        "CHECK (status IN ('open', 'started', 'finished'))," +
+        "CHECK (owned IN ('no', 'softcover', 'hardcover', 'digital'))" +
         ");"
     );
 
@@ -86,7 +89,8 @@ export function setup_database() {
         "score VARCHAR(128)," +
         "cast TEXT," +
         "owned VARCHAR(128)," +
-        "CHECK (status IN ('open', 'started', 'finished'))" +
+        "CHECK (status IN ('open', 'started', 'finished'))," +
+        "CHECK (owned IN ('no', 'physical', 'digital'))" +
         ");"
     );
 
