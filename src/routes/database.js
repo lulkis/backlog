@@ -172,6 +172,16 @@ export function setup_database() {
         ");"
     );
 
+    db.exec(
+        "CREATE TABLE IF NOT EXISTS book_progress (" +
+        "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+        "bookid INTEGER NOT NULL," +
+        "date TEXT," +
+        "pages INTEGER," +
+        "FOREIGN KEY(bookid) REFERENCES book(id)" +
+        ");"
+    );
+
     db.close()
 
     const db2 = new Database('hltb.db');

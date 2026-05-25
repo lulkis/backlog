@@ -126,6 +126,29 @@ function getBookCount(){
     }
 }
 
+function addBookProgress(progress){
+    try {
+        return db.prepare("" +
+            "INSERT INTO book_progress (bookid, date, pages) " +
+            "VALUES (?, ?, ?)")
+            .run(progress.book, new Date().toISOString(), progress.pages)
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
+function getCurrentProgress(id){
+    try {
+        const row = db.prepare(
+            "SELECT pages FROM book_progress WHERE bookid = ? ORDER BY date DESC LIMIT 1"
+        ).get(id);
+
+        return row ? row.pages : 1;
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
 module.exports = {
     getAllBooks,
     createBook,
@@ -137,5 +160,7 @@ module.exports = {
     readBookAgain,
     finishedBook,
     updateValuation,
-    getBookCount
+    getBookCount,
+    addBookProgress,
+    getCurrentProgress
 }

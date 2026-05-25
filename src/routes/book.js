@@ -22,12 +22,14 @@ router.post('/add', function(req, res, next) {
 router.get('/detail/:id', function(req, res, next) {
     const id = parseInt(req.params.id);
     const full_details = service.getAllBookInfoById(id);
+    console.log(full_details.progress);
     res.render('media', {
         media: full_details.book,
         route: 'book',
         finish: full_details.valuation,
         days: full_details.days,
         inlist: full_details.lists,
+        progress: full_details.progress,
     });
 });
 
@@ -74,6 +76,18 @@ router.post('/editval/:id', function(req, res, next) {
     const id = parseInt(req.params.id);
     service.updateValuation(id, req.body)
     res.redirect('/book/detail/' + req.params.id);
+})
+
+router.get('/progress/:id/:pages', function(req, res, next) {
+    const id = parseInt(req.params.id);
+    const pages = parseInt(req.params.pages);
+
+    const data = {
+        book: id,
+        pages: pages,
+    }
+    service.addBookProgress(data)
+    res.redirect('/book/detail/' + id);
 })
 
 module.exports = router;

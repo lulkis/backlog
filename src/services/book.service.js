@@ -43,6 +43,7 @@ function getAllBookInfoById(id){
         valuation: persistence.getBookValuationById(id),
         lists: persistence.getListsForBookById(id),
         days: daysToRelease(book.upcoming),
+        progress: getCurrentProgress(id),
     }
 }
 
@@ -104,6 +105,18 @@ function updateValuation(id, data){
     persistence.updateValuation(id, valuation)
 }
 
+function addBookProgress(data){
+    const progress = {
+        book: data.book,
+        pages: data.pages,
+    }
+    persistence.addBookProgress(progress)
+}
+
+function getCurrentProgress(id){
+    return persistence.getCurrentProgress(id);
+}
+
 module.exports = {
     getAllBooks,
     getEmptyBook,
@@ -117,5 +130,7 @@ module.exports = {
     getEmptyValuation,
     readBookAgain,
     finishedBook,
-    updateValuation
+    updateValuation,
+    addBookProgress,
+    getCurrentProgress
 }

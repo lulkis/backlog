@@ -276,6 +276,33 @@
             </div>
         </div>
 
+        <%if (media.status === 'started' && route === 'book') {%>
+        <hr>
+        <div>
+            <h3>Progress</h3>
+            <p><span id="progress">0</span>/<%= media.length%></p>
+            <input style="width: 100%" type="range" min="1" max="<%=media.length%>" value="<%= progress%>" class="slider" id="myRange">
+            <a id="progressLink" href="#" class="progress-link shadow click-anim">
+                Save Progress
+            </a>
+            <script>
+                const range = document.getElementById("myRange");
+                const progress = document.getElementById("progress");
+                const link = document.getElementById("progressLink");
+
+                function updateProgress() {
+                    progress.innerHTML = range.value;
+
+                    link.href = "/book/progress/<%= media.id %>/" + range.value;
+                }
+
+                range.addEventListener("input", updateProgress);
+
+                updateProgress();
+            </script>
+        </div>
+        <% } %>
+
         <hr>
         <div>
             <h3>Description</h3>

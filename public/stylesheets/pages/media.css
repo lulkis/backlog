@@ -226,3 +226,15 @@ h4 > a:hover,
     display: block;
     padding-bottom: 10px;
 }
+
+/* PROGRESS: the progress elements */
+.progress-link {
+    background-color: var(--accent-two);
+    padding: 5px;
+    border-radius: 5px;
+
+    text-decoration: none;
+    color: var(--highlight);
+
+    margin: 10px;
+}
