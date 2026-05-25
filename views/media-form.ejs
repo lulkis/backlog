@@ -96,6 +96,14 @@
                                 <br>
                                 <input name="score" id="score" placeholder="Score" type="text" value="<%= media.score%>">
                                 <br>
+
+                                    <label for="owned">Do You Own It?</label>
+                                    <select id="owned" name="owned">
+                                        <option value="no" <%= media.owned === "no" ? "selected" : "" %>>No</option>
+                                        <option value="digital" <%= media.owned === "digital" ? "selected" : "" %>>Digital</option>
+                                        <option value="dvd" <%= media.owned === "dvd" ? "selected" : "" %>>DVD</option>
+                                        <option value="blu-ray" <%= media.owned === "blu-ray" ? "selected" : "" %>>Blu-Ray</option>
+                                    </select>
                             <%}%>
                             <% if (route === "series") {%>
                                 <input name="studio" id="studio" placeholder="Studio" type="text" value="<%= media.studio%>">
@@ -104,12 +112,27 @@
                                     <br>
                                 <input type="checkbox" id="cancelled" name="cancelled" value="1" <%= media.cancelled === 1 ? "checked" : "" %>>
                                 <label for="cancelled"> Was the Show Cancelled?</label><br>
+
+                                    <label for="owned">Do You Own It?</label>
+                                    <select id="owned" name="owned">
+                                        <option value="no" <%= media.owned === "no" ? "selected" : "" %>>No</option>
+                                        <option value="digital" <%= media.owned === "digital" ? "selected" : "" %>>Digital</option>
+                                        <option value="dvd" <%= media.owned === "dvd" ? "selected" : "" %>>DVD</option>
+                                        <option value="blu-ray" <%= media.owned === "blu-ray" ? "selected" : "" %>>Blu-Ray</option>
+                                    </select>
                             <%}%>
                             <% if (route === "game") {%>
                                 <input name="publisher" id="publisher" placeholder="Publisher" type="text" value="<%= media.publisher%>">
                                 <br>
                                     <input name="score" id="score" placeholder="Score" type="text" value="<%= media.score%>">
                                     <br>
+
+                                    <label for="owned">Do You Own It?</label>
+                                    <select id="owned" name="owned">
+                                        <option value="no" <%= media.owned === "no" ? "selected" : "" %>>No</option>
+                                        <option value="digital" <%= media.owned === "digital" ? "selected" : "" %>>Digital</option>
+                                        <option value="physical" <%= media.owned === "physical" ? "selected" : "" %>>Physical</option>
+                                    </select>
                             <%}%>
                             <% if (route === "book") {%>
                                 <input name="length" id="length" placeholder="Length" type="text" value="<%= media.length%>">
@@ -118,6 +141,14 @@
                                 <br>
                                 <input name="illustrator" id="illustrator" placeholder="Illustrator" type="text" value="<%= media.illustrator%>">
                                 <br>
+
+                                <label for="owned">Do You Own It?</label>
+                                <select id="owned" name="owned">
+                                    <option value="no" <%= media.owned === "no" ? "selected" : "" %>>No</option>
+                                    <option value="digital" <%= media.owned === "digital" ? "selected" : "" %>>Digital</option>
+                                    <option value="softcover" <%= media.owned === "softcover" ? "selected" : "" %>>Softcover</option>
+                                    <option value="hardcover"<%= media.owned === "hardcover" ? "selected" : "" %>>Hardcover</option>
+                                </select>
                             <%}%>
                         </div>
                     </div>

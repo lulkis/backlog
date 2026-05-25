@@ -22,6 +22,7 @@ export function setup_database() {
         "length INTEGER," +
         "cast TEXT," +
         "score VARCHAR(128)," +
+        "owned VARCHAR(128)," +
         "CHECK (status IN ('open', 'started', 'finished'))" +
         ");"
     );
@@ -44,6 +45,7 @@ export function setup_database() {
         "episodes TEXT," +
         "cancelled BOOLEAN," +
         "score VARCHAR(128)," +
+        "owned VARCHAR(128)," +
         "CHECK (status IN ('open', 'started', 'finished'))" +
         ");"
     );
@@ -63,6 +65,7 @@ export function setup_database() {
         "length INTEGER," +
         "publisher VARCHAR(128)," +
         "illustrator VARCHAR(128)," +
+        "owned VARCHAR(128)," +
         "CHECK (status IN ('open', 'started', 'finished'))" +
         ");"
     );
@@ -82,6 +85,7 @@ export function setup_database() {
         "publisher VARCHAR(128)," +
         "score VARCHAR(128)," +
         "cast TEXT," +
+        "owned VARCHAR(128)," +
         "CHECK (status IN ('open', 'started', 'finished'))" +
         ");"
     );

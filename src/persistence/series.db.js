@@ -26,8 +26,8 @@ function getAllSeries(){
 
 function createSeries(series){
     try {
-        db.prepare("INSERT INTO series (name, year, year_end, genre, country, description, status, added, idea, studio, cast, episodes, header_space, score, upcoming)" +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+        db.prepare("INSERT INTO series (name, year, year_end, genre, country, description, status, added, idea, studio, cast, episodes, header_space, score, upcoming, owned)" +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
             .run(series.name,
                 series.year,
                 series.year_end,
@@ -42,7 +42,8 @@ function createSeries(series){
                 series.episodes,
                 series.header_space,
                 series.score,
-                series.upcoming)
+                series.upcoming,
+                series.owned)
     } catch (err) {
         console.log("Database Error: " + err.message);
     }
@@ -112,7 +113,7 @@ function updateValuation(id, valuation){
 function updateSeries(id, series){
     try {
         db.prepare("Update series SET " +
-            "name=?, year=?, year_end=?, genre=?, country=?, description=?, idea=?, studio=?, cast=?, episodes=?, header_space=?, cancelled=?, score=?, upcoming=?" +
+            "name=?, year=?, year_end=?, genre=?, country=?, description=?, idea=?, studio=?, cast=?, episodes=?, header_space=?, cancelled=?, score=?, upcoming=?, owned=?" +
             "WHERE id = ?")
             .run(series.name,
                 series.year,
@@ -128,6 +129,7 @@ function updateSeries(id, series){
                 series.cancelled,
                 series.score,
                 series.upcoming,
+                series.owned,
                 id)
 
     } catch (err) {

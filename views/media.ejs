@@ -265,6 +265,14 @@
                     <span class="tag shadow"><%=tiles[i]%></span>
                     <%}%>
                 </p>
+
+
+                <%if (media.owned !== 'No' && media.owned !== 'no') {%>
+                    <div class="owned shadow" style="margin-top:41px">
+                        <h5 class="owned-title">In Personal Library as:</h5>
+                        <span><%= media.owned %></span>
+                    </div>
+                <%}%>
             </div>
         </div>
 

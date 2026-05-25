@@ -35,6 +35,7 @@ function createGame(data) {
         score: data.score,
         cast: data.cast,
         upcoming: data.upcoming,
+        owned: data.owned,
     }
     persistence.createGame(game)
 }
@@ -71,6 +72,7 @@ function updateGame(id, data){
         score: data.score,
         cast: data.cast,
         upcoming: data.upcoming,
+        owned: data.owned,
     }
     persistence.updateGame(id, game)
 }

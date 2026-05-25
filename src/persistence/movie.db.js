@@ -2,8 +2,8 @@ const {db} = require("../utils/db");
 
 function saveMovie(movie) {
     try {
-        db.prepare("INSERT INTO movie (name, year, genre, country, description, status, added, studio, director, length, cast, header_space, score)" +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+        db.prepare("INSERT INTO movie (name, year, genre, country, description, status, added, studio, director, length, cast, header_space, score, owned)" +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
             .run(
                 movie.name,
                 movie.year,
@@ -17,7 +17,8 @@ function saveMovie(movie) {
                 movie.length,
                 movie.cast,
                 movie.header_space,
-                movie.score
+                movie.score,
+                movie.owned,
             )
     } catch (err) {
         console.log("Database Error: " + err.message);
@@ -68,7 +69,7 @@ function seenMovieAgain(id){
 function updateMovie(id, movie) {
     try {
         db.prepare("Update movie SET " +
-            "name=?, year=?, genre=?, country=?, description=?, studio=?, director=?, length=?, cast=?, header_space=?, score=?, upcoming=?" +
+            "name=?, year=?, genre=?, country=?, description=?, studio=?, director=?, length=?, cast=?, header_space=?, score=?, upcoming=?, owned=?" +
             "WHERE id = ?")
             .run(movie.name,
                 movie.year,
@@ -81,7 +82,9 @@ function updateMovie(id, movie) {
                 movie.cast,
                 movie.header_space,
                 movie.score,
-                movie.upcoming, id
+                movie.upcoming,
+                movie.owned,
+                id
             )
     } catch (err) {
         console.log("Database Error: " + err.message);

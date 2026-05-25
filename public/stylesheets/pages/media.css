@@ -206,3 +206,23 @@ h4 > a:hover,
 .l-color:hover {
     color: var(--action);
 }
+
+/* OWNED: the personal library/owned block */
+.owned {
+    margin: 10px;
+    background-color: var(--owned);
+    border-radius: 15px;
+
+    text-align: center;
+}
+
+.owned > .owned-title {
+    padding-top: 5px;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+.owned span {
+    display: block;
+    padding-bottom: 10px;
+}

@@ -25,6 +25,7 @@ function createBook(data){
         publisher: data.publisher,
         illustrator: data.illustrator,
         upcoming: data.upcoming,
+        owned: data.owned,
     }
     persistence.createBook(book)
 }
@@ -66,6 +67,7 @@ function updateBook(id, data){
         illustrator: data.illustrator,
         header_space: data.header_space,
         upcoming: data.upcoming,
+        owned: data.owned,
     }
     persistence.updateBook(id, book)
 }

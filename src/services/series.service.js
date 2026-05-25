@@ -36,6 +36,7 @@ function createSeries(data){
         episodes: data.episodes,
         score: data.score,
         upcoming: data.upcoming,
+        owned: data.owned,
     }
     persistence.createSeries(series)
 }
@@ -105,6 +106,7 @@ function updateSeries(id, data){
         score: data.score,
         upcoming: data.upcoming,
         cancelled: parseInt(data.cancelled),
+        owned: data.owned,
     }
     persistence.updateSeries(id, series)
 }

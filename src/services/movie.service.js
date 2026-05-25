@@ -18,6 +18,7 @@ function createMovie(data){
         cast: data.cast,
         header_space: parseFloat(data.header_space),
         score: data.score,
+        owned: data.owned,
     }
     validateMovie(movie);
     persistence.saveMovie(movie);
@@ -90,6 +91,7 @@ function updateMovie(id, data){
         header_space: data.header_space,
         score: data.score,
         upcoming: data.upcoming,
+        owned: data.owned,
     }
 
     persistence.updateMovie(id, movie)

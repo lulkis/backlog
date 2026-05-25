@@ -42,8 +42,8 @@ function getGameCount(){
 
 function createGame(game) {
     try {
-        db.prepare("INSERT INTO game (name, year, genre, country, description, status, added, developer, publisher, header_space, score, cast, upcoming)" +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+        db.prepare("INSERT INTO game (name, year, genre, country, description, status, added, developer, publisher, header_space, score, cast, upcoming, owned)" +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
             .run(game.name,
                 game.year,
                 game.genre,
@@ -56,7 +56,8 @@ function createGame(game) {
                 game.header_space,
                 game.score,
                 game.cast,
-                game.upcoming)
+                game.upcoming,
+                game.owned,)
 
     } catch (err) {
         console.log("Database Error: " + err.message);
@@ -75,7 +76,7 @@ function getListsWithGame(id){
 function updateGame(id, game) {
     try {
         db.prepare("Update game SET " +
-            "name=?, year=?, genre=?, country=?, description=?, developer=?, publisher=?, header_space=?, score=?, cast=?, upcoming=?" +
+            "name=?, year=?, genre=?, country=?, description=?, developer=?, publisher=?, header_space=?, score=?, cast=?, upcoming=?, owned=?" +
             "WHERE id = ?")
             .run(game.name,
                 game.year,
@@ -88,6 +89,7 @@ function updateGame(id, game) {
                 game.score,
                 game.cast,
                 game.upcoming,
+                game.owned,
                 id)
     } catch (err) {
         console.log("Database Error: " + err.message);

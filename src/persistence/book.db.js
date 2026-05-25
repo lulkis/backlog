@@ -10,8 +10,8 @@ function getAllBooks() {
 
 function createBook(book) {
     try {
-        db.prepare("INSERT INTO book (name, year, genre, country, description, status, added, author, length, publisher, illustrator, header_space, upcoming)" +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+        db.prepare("INSERT INTO book (name, year, genre, country, description, status, added, author, length, publisher, illustrator, header_space, upcoming, owned)" +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
             .run(book.name,
                 book.year,
                 book.genre,
@@ -24,7 +24,8 @@ function createBook(book) {
                 book.publisher,
                 book.illustrator,
                 book.header_space,
-                book.upcoming
+                book.upcoming,
+                book.owned,
             )
     } catch (err) {
         console.log("Database Error: " + err.message);
@@ -59,7 +60,7 @@ function getListsForBookById(id) {
 function updateBook(id, book) {
     try {
         db.prepare("Update book SET " +
-            "name=?, year=?, genre=?, country=?, description=?, author=?, length=?, publisher=?, illustrator=?, header_space=?, upcoming=?" +
+            "name=?, year=?, genre=?, country=?, description=?, author=?, length=?, publisher=?, illustrator=?, header_space=?, upcoming=?, owned=?" +
             "WHERE id = ?")
             .run(book.name,
                 book.year,
@@ -72,6 +73,7 @@ function updateBook(id, book) {
                 book.illustrator,
                 book.header_space,
                 book.upcoming,
+                book.owned,
                 id)
     } catch (err) {
         console.log("Database Error: " + err.message);
