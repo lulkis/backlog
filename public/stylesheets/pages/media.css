@@ -235,6 +235,8 @@ h4 > a:hover,
 
     text-decoration: none;
     color: var(--highlight);
+}
 
+.progress-box {
     margin: 10px;
 }

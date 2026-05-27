@@ -286,9 +286,13 @@
             <h3>Progress</h3>
             <p><span id="progress">0</span>/<%= media.length%></p>
             <input style="width: 100%" type="range" min="1" max="<%=media.length%>" value="<%= progress%>" class="slider" id="myRange">
-            <a id="progressLink" href="#" class="progress-link shadow click-anim">
-                Save Progress
-            </a>
+
+            <div class="progress-box">
+                <a id="progressLink" href="#" class="progress-link shadow click-anim">
+                    Save Progress
+                </a>
+            </div>
+
             <script>
                 const range = document.getElementById("myRange");
                 const progress = document.getElementById("progress");

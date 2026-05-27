@@ -20,7 +20,7 @@
 .recent-box > a{
     background-color: var(--action);
 
-    height: 350px;
+    height: 320px;
     margin: 10px;
 
     background-size: cover;
