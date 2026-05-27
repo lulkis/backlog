@@ -32,6 +32,10 @@
                     <% open += 1%>
                 <%}%>
                 <%}%>
+
+                <% if(open === 0) { %>
+                    <div class="media-item-empty"><i>Empty Yet...</i></div>
+                <% } %>
             </div>
 
             <%if(route != 'movie') {%>
@@ -45,6 +49,10 @@
                         <% started += 1%>
                     <%}%>
                     <%}%>
+
+                    <% if(started === 0) { %>
+                        <div class="media-item-empty"><i>Empty Yet...</i></div>
+                    <% } %>
                 </div>
             <%}%>
 
@@ -58,6 +66,10 @@
                     <% finished += 1%>
                 <%}%>
                 <%}%>
+
+                <% if(finished === 0) { %>
+                    <div class="media-item-empty"><i>Empty Yet...</i></div>
+                <% } %>
             </div>
 
             <div class="grd-status status-stats shadow">

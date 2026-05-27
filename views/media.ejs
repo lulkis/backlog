@@ -188,6 +188,7 @@
                 <span>
                     <img src="/images/countries/<%= media.country %>.png" height="35px">
                 </span><br>
+
                 <% if(route === 'movie') {%>
                     <p class="minutes">
                         <%if(settings.time_in_minutes === true){%>
@@ -211,34 +212,44 @@
 
                 <%}%>
                 <% if(route === 'series') {%>
-                    <span><b>Studio:</b> <%= media.studio %></span><br>
-                    <span><b>Score: </b>
-                        <% let arr = media.score.split(", ")
-                        for(var i=0; i<arr.length; i++){
-                        %>
-                            <a class="l-color" href="/get/<%= arr[i]%>"><%= arr[i]%></a><%if(i != arr.length-1){%>,<%}%>
-                        <%}%>
-                    </span><br>
+                    <p>
+                        <span><b>Studio:</b> <%= media.studio %></span><br>
+                        <span><b>Score: </b>
+                            <% let arr = media.score.split(", ")
+                            for(var i=0; i<arr.length; i++){
+                            %>
+                                <a class="l-color" href="/get/<%= arr[i]%>"><%= arr[i]%></a><%if(i != arr.length-1){%>,<%}%>
+                            <%}%>
+                        </span><br>
+                    </p>
                 <%}%>
+
                 <% if(route === 'game') {%>
-                    <span><b>Publisher:</b> <%= media.publisher %></span><br>
-                    <span><b>Score: </b>
-                        <% let arr = media.score.split(", ")
-                        for(var i=0; i<arr.length; i++){
-                        %>
-                            <a class="l-color" href="/get/<%= arr[i]%>"><%= arr[i]%></a><%if(i != arr.length-1){%>,<%}%>
-                        <%}%>
-                    </span><br>
+                    <p>
+                        <span><b>Publisher:</b> <%= media.publisher %></span><br>
+                        <span><b>Score: </b>
+                            <% let arr = media.score.split(", ")
+                            for(var i=0; i<arr.length; i++){
+                            %>
+                                <a class="l-color" href="/get/<%= arr[i]%>"><%= arr[i]%></a><%if(i != arr.length-1){%>,<%}%>
+                            <%}%>
+                        </span><br>
+                    </p>
                 <%}%>
+
                 <% if(route === 'book') {%>
-                    <span><b>Length:</b> <%= media.length %></span><br>
-                    <span><b>Publisher:</b> <%= media.publisher %></span><br>
-                    <span><b>Illustrator:</b> <%= media.illustrator %></span>
+                    <p>
+                        <span><b>Length:</b> <%= media.length %></span><br>
+                        <span><b>Publisher:</b> <%= media.publisher %></span><br>
+                        <span><b>Illustrator:</b> <%= media.illustrator %></span>
+                    </p>
                 <%}%>
 
                 <% if(route === 'manga') {%>
-                    <span><b>Length:</b> <%= media.length %></span><br>
-                    <span><b>Publisher:</b> <%= media.publisher %></span><br>
+                    <p>
+                        <span><b>Length:</b> <%= media.length %></span><br>
+                        <span><b>Publisher:</b> <%= media.publisher %></span><br>
+                    </p>
                 <%}%>
 
                 <%if(route === 'game'){%>
