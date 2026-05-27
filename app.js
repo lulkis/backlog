@@ -14,6 +14,7 @@ var moviesRouter = require('./src/routes/movie');
 var gamesRouter = require('./src/routes/game');
 var booksRouter = require('./src/routes/book');
 var seriesRouter = require('./src/routes/series');
+var mangaRouter = require('./src/routes/manga');
 
 var app = express();
 
@@ -42,6 +43,7 @@ app.use('/movie', moviesRouter);
 app.use('/game', gamesRouter);
 app.use('/book', booksRouter);
 app.use('/series', seriesRouter);
+app.use('/manga', mangaRouter);
 app.use('/api', list);
 
 // catch 404 and forward to error handler

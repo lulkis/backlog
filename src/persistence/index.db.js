@@ -9,6 +9,8 @@ function getFiveRecentAdded() {
             "SELECT book.id, book.name, book.added, 'book' AS route FROM book WHERE book.status = 'open' OR book.status = 'started'\n" +
             "UNION\n" +
             "SELECT game.id, game.name, game.added, 'game' AS route FROM game WHERE game.status = 'open' OR game.status = 'started'\n" +
+            "UNION\n" +
+            "SELECT manga.id, manga.name, manga.added, 'manga' AS route FROM manga WHERE manga.status = 'open' OR manga.status = 'started'\n" +
             "ORDER BY added DESC LIMIT 5").all();
     } catch (err) {
         console.log("Database Error: " + err.message);
@@ -28,6 +30,9 @@ function getFiveRecentFinished() {
             "UNION\n" +
             "SELECT game.name, game.id, game_finished.date, 'game' AS route FROM game\n" +
             "INNER JOIN game_finished ON game.id = game_finished.id\n" +
+            "UNION\n" +
+            "SELECT manga.name, manga.id, manga_finished.date, 'manga' AS route FROM manga\n" +
+            "INNER JOIN manga_finished ON manga.id = manga_finished.id\n" +
             "ORDER BY date DESC LIMIT 5").all()
     } catch (err) {
         console.log("Database Error: " + err.message);
@@ -45,6 +50,8 @@ function getBacklogStats() {
             "         SELECT status FROM book\n" +
             "         UNION ALL\n" +
             "         SELECT status FROM game\n" +
+            "         UNION ALL\n" +
+            "         SELECT status FROM manga\n" +
             "     ) AS Alle_Daten\n" +
             "GROUP BY status;").all()
     } catch (err) {

@@ -21,7 +21,7 @@
                       encType="multipart/form-data">
 
                     <div>
-                        <%if(route != 'book'){%>
+                        <%if(route != 'book' && route != 'manga'){%>
                             <div>
                                 <div class="center-drag space-bottom">
                                     <input name="header" type="file" class="dragndrop" />
@@ -48,6 +48,9 @@
                         <% if (route === "book") {%>
                             <input class="from" name="author" id="author" placeholder="Author" type="text" value="<%= media.author%>">
                         <%}%>
+                        <% if (route === "manga") {%>
+                            <input class="from" name="mangaka" id="mangaka" placeholder="Mangaka" type="text" value="<%= media.mangaka%>">
+                        <%}%>
                     </div>
 
                     <hr>
@@ -60,7 +63,7 @@
                         </div>
 
                         <div>
-                            <%if(route === 'series'){%>
+                            <%if(route === 'series' || route === 'manga'){%>
                                 <label for="year">Von</label>
                                 <input name="year" id="year" placeholder="Year" type="text" value="<%= media.year%>">
                                 <label for="year_end" style="line-height: 25px;">Bis</label>
@@ -150,13 +153,28 @@
                                     <option value="hardcover"<%= media.owned === "hardcover" ? "selected" : "" %>>Hardcover</option>
                                 </select>
                             <%}%>
+
+                            <% if (route === "manga") {%>
+                                <input name="length" id="length" placeholder="Length" type="text" value="<%= media.length%>">
+                                <br>
+                                <input name="publisher" id="publisher" placeholder="Publisher" type="text" value="<%= media.publisher%>">
+                                <br>
+
+                                <label for="owned">Do You Own It?</label>
+                                <select id="owned" name="owned">
+                                    <option value="no" <%= media.owned === "no" ? "selected" : "" %>>No</option>
+                                    <option value="digital" <%= media.owned === "digital" ? "selected" : "" %>>Digital</option>
+                                    <option value="softcover" <%= media.owned === "softcover" ? "selected" : "" %>>Softcover</option>
+                                    <option value="hardcover"<%= media.owned === "hardcover" ? "selected" : "" %>>Hardcover</option>
+                                </select>
+                            <%}%>
                         </div>
                     </div>
 
                     <hr>
                     <textarea rows="7" name="description" id="description" placeholder="Description" type="text" ><%= media.description%></textarea>
 
-                    <%if(!(route === "book")){%>
+                    <%if(!(route === "book") && !(route === "manga")){%>
                         <hr>
                         <textarea rows="7" name="cast" id="cast" placeholder="Cast" type="text" ><%= media.cast%></textarea>
                     <%}%>

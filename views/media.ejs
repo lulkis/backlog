@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <%if(route === 'book'){%>
+    <%if(route === 'book' || route === 'manga'){%>
     <div class="header-img"
          style="background-image: url(/images/<%=route%>/<%= media.name.toLowerCase()
                  .replaceAll(" ", "_")
@@ -39,6 +39,9 @@
                 <div>
                     <% if( route === 'book'){%>
                         <h4>By <a href="/get/<%= media.author%>"><%= media.author%></a></h4>
+                    <%}%>
+                    <% if( route === 'manga'){%>
+                        <h4>By <a href="/get/<%= media.mangaka%>"><%= media.mangaka%></a></h4>
                     <%}%>
                     <% if( route === 'movie'){%>
                         <h4>By
@@ -170,7 +173,7 @@
                         <%= Math.abs(media.year)  %> v. Chr.
                     <%}%>
 
-                    <%if(route === 'series'){%>
+                    <%if(route === 'series' || route === 'manga'){%>
                         <%if(media.year !== media.year_end){%>
                         -
                             <%if(media.year_end === 0){%>
@@ -231,6 +234,11 @@
                     <span><b>Length:</b> <%= media.length %></span><br>
                     <span><b>Publisher:</b> <%= media.publisher %></span><br>
                     <span><b>Illustrator:</b> <%= media.illustrator %></span>
+                <%}%>
+
+                <% if(route === 'manga') {%>
+                    <span><b>Length:</b> <%= media.length %></span><br>
+                    <span><b>Publisher:</b> <%= media.publisher %></span><br>
                 <%}%>
 
                 <%if(route === 'game'){%>

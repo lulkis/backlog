@@ -3,6 +3,7 @@ const moviePersistence = require("../persistence/movie.db");
 const bookPersistence = require("../persistence/book.db");
 const gamePersistence = require("../persistence/game.db");
 const seriesPersistence = require("../persistence/series.db");
+const mangaPersistence = require("../persistence/manga.db");
 
 const utils = require("../utils/utils");
 const path = require("path");
@@ -34,7 +35,7 @@ function getMediaOfTheDay() {
     let route;
 
     const seed = Math.random();
-    const category = Math.floor(seed * 4);
+    const category = Math.floor(seed * 5);
     switch (category) {
         case 0: //movie
             mediaId = Math.floor(seed * parseInt(moviePersistence.getMovieCount()));
@@ -55,6 +56,11 @@ function getMediaOfTheDay() {
             mediaId = Math.floor(seed * parseInt(seriesPersistence.getSeriesCount()));
             media = seriesPersistence.getSeriesById(mediaId);
             route = 'series'
+            break;
+        case 4: //series
+            mediaId = Math.floor(seed * parseInt(mangaPersistence.getMangaCount()));
+            media = mangaPersistence.getMangaById(mediaId);
+            route = 'manga'
             break;
     }
 

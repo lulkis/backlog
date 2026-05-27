@@ -95,6 +95,28 @@ export function setup_database() {
     );
 
     db.exec(
+        "CREATE TABLE IF NOT EXISTS manga (" +
+        "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+        "name VARCHAR(128) NOT NULL," +
+        "year INTEGER," +
+        "genre VARCHAR(128)," +
+        "country VARCHAR(128)," +
+        "description TEXT," +
+        "header_space FLOAT," +
+        "status VARCHAR(128)," +
+        "added VARCHAR(128)," +
+        "mangaka VARCHAR(128)," +
+        "length INTEGER," +
+        "publisher VARCHAR(128)," +
+        "owned VARCHAR(128)," +
+        "year_end INTEGER," +
+        "upcoming TEXT," +
+        "CHECK (status IN ('open', 'started', 'finished'))," +
+        "CHECK (owned IN ('no', 'softcover', 'hardcover', 'digital'))" +
+        ");"
+    );
+
+    db.exec(
         "CREATE TABLE IF NOT EXISTS movie_finished (" +
         "id INTEGER PRIMARY KEY NOT NULL," +
         "date VARCHAR(128)," +
@@ -133,6 +155,18 @@ export function setup_database() {
 
     db.exec(
         "CREATE TABLE IF NOT EXISTS book_finished (" +
+        "id INTEGER PRIMARY KEY NOT NULL," +
+        "date VARCHAR(128)," +
+        "rating INTEGER," +
+        "valuation TEXT," +
+        "like BOOLEAN," +
+        "finishcount INTEGER default 1," +
+        "FOREIGN KEY(id) REFERENCES book(id)" +
+        ");"
+    );
+
+    db.exec(
+        "CREATE TABLE IF NOT EXISTS manga_finished (" +
         "id INTEGER PRIMARY KEY NOT NULL," +
         "date VARCHAR(128)," +
         "rating INTEGER," +
