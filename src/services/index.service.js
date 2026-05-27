@@ -21,7 +21,8 @@ function getHomepageComponents(){
 }
 
 function getMediaOfTheDay() {
-    const time = new Date().toISOString().split("T")[0]
+    const berlinString = new Date().toLocaleString("sv-SE", { timeZone: "Europe/Berlin" });
+    const time = berlinString.split(" ")[0];
 
     const motd = persistence.getMediaOfTheDay(time)
     if(motd != null) {
