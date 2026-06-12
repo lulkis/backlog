@@ -54,7 +54,7 @@ router.get('/finish/:id', function(req, res, next) {
 
 router.post('/finish/:id', function(req, res, next) {
     const id = parseInt(req.params.id);
-    service.finishGame(req.body)
+    service.finishGame(id, req.body)
     res.redirect('/game/detail/' + id);
 })
 
