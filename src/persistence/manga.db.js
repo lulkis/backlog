@@ -126,6 +126,29 @@ function getMangaCount(){
     }
 }
 
+function addMangaProgress(progress){
+    try {
+        return db.prepare("" +
+            "INSERT INTO manga_progress (mangaid, date, chapter) " +
+            "VALUES (?, ?, ?)")
+            .run(progress.manga, new Date().toISOString(), progress.chapter)
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
+function getCurrentProgress(id){
+    try {
+        const row = db.prepare(
+            "SELECT chapter FROM manga_progress WHERE mangaid = ? ORDER BY date DESC LIMIT 1"
+        ).get(id);
+
+        return row ? row.chapter : 1;
+    } catch (err) {
+        console.log("Database Error: " + err.message);
+    }
+}
+
 module.exports = {
     getAllMangas,
     createManga,
@@ -138,4 +161,6 @@ module.exports = {
     finishedManga,
     updateValuation,
     getMangaCount,
+    addMangaProgress,
+    getCurrentProgress
 }

@@ -216,6 +216,16 @@ export function setup_database() {
         ");"
     );
 
+    db.exec(
+        "CREATE TABLE IF NOT EXISTS manga_progress (" +
+        "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+        "mangaid INTEGER NOT NULL," +
+        "date TEXT," +
+        "chapter INTEGER," +
+        "FOREIGN KEY(mangaid) REFERENCES manga(id)" +
+        ");"
+    );
+
     db.close()
 
     const db2 = new Database('hltb.db');

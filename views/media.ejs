@@ -247,7 +247,7 @@
 
                 <% if(route === 'manga') {%>
                     <p>
-                        <span><b>Length:</b> <%= media.length %></span><br>
+                        <span><b>Chapter:</b> <%= media.length %></span><br>
                         <span><b>Publisher:</b> <%= media.publisher %></span><br>
                     </p>
                 <%}%>
@@ -299,7 +299,7 @@
             </div>
         </div>
 
-        <%if (media.status === 'started' && route === 'book') {%>
+        <%if (media.status === 'started' && (route === 'book' || route === 'manga')) {%>
         <hr>
         <div>
             <h3>Progress</h3>
@@ -320,7 +320,7 @@
                 function updateProgress() {
                     progress.innerHTML = range.value;
 
-                    link.href = "/book/progress/<%= media.id %>/" + range.value;
+                    link.href = "/<%= route%>/progress/<%= media.id %>/" + range.value;
                 }
 
                 range.addEventListener("input", updateProgress);

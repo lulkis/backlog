@@ -78,5 +78,17 @@ router.post('/editval/:id', function(req, res, next) {
     res.redirect('/manga/detail/' + req.params.id);
 })
 
+router.get('/progress/:id/:pages', function(req, res, next) {
+    const id = parseInt(req.params.id);
+    const pages = parseInt(req.params.pages);
+
+    const data = {
+        manga: id,
+        pages: pages,
+    }
+    service.addMangaProgress(data)
+    res.redirect('/manga/detail/' + id);
+})
+
 module.exports = router;
 

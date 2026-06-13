@@ -43,6 +43,7 @@ function getAllMangaInfoById(id){
         valuation: persistence.getMangaValuationById(id),
         lists: persistence.getListsForMangaById(id),
         days: daysToRelease(manga.upcoming),
+        progress: getCurrentProgress(id),
     }
 }
 
@@ -104,6 +105,18 @@ function updateValuation(id, data){
     persistence.updateValuation(id, valuation)
 }
 
+function addMangaProgress(data){
+    const progress = {
+        manga: data.manga,
+        chapter: data.pages,
+    }
+    persistence.addMangaProgress(progress)
+}
+
+function getCurrentProgress(id){
+    return persistence.getCurrentProgress(id);
+}
+
 module.exports = {
     getAllMangas,
     getEmptyManga,
@@ -118,4 +131,6 @@ module.exports = {
     finishedManga,
     readMangaAgain,
     updateValuation,
+    addMangaProgress,
+    getCurrentProgress
 }
